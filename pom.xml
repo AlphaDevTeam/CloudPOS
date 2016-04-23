@@ -8,7 +8,7 @@
   <name>CloudPOS</name>
   <modules>
     <module>CloudPOS-ear</module>
-    <module>CloudPOS-web</module>
     <module>CloudPOS-ejb</module>
+    <module>CloudPOS-web</module>
   </modules>
 </project>
