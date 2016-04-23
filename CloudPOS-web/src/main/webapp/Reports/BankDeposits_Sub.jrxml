@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BankDeposits_Sub" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="49135ea0-e79d-4a1f-8fa1-228aedc09f24">
+	<property name="ireport.zoom" value="2.1435888100000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[amount]]></fieldDescription>
+	</field>
+	<field name="refNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[refNumber]]></fieldDescription>
+	</field>
+	<field name="relatedAccount" class="com.AlphaDevs.cloud.web.Entities.BankAccounts">
+		<fieldDescription><![CDATA[relatedAccount]]></fieldDescription>
+	</field>
+	<variable name="amount_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="13" width="250" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="8e5c2dfc-0e23-4f7d-893e-5ed5b12f6efd"/>
+				<textElement>
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Bank Deposits]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="29" width="80" height="15" uuid="0461317a-da7b-4368-aee0-27c984754bed"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="85" y="29" width="85" height="15" uuid="76933cf3-1215-4dc2-b655-92547a4e832a"/>
+				<text><![CDATA[Ref Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="29" width="85" height="15" uuid="abbd067c-803c-4604-96c5-ad42e15cd932"/>
+				<text><![CDATA[Bank Account]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="2" width="250" height="1" uuid="356de5ae-5b27-4b4d-be5c-c88d2eafd647"/>
+			</line>
+			<textField>
+				<reportElement x="170" y="3" width="80" height="17" uuid="f4963ca8-6980-466d-b107-ec6542820582"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="85" y="3" width="85" height="17" uuid="36c293ce-65b4-45e6-ab93-109218571754"/>
+				<textFieldExpression><![CDATA[$F{refNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="3" width="85" height="17" uuid="23aabf6d-bbbd-4daa-8fd5-8ef1430439b1"/>
+				<textFieldExpression><![CDATA[""+$F{relatedAccount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="250" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="69c2e95a-4525-44f2-9596-3278dda3d266"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="170" y="0" width="80" height="16" uuid="20f971aa-8fff-4d18-b0c1-89659b390c65"/>
+				<box>
+					<topPen lineWidth="1.5"/>
+					<bottomPen lineWidth="2.25" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{amount_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

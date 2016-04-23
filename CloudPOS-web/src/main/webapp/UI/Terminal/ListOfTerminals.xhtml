@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+
+                <f:view>
+                    <h:form>                       
+                        <h1><h:outputText value="List Of Terminals"/></h1>
+                        <br/>
+                        <p:dataTable value="#{terminalHandler.allTerminals}" var="item" paginator="true" lazy="true" rows="10">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Terminal Name"/>
+                                </f:facet>
+                                <h:outputText value="#{item.terminalName}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Terminal IP"/>
+                                </f:facet>
+                                <h:outputText value="#{item.terminalIP}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Terminal Code"/>
+                                </f:facet>
+                                <h:outputText value="#{item.terminalCode}"/>
+                            </p:column>
+
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Logger"/>
+                                </f:facet>
+                                <h:outputText id="Logger" value="#{item.terminalCode} , #{item.terminalIP} , #{item.terminalName}"/>
+                               
+                                <p:overlayPanel appendToBody="true" id="myPanel" for="Logger" showEvent="mouseover" hideEvent="mouseout">
+                                    <p:panelGrid columns="2">  
+                                        <f:facet name="header">Logger</f:facet>  
+
+                                        <p:outputLabel value="CODE : " />  
+                                        <p:outputLabel value="#{item.terminalCode}" />
+
+                                        <p:outputLabel value="IP : " />  
+                                        <p:outputLabel value="#{item.terminalIP}" />
+
+                                        <p:outputLabel value="NAME : " />  
+                                        <p:outputLabel value="#{item.terminalName}" />
+
+
+                                    </p:panelGrid>  
+                                </p:overlayPanel>  
+                            </p:column>
+
+                        </p:dataTable>
+
+
+
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

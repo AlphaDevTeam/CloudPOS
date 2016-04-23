@@ -1,0 +1,228 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <h:outputStylesheet name="css/CoreStyles.css"/>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <h:form>
+                    <p:growl id="message"/>
+
+                    <p:dashboard id="board" model="#{dashboardHandler.model}" >
+                        <p:ajax event="reorder" listener="#{dashboardHandler.handleReorder}" update="message" />
+
+                        <p:panel id="sales" header="Sales Details" >
+                            <h:panelGrid columns="2" columnClasses="left,right" style="width:100%" >
+                                <p:chart type="line" model="#{dashboardHandler.animatedSalesModel}" style="width:400px;" responsive="true" />
+                            </h:panelGrid>
+                        </p:panel>
+
+
+                    </p:dashboard>
+
+
+
+                    <h:panelGrid columns="4">
+
+
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Create Customer Category" action="UI/CustomerCategory/CreateCustomerCategory.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Create Supplier" action="UI/Supplier/CreateSupplier.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="List of Customer Category" action="UI/CustomerCategory/ListCustomerCategory.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <p:commandButton icon="ui-icon-disk" value="SupLis" action="UI/Supplier/ListSupplier.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <p:commandButton icon="fa fa-list-alt" value="Create GRN" action="UI/GRN/CreateGRN.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Create Location" action="UI/Location/CreateLocation.xhtml?faces-redirect=true"/>    
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="List Location" action="UI/Location/ListLocation.xhtml?faces-redirect=true"/>      
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Create Product" action="UI/Products/CreateProducts.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="List Products" action="UI/Products/ListProducts.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Create Design" action="UI/Design/CreateDesign.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="List Designs" action="UI/Design/ListDesigns.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Create Items" action="UI/Items/CreateItems.xhtml?faces-redirect=true"/>
+
+
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Grn Reprint" action="UI/Reprints/ReprintGRN.xhtml?faces-redirect=true"/>
+
+
+                        <h:outputLabel value="Customer Account"/>
+                        <h:commandButton value="Customer Account" action="UI/Supplier/Account.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Stock Report"/>
+                        <h:commandButton value="Stock Report" action="UI/Reports/Stock.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Day Summary"/>
+                        <h:commandButton value="Day Summary" action="UI/Reports/DaySummary.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Item Bin Card"/>
+                        <h:commandButton value="Item Bin Card" action="UI/Reports/BinCard.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Cash Book"/>
+                        <h:commandButton value="Cash Book" action="UI/CashBook/CashBook.xhtml?faces-redirect=true"/>
+
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Return GRN" action="UI/GRN/ReturnGrn.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Invoice" action="UI/Sales/Invoice.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Tempary"/>
+                        <h:commandButton value="Invoice" action="UI/Sales/temp.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Property Manager"/>
+                        <h:commandButton value="PropertyManager" action="UI/Property/PropertyManager.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Employe" action="UI/Employee/CreateEmployee.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Employe List" action="UI/Employee/ListEmployee.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Job" action="UI/Job/CreateJob.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Job List" action="UI/Job/ListJob.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Stock Adjestments" action="UI/StockAdjestments/CreateStockAdjestments.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Create Bank" action="UI/Bank/CreateBank.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton action="UI/Bank/CreateBankBranch.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Reports"/>
+                        <h:commandButton styleClass="reportSection"  action="UI/Menu/Reports.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="List Bank Branch" action="UI/Bank/ListBankBranch.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Meter Reading" action="UI/Meter/CreateMeterReading.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Cash Payment Voucher" action="UI/Payment/CreateCashPaymentVoucher.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Manage Pump" action="#{pumpHandler.createPumpCreateLink()}"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Manage Pump Correct" action="UI/Pump/CreatePump.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="List Pump" action="#{pumpHandler.createPumpListLink()}"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Cash Receipt Voucher" action="UI/Receipts/CreateCashReceiptsVoucher.html"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Create Bank Accounts" action="UI/Bank/CreateBankAccount.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Manage Expenses" action="UI/Expenses/ManageExpenses.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Cash Receipts Voucher Expenses" action="UI/Expenses/CreateCashReceiptsVoucherExpenses.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Cash Payment Voucher Expenses" action="UI/Expenses/CreateCashPaymentExpenses.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:commandButton value="Bank Deposit" action="UI/Bank/BankDeposit.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Manage Terminal"/>
+                        <h:commandButton value="Manage Terminal" action="UI/CreditCardTerminal/ManageCreditCardTerminals.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="List Of Terminal"/>
+                        <h:commandButton value="List Of Terminal" action="UI/Terminal/ListOfTerminals.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Terminal"/>
+                        <h:commandButton value="Create Terminal" action="UI/Terminal/CreateTerminal.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Logger Details"/>
+                        <h:commandButton value="Logger Details" action="UI/Logger/ListOfLoggerDetails.xhtml?faces-redirect=true"/>
+
+                        <p:outputLabel value="Product Map"/>
+                        <p:commandButton icon="fa-home" value="Product Map" action="/UI/Reports/ProductMindMap.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create Myself"/>
+                        <p:commandButton icon="fa-home" value="Create Myself" action="UI/MySelf/MySelf.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Second Myself"/>
+                        <h:commandButton value="Second Myself" action="UI/MySelf/view_single.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Create UOM"/>
+                        <h:commandButton value="Create UOM" action="UI/Units/CreateUnits.xhtml?faces-redirect=true"/>
+
+                        <p:outputLabel value="Cheque Details"/>
+                        <p:commandButton ajax="false" value="Cheque Details" action="ChequesDeposit"/>
+
+                    </h:panelGrid>
+                    <hr/>
+                    <br/>
+
+                    <h:panelGrid columns="4">
+                        <h:commandButton value="Set System Numbers" action="Admin/UI/SystemNumbers/CreateSystemNumbers.xhtml?faces-redirect=true"/>
+                        <h:commandButton value="List of System Numbers" action="Admin/UI/SystemNumbers/ListSystemNumbers.xhtml?faces-redirect=true"/>
+                        <h:commandButton value="Set Systems " action="Admin/UI/Systems/CreateSystems.xhtml?faces-redirect=true"/>
+                        <h:commandButton value="List of Systems" action="Admin/UI/Systems/ListSystems.xhtml?faces-redirect=true"/>
+                        <h:commandButton value="E mail Configuration" action="Admin/UI/Email/CustomEmailSetup.xhtml?faces-redirect=true"/>
+                        <h:commandButton value="Create Company" action="Admin/UI/Company/CreateCompany.xhtml?faces-redirect=true"/>
+                        <h:commandButton value="User Management" action="Admin/UI/UserManagement/UserManagement.xhtml?faces-redirect=true"/>
+                        <h:commandButton value="UI" action="Admin/UI/UI/CreateMenu.xhtml?faces-redirect=true"/>
+                        <h:commandButton value="UI" action="Admin/UI/UI/CreateMenuItem.xhtml?faces-redirect=true"/>
+                        <p:commandButton ajax="false" value="Session Details" action="Admin/UI/Session/SessionDetails.xhtml?faces-redirect=true"/>
+                        <h:commandButton value="User Menu" action="#{userMenuHandler.checkLoggedUser()}"/>
+                        <h:commandButton value="Logout" action="#{sessionHandler.userLogout}"/>
+                    </h:panelGrid>
+
+                    <p:stack icon="./resources/Images/stack/stack.png">  
+                        <p:menuitem value="Aperture" icon="./resources/Images/stack/aperture.png" url="#"/>  
+                        <p:menuitem value="Photoshop" icon="./resources/Images/stack/photoshop.png" url="#"/>  
+                        <p:menuitem value="Coda" icon="./resources/Images/stack/coda.png" url="#"/>  
+                        <p:menuitem value="Safari" icon="./resources/Images/stack/safari.png" url="#" />  
+                        <p:menuitem value="Finder" icon="./resources/Images/stack/finder.png" url="#" /> 
+                        <p:menuitem value="Logout" icon="./resources/Images/stack/Log-Out-icon.png" action="#{infoGrabber.logoutUser}" /> 
+
+                    </p:stack>  
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
+

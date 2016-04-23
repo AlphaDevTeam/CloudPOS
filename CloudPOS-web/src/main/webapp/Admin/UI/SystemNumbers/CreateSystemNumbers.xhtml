@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <ui:insert name="title"> Title</ui:insert>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Create System Numbers"/></h1>
+                        <p:panelGrid columns="3">
+                            <p:outputLabel value="Related Company : " for="relatedCompany" />
+                            <p:selectOneMenu id="relatedCompany" value="#{systemNumbersHandler.current.relatedCompany}" label="RelatedCompany" converter="#{companyConvertor}" >
+                                <f:selectItems value="#{companyHandler.listOfCompany}"/>
+                            </p:selectOneMenu>
+                            <h:inputHidden/>
+
+                            <p:outputLabel value="Related Location : " for="relatedLocation" />
+                            <p:selectOneMenu id="relatedLocation" value="#{systemNumbersHandler.current.relatedLocation}" label="RelatedLocation" converter="#{locationConvertor}" >
+                                <f:selectItems value="#{locationHandler.list}"/>
+                            </p:selectOneMenu>                       
+                            <h:inputHidden/>
+
+                            <p:outputLabel value="Document Prefix : " for="documentPrefix" />
+                            <p:inputText id="documentPrefix" value="#{systemNumbersHandler.current.documentPrefix}" label="DocumentPrefix" />
+                            <p:selectOneMenu id="Document" value="#{systemNumbersHandler.current.document}" label="Document"  >
+                                <f:selectItems value="#{documentEnumHandler.documentList}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="System Number : " for="systemNumber" />
+                            <p:inputText type="number" id="systemNumber" value="#{systemNumbersHandler.current.systemNumber}" title="SystemNumber" />
+                            <h:inputHidden/>
+                            
+
+                            <p:commandButton value="Save" action="#{systemNumbersHandler.createSystemNumber()}" />
+                        </p:panelGrid>
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+
+
+    </h:body>
+</html>
+

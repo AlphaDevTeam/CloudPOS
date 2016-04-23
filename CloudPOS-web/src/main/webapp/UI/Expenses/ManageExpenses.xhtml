@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Manage Expenses"/></h1>
+                        
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Expenses Code : " for="expCode" />
+                            <p:inputText id="expCode" value="#{expensesHandler.curent.expCode}" title="Expenses Code" />
+                            <p:outputLabel value="Description : " for="expDescription" />
+                            <p:inputText id="expDescription" value="#{expensesHandler.curent.expDescription}" title="Description" />
+                            <p:outputLabel value="Location : " for="itemLocation" />
+                            <p:selectOneMenu id="itemLocation" value="#{expensesHandler.curent.expLcoation}" label="Location" converter="#{locationConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton value="Save" action="#{expensesHandler.persistExpense()}" />
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+            
+        </ui:composition>
+
+    </h:body>
+</html>

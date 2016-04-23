@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CreditCardReceipts_Sub" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a92e4d0b-86e7-4c83-bf5d-04ad9d5ab4f7">
+	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cardNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[cardNumber]]></fieldDescription>
+	</field>
+	<field name="relatedTerminal" class="com.AlphaDevs.cloud.web.Entities.CreditCardTeminals">
+		<fieldDescription><![CDATA[relatedTerminal]]></fieldDescription>
+	</field>
+	<field name="amount" class="java.lang.Double">
+		<fieldDescription><![CDATA[amount]]></fieldDescription>
+	</field>
+	<variable name="amount_1" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+	</variable>
+	<variable name="MihiTest" class="java.lang.Double" resetType="None">
+		<variableExpression><![CDATA[$V{amount_1}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="34" width="100" height="16" uuid="73bbc605-7361-480d-95f0-8030546372ab"/>
+				<text><![CDATA[Terminal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="34" width="100" height="16" uuid="055589f1-4fa1-4100-bbdb-fa31474bcc13"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="18" width="250" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="07461e3d-d071-4f56-a9ff-dd6fb99b7053"/>
+				<textElement>
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Credit Card Receipts]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement x="150" y="1" width="100" height="15" uuid="36bc3f9a-eb1e-4afa-b821-b77ef4548f4d"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="250" height="1" uuid="1077ae83-de58-47c3-babd-b5b51e42fc62"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="1" width="120" height="15" uuid="665e7257-f265-46b5-99b9-633c4068c6a4"/>
+				<textFieldExpression><![CDATA[""+$F{relatedTerminal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="250" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="56828b8a-af5f-4f41-bdba-a69d152cb66f"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="150" y="0" width="100" height="15" uuid="887ba0ef-8b65-4d00-8d07-82488a4d7630"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="2.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{amount_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

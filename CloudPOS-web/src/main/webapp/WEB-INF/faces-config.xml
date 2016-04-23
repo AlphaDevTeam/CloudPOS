@@ -1,0 +1,380 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+    
+    <application>
+        <action-listener>org.primefaces.application.DialogActionListener</action-listener>
+         <navigation-handler>org.primefaces.application.DialogNavigationHandler</navigation-handler>
+         <view-handler>org.primefaces.application.DialogViewHandler</view-handler>
+     </application>
+    
+    <navigation-rule>
+        <from-view-id>/UI/Login.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>BeforeHome</from-outcome>
+            <to-view-id>/UI/SessionValidator/ValidateSession.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
+    
+    
+    <navigation-rule>
+        <from-view-id>/UI/SessionValidator/ValidateSession.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule> 
+    
+    <navigation-rule>
+        <from-view-id>/Admin/UI/UI/UserMenu.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule> 
+
+    <navigation-rule>
+        <from-view-id>/Test.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>ChequesDeposit</from-outcome>
+            <to-view-id>/UI/Cheque/ChequesDeposit.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule> 
+    
+      <navigation-rule>
+        <from-view-id>/UI/Cheque/ChequesDeposit.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>SpecificGRN</from-outcome>
+            <to-view-id>/UI/GRN/SpecificGRN.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule> 
+            
+    <navigation-rule>
+        <from-view-id>/Admin/UI/UI/CreateMenu.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>        
+    </navigation-rule>
+    
+      <navigation-rule>
+        <from-view-id>/Test.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>ToUserMenu</from-outcome>
+            <to-view-id>/Admin/UI/UI/UserMenu.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>cancel</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+        
+    </navigation-rule> 
+    
+    
+    
+    <navigation-rule>
+        <from-view-id>/UI/Pump/CreatePump.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>Current</from-outcome>
+            <to-view-id>/UI/Pump/CreatePump.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/UI/MySelf/MySelf.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>Current</from-outcome>
+            <to-view-id>/UI/MySelf/view_single.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <!--
+    <lifecycle>
+       <phase-listener>com.AlphaDevs.cloud.web.Helpers.SessionPhaseListner</phase-listener>
+    </lifecycle>
+    -->
+    <navigation-rule>
+        <from-view-id>/UI/GRN/CreateGRN.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/Test.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Login</from-outcome>
+            <to-view-id>/UI/Login.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>CreatePump</from-outcome>
+            <to-view-id>/UI/Pump/CreatePump.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ListPump</from-outcome>
+            <to-view-id>/UI/Pump/ListPump.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/UI/Design/CreateDesign.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <redirect/>
+            <from-outcome>FromItem</from-outcome>
+            <to-view-id>/UI/Items/CreateItems.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/UI/Products/CreateProducts.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+         <navigation-case>
+            <redirect/>
+            <from-outcome>FromItem</from-outcome>
+            <to-view-id>/UI/Items/CreateItems.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/UI/Supplier/CreateSupplier.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>FroMItem</from-outcome>
+            <to-view-id>/UI/Items/CreateItems.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/UI/Items/CreateItems.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/UI/CustomerCategory/CreateCustomerCategory.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/UI/CustomerCategory/ListCustomerCategory.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Update</from-outcome>
+            <to-view-id>/UI/CustomerCategory/UpdateCustomerCategory.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/UI/CustomerCategory/UpdateCustomerCategory.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>updated</from-outcome>
+            <to-view-id>/UI/CustomerCategory/ListCustomerCategory.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/UI/Meter/CreateMeterReading.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/UI/Sales/Invoice.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/Admin/UI/Company/CreateCompany.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+        
+    </navigation-rule>
+    
+     <navigation-rule>
+        <from-view-id>/Admin/UI/Company/CreateCompany.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>FromUser</from-outcome>
+            <to-view-id>/Admin/UI/UserManagement/UserManagement.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
+    
+   
+    
+    <navigation-rule>
+        <from-view-id>/Admin/UI/UserManagement/UserManagement.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>    
+    
+    
+     <navigation-rule>
+        <from-view-id>/Admin/UI/UserManagement/UserManagement.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome> ToRegisterNewCompany </from-outcome>
+            <to-view-id>/Admin/UI/Company/CreateCompany.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/UI/CreditCardTerminal/ManageCreditCardTerminals.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/UI/Terminal/CreateTerminal.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/UI/Items/CreateItems.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome> ToRegisterNewLocation </from-outcome>
+            <to-view-id>/UI/Location/CreateLocation.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <redirect/>
+            <from-outcome>ToRegisterNewProduct </from-outcome>
+            <to-view-id>/UI/Products/CreateProducts.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <redirect/>
+            <from-outcome> ToRegisterNewDesign </from-outcome>
+            <to-view-id>/UI/Design/CreateDesign.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <redirect/>
+            <from-outcome>ToRegisterNewSupplier </from-outcome>
+            <to-view-id>/UI/Supplier/CreateSupplier.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <redirect/>
+            <from-outcome>ToRegisterNewUOM </from-outcome>
+            <to-view-id>/UI/Units/CreateUnits.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+   
+    
+    
+    <navigation-rule>
+        <from-view-id>/UI/Location/CreateLocation.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+         <navigation-case>
+            <redirect/>
+            <from-outcome>FromItem</from-outcome>
+            <to-view-id>/UI/Items/CreateItems.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+     <navigation-rule>
+        <from-view-id>/UI/Units/CreateUnits.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+         <navigation-case>
+            <redirect/>
+            <from-outcome>FromItem</from-outcome>
+            <to-view-id>/UI/Items/CreateItems.xhtml</to-view-id>
+        </navigation-case>
+        
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/UI/Employee/CreateEmployee.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/UI/Property/PropertyManager.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+</faces-config>

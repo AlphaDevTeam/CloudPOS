@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <ui:insert name="title">WeBPOS - #{systemsHandler.current.header}</ui:insert>
+    </h:head>
+    <h:body>
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="List of Products"/></h1>
+                        <br/>
+                        <p:dataTable value="#{productHandler.list}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Product Code"/>
+                                </f:facet>
+                                <h:outputText value="#{item.prodCode}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Product Description"/>
+                                </f:facet>
+                                <h:outputText value="#{item.productDescription}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Profit Perc."/>
+                                </f:facet>
+                                <h:outputText value="#{item.profitPerc}"/>
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Prefix"/>
+                                </f:facet>
+                                <h:outputText value="#{item.productPrefix}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+        
+    </h:body>
+</html>
+

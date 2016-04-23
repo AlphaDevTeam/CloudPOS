@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <ui:insert name="title">WeBPOS - #{systemsHandler.current.header}</ui:insert>
+    </h:head>
+    <h:body>
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h:outputText value="Register a New Property Manager"/>
+                        <h:panelGrid columns="2">
+
+                            <p:outputLabel value="Document Type" for="Document" />
+                            <p:selectOneMenu id="Document" value="#{propertyManagerHandler.current.document}" label="Document" required="true">
+                                <f:selectItems value="#{documentEnumHandler.documentList}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Type" for="propertyType" />
+                            <p:selectOneMenu id="propertyType" value="#{propertyManagerHandler.current.type}" label="Type" required="true">
+                                <f:selectItems value="#{propertieTypesHandler.propertieTypes}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Field Name" for="fieldName" />
+                            <p:inputText id="fieldName" value="#{propertyManagerHandler.current.fieldName}" title="Field Name" />
+
+                            <p:outputLabel value="Company" for="company" />
+                            <p:selectOneMenu id="company" value="#{propertyManagerHandler.current.company}" label="Company" required="true" converter="#{companyConvertor}" >
+                                <f:selectItems value="#{companyHandler.listOfCompany}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton value="Save" action="#{propertyManagerHandler.saveProperties()}"/>
+                        </h:panelGrid>
+                    </h:form>
+
+
+                    <h:form>
+                        <h1><h:outputText value="List"/></h1>
+                        <p:dataTable value="#{propertyManagerHandler.all}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Type"/>
+                                </f:facet>
+                                <h:outputText value="#{item.type}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Document"/>
+                                </f:facet>
+                                <h:outputText value="#{item.document}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="FieldName"/>
+                                </f:facet>
+                                <h:outputText value="#{item.fieldName}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Company"/>
+                                </f:facet>
+                                <h:outputText value="#{item.company}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+
+
+                </f:view>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

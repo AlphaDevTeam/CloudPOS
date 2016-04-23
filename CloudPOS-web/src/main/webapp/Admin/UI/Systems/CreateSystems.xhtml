@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <ui:insert name="title"> Title</ui:insert>
+    </h:head>
+    <h:body>
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+        <f:view>
+            <h:form>
+                <h1><h:outputText value="Create New Systems"/></h1>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Related Company : " for="relatedCompany" />
+                    <h:selectOneMenu id="relatedCompany" value="#{systemsHandler.current.relatedCompany}" title="RelatedCompany" converter="#{companyConvertor}">
+                        <f:selectItems value="#{companyHandler.listOfCompany}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Related Location : " for="relatedLocation" />
+                    <h:selectOneMenu id="relatedLocation" value="#{systemsHandler.current.relatedLocation}" title="RelatedLocation" converter="#{locationConvertor}" >
+                        <f:selectItems value="#{locationHandler.list}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Header : " for="header" />
+                    <h:inputText id="header" value="#{systemsHandler.current.header}" title="Header" />
+                    <h:outputText value="GRN No Auto Genarated : " />  
+                    <p:selectBooleanCheckbox value="#{systemsHandler.current.isGRNnumberAutoGenarated}" label="is GRN No Auto Genarated" />
+                    <h:commandButton value="Save" action="#{systemsHandler.createSystem()}"/>
+                </h:panelGrid>
+            </h:form>
+        </f:view>
+                </ui:define>
+            </ui:composition>
+    </h:body>
+</html>
+

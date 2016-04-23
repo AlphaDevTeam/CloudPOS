@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body style="background-color: black">
+        <center>
+            <h:form>
+                <p:growl id="growl" sticky="true" showDetail="true"/>
+                <p:wizard flowListener="#{accessRequestHandler.onFlowProcessDemoRequest}">
+                    <p:tab id="company" title="Company Details">
+                        <p:panel header="Company Details" >
+                            <p:messages />
+                            <h:panelGrid columns="2" >
+                                <p:outputLabel for="companyName" value="Company Name" />
+                                <p:inputText id="companyName" value="#{accessRequestHandler.current.companyName}" required="true" label="Company Name"/>
+
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab id="contact" title="Contact">
+                        <p:panel header="Contact Information">
+                            <p:messages />
+                            <h:panelGrid columns="2" >
+                                <p:outputLabel for="contactName" value="Contact Name" />
+                                <p:inputText id="contactName" value="#{accessRequestHandler.current.contactName}" required="true" label="Contact Name"/>
+
+                                <p:outputLabel for="contactEmail" value="Contact Email" />
+                                <p:inputText id="contactEmail" value="#{accessRequestHandler.current.contactEmail}" required="true" label="Contact Email"/>
+
+                                <p:outputLabel for="contactNumber" value="Contact Number" />
+                                <p:inputText id="contactNumber" value="#{accessRequestHandler.current.contactNumber}" required="true" label="Contact Number"/>
+
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab id="extra" title="Extra">
+                        <p:panel header="Extra Information">
+                            <p:messages />
+                            <h:panelGrid columns="2" >
+                                <p:outputLabel for="requestRef" value="Request Reference" />
+                                <p:inputText id="requestRef" value="#{accessRequestHandler.current.requestReference}" required="false" label="Request Reference"/>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab id="confirm" title="Confirmation">
+                        <p:panel header="Confirmation">
+                            <p:panelGrid id="confirmation" columns="2">
+
+                                <p:panelGrid columns="2" >
+                                    <h:outputText value="Request Number " />
+                                    <h:outputText value="#{accessRequestHandler.current.requestNumber}"/>
+
+                                    <h:outputText value="Request Type " />
+                                    <h:outputText value="#{accessRequestHandler.current.requestType}" />
+
+                                    <h:outputText value="Request Status " />
+                                    <h:outputText value="#{accessRequestHandler.current.requestStatus}" />
+
+                                    <h:outputText value="Company Name " />
+                                    <h:outputText value="#{accessRequestHandler.current.companyName}"/>
+
+                                    <p:outputLabel value="Contact Name" />
+                                    <p:outputLabel value="#{accessRequestHandler.current.contactName}" />
+
+                                    <p:outputLabel value="Contact Email" />
+                                    <p:outputLabel value="#{accessRequestHandler.current.contactEmail}" />
+
+                                    <p:outputLabel value="Contact Number" />
+                                    <p:outputLabel value="#{accessRequestHandler.current.contactNumber}" />
+                                    <p:outputLabel value="Request Reference" />
+                                    <p:outputLabel value="#{accessRequestHandler.current.requestReference}" />
+                                    
+                                    <p:outputLabel value="Requested IP Address" />
+                                    <p:outputLabel value="#{accessRequestHandler.requestedIPAddress}" />
+                                    
+                                    
+                                </p:panelGrid>
+
+
+                            </p:panelGrid>
+
+                            <p:commandButton value="Submit" actionListener="#{accessRequestHandler.save}" update="growl" process="@this"/>
+                        </p:panel>
+                    </p:tab>
+                </p:wizard>
+
+            </h:form>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="Request a Demo : " for="reqDemo" />
+                    <p:commandLink id="reqDemo" value="Request" title="Request" action="#{userHandler.demoLogin}"/>
+                </h:panelGrid>
+            </h:form>
+
+        </center>
+    </h:body>
+</html>
+

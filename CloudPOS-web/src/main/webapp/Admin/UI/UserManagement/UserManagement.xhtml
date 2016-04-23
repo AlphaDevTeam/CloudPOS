@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <ui:insert name="title">WeBPOS - #{systemsHandler.current.header}</ui:insert>
+    </h:head>
+    <h:body>
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                
+                  <f:view>
+                    <h:form>
+                        <p:growl id="Message" showDetail="true"/>
+                        <h1><h:outputText value="User Registration"/></h1>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Username : " for="Username" />
+                            <p:inputText id="Username" value="#{userHandler.current.userName}" title="Username" />
+                            
+                            <p:outputLabel value="Password : " for="Password" />
+                            <p:password id="Password" value="#{userHandler.current.passWord}" title="Password" />
+                            
+                            <p:outputLabel value="Associated Company : " for="AssociatedCompany" />
+                            
+                            <p:selectOneMenu id="AssociatedCompany" value="#{userHandler.current.associatedCompany}" label="AssociatedCompany" converter="#{companyConvertor}" >
+                                <f:selectItems value="#{companyHandler.listOfCompany}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="User Leval : " for="UserLevel" />
+                            
+                            <p:selectOneMenu id="UserLevel" value="#{userHandler.current.userLevel}" label="UserLevel"  >
+                                <f:selectItems value="#{userHandler.userLevelList}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:commandLink value="Register New Company : " action="#{userHandler.redirectToCompany()}" />
+                            #{companyHandler.setRDStatus("FromUser")}
+                            <p:commandButton value="Save" action="#{userHandler.persisitUser()}" />
+                           
+                            
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+                
+                
+                
+            </ui:define>
+
+         
+        </ui:composition>
+    </h:body>
+</html>
+

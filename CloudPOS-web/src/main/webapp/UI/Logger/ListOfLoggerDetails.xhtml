@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:body>
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h:outputText value="List Of Logger Details"/>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Description : " for="description"/>
+                            <p:inputText id="description" title="Description" value="#{loggerHandler.current.description}"/>
+                            <p:outputLabel value="User : " for="user"/>
+                            <p:selectOneMenu id="user" value="#{loggerHandler.current.user}" label="User" converter="#{userConvertor}">
+                                <f:selectItem itemLabel="Select One" />
+                                <f:selectItems value="#{userHandler.companyUsers}" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Terminal : " for="terminal"/>
+                            <p:selectOneMenu id="terminal" value="#{loggerHandler.current.terminal}" label="Terminal" converter="#{terminalConvertor}">
+                                <f:selectItem itemLabel="Select One" />
+                                <f:selectItems value="#{terminalHandler.allTerminals}" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Trn Type : " for="trntype"/>
+                            <p:selectOneMenu id="trntype" value="#{loggerHandler.current.trnType}" label="Location" >
+                                <f:selectItem itemLabel="Select One" />
+                                <f:selectItems value="#{loggerHandler.trnTypes}" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Trn Number : " for="trnnumber"/>
+                            <p:inputText id="trnnumber" title="Trn Number " value="#{loggerHandler.current.trnNumber}"/>
+                            <p:outputLabel value="From : " for="fromDate"/>
+                            <p:calendar id="fromDate" value="#{loggerHandler.fromDate}" pattern="#{systemsHandler.current.dateTimeformat}" title="Date">
+                                <f:convertDateTime type="date" pattern="#{systemsHandler.current.dateTimeformat}" />  
+                                <p:ajax partialSubmit="true" update="LoggerDataTable" /> 
+                            </p:calendar>
+                            <p:outputLabel value="To : " for="toDate"/>
+                            <p:calendar id="toDate" value="#{loggerHandler.toDate}" pattern="#{systemsHandler.current.dateTimeformat}" title="Date">
+                                <f:convertDateTime type="date" pattern="#{systemsHandler.current.dateTimeformat}" /> 
+                                <p:ajax partialSubmit="true" update="LoggerDataTable" /> 
+                            </p:calendar>
+                            <p:commandButton update="LoggerDataTable" value="Load" action="#{loggerHandler.initRelevantLoggerDetails()}"/>
+                        </h:panelGrid>
+                        <br/>
+                        <p:dataTable id="LoggerDataTable" value="#{loggerHandler.listOfLoggerData}" var="item" paginator="true" rows="10" >
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Trn Number"/>
+                                </f:facet>
+                                <h:outputText value="#{item.trnNumber}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Description"/>
+                                </f:facet>
+                                <h:outputText value="#{item.description}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Trn Time Stamp"/>
+                                </f:facet>
+                                <h:outputText value="#{item.trnTimeStamp}">
+                                    <f:convertDateTime pattern="#{systemsHandler.current.dateTimeformat}" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Terminal"/>
+                                </f:facet>
+                                <h:outputText value="#{item.terminal}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Trn Type"/>
+                                </f:facet>
+                                <h:outputText value="#{item.trnType}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="User"/>
+                                </f:facet>
+                                <h:outputText value="#{item.user}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

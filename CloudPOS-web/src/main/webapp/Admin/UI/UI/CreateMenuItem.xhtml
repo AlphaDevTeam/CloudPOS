@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+
+
+                    <h:form>
+                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <p:panelGrid id="dataPanel" columns="2">
+
+
+                            <h:outputLabel value="Menu" for="menu"/>
+                            <p:selectOneMenu id="menu" value="#{menuItemHandler.currentMenu}" label="Menu" required="true" converter="#{menuConvertor}">
+                                <f:selectItem itemLabel="Select One"  />  
+                                <f:selectItems value="#{menuItemHandler.menuList}"/>
+                            </p:selectOneMenu> 
+                            <p:outputLabel value="Menu Item Title:" for="menuItemTitle" />
+                            <p:inputText id="menuItemTitle" value="#{menuItemHandler.current.menuItemTitle}" title="MenuItemTitle" />
+
+
+                            <p:outputLabel value="Menu Item URL:" for="menuItemURL" />
+                            <p:inputText id="menuItemURL" value="#{menuItemHandler.current.url}" title="Menu Item URL" />
+                            <p:commandButton value="Add" action="#{menuItemHandler.addItem()}" update="itemMenuList,dataPanel" />
+                            <p:commandButton value="Save" action="#{menuItemHandler.createMenuItem()}"/>
+                        </p:panelGrid>
+
+                        <h1><h:outputText value="List"/></h1>
+
+                        <p:dataTable id="itemMenuList" value="#{menuItemHandler.menuItems}" var="item">
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="MainMenuTitle"/>
+                                </f:facet>
+                                <h:outputText value="#{item.parentMenu.menuTitle}"/>
+                            </p:column>
+
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="MenuItemTitle"/>
+                                </f:facet>
+                                <h:outputText value="#{item.menuItemTitle}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Url"/>
+                                </f:facet>
+                                <h:outputText value="#{item.url}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">  
+                                    <h:outputText value="Action"/>
+                                </f:facet>
+                                <p:commandLink  value="Delete" action="#{menuItemHandler.deleteRow(item)}" update="itemMenuList" />
+                            </p:column>
+
+                        </p:dataTable>
+
+
+
+
+
+
+                    </h:form>
+                </f:view>
+
+
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

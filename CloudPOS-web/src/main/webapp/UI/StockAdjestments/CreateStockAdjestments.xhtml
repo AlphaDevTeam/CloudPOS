@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+           
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Create Stock Adjestments "/></h1>
+                        <h:panelGrid columns="2">
+                            
+                            <p:outputLabel value="Ref Number : " for="refNumber" />
+                            <p:inputText id="refNumber" value="#{stockAdjestmentsHandler.refNumber}" title="Reference Number" />
+                            <p:outputLabel value="Date : " for="Date" />  
+                            <p:calendar id="Date" value="#{stockAdjestmentsHandler.current.adjestmentDate}" pattern="#{sessionHandler.defaultDateFormat}" title="Date">
+                                    <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
+                            </p:calendar>
+                            <p:outputLabel value="Description : " for="adjestmentDescription" />
+                            <p:inputText id="adjestmentDescription" value="#{stockAdjestmentsHandler.current.adjestmentDescription}" title="Description" />
+                            <p:outputLabel value="Qty : " for="adjestmentQty" />
+                            <p:inputText type="number" id="adjestmentQty" value="#{stockAdjestmentsHandler.current.adjestmentQty}" title="Qty" />
+                            
+                            <p:outputLabel value="Location : " for="adjestmentLocation" />
+                            <p:selectOneMenu id="adjestmentLocation" value="#{stockAdjestmentsHandler.current.adjestmentLocation}" label="Location " converter="#{locationConvertor}" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                                <p:ajax update="refNumber" /> 
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Item : " for="adjestmentItem" />
+                            <p:autoComplete id="adjestmentItem" value="#{stockAdjestmentsHandler.current.adjestmentItems}"   
+                                            completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}"  >
+                            </p:autoComplete>  
+                            <p:outputLabel value="Type : " for="adjestmentType" />
+                            <p:selectOneMenu id="adjestmentType" value="#{stockAdjestmentsHandler.current.adjestmentType}" label="Type " >
+                                <f:selectItems value="#{stockAdjestmentsHandler.adjTypes}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton value="Save" action="#{stockAdjestmentsHandler.persistStockAdjestment()}" />
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+           
+
+        </ui:composition>
+
+    </h:body>
+</html>

@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <ui:insert name="title">WeBPOS - #{systemsHandler.current.header}</ui:insert>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="List Of Suppliers "/></h1>
+                        <br/>
+                        <p:dataTable value="#{supplierHandler.allSuppliers()}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="First Name"/>
+                                </f:facet>
+                                <h:outputText value="#{item.firstName}"/>
+                            </p:column>
+                             <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Last Name"/>
+                                </f:facet>
+                                <h:outputText value="#{item.lastName}"/>
+                            </p:column>
+
+                            <p:column width="100">
+                                <f:facet  name="header">
+                                    <h:outputText value="Address"/>
+                                </f:facet>
+                                <h:outputText id="Address" value="#{item.zipCode} , #{item.street} , #{item.city} , #{item.addressState}"/>
+                                <p:overlayPanel appendToBody="true" id="myPanel" for="Address" showEvent="mouseover" hideEvent="mouseout">
+                                    <p:panelGrid columns="2">  
+                                        <f:facet name="header">Address</f:facet>  
+
+                                        <p:outputLabel value="PO BOX : " />  
+                                        <p:outputLabel value="#{item.zipCode}" />
+
+                                        <p:outputLabel value="STREET : " />  
+                                        <p:outputLabel value="#{item.street}" />
+
+                                        <p:outputLabel value="CITY : " />  
+                                        <p:outputLabel value="#{item.city}" />
+
+                                        <p:outputLabel value="STATE : " />  
+                                        <p:outputLabel value="#{item.addressState}" />
+
+                                    </p:panelGrid>  
+                                </p:overlayPanel>  
+                            </p:column>   
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Email"/>
+                                </f:facet>
+                                <h:outputText value="#{item.emailAddress}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="NIC No"/>
+                                </f:facet>
+                                <h:outputText value="#{item.custNIC}"/>
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Mobile"/>
+                                </f:facet>
+                                <h:outputText value="#{item.mobile}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Phone"/>
+                                </f:facet>
+                                <h:outputText value="#{item.phone}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Fax"/>
+                                </f:facet>
+                                <h:outputText value="#{item.fax}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="URL"/>
+                                </f:facet>
+                                <h:outputText value="#{item.URL}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Credit Limit"/>
+                                </f:facet>
+                                <h:outputText value="#{item.creditLimit}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Category"/>
+                                </f:facet>
+                                <h:outputText value="#{item.custcategory}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Code"/>
+                                </f:facet>
+                                <h:outputText value="#{item.custCode}"/>
+                            </p:column>                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Inactive"/>
+                                </f:facet>
+                                <h:outputText value="#{item.inactive}"/>
+                            </p:column>
+                           
+
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+
+
+
+    </h:body>
+</html>
+

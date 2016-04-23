@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MeterReadings_Sub" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c3faf5e1-610e-4029-9218-319796dbe965">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="totalLiquidAmount" class="java.lang.Double"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="lastReading" class="java.lang.Double">
+		<fieldDescription><![CDATA[lastReading]]></fieldDescription>
+	</field>
+	<field name="relatedPump" class="com.AlphaDevs.cloud.web.Entities.Pump">
+		<fieldDescription><![CDATA[relatedPump]]></fieldDescription>
+	</field>
+	<field name="reading" class="java.lang.Double">
+		<fieldDescription><![CDATA[reading]]></fieldDescription>
+	</field>
+	<field name="pumpCode" class="java.lang.String">
+		<fieldDescription><![CDATA[relatedPump.pumpCode]]></fieldDescription>
+	</field>
+	<field name="relatedItem" class="com.AlphaDevs.cloud.web.Entities.Items">
+		<fieldDescription><![CDATA[relatedPump.relatedItem]]></fieldDescription>
+	</field>
+	<field name="unitPrice" class="java.lang.Double">
+		<fieldDescription><![CDATA[relatedPump.relatedItem.unitPrice]]></fieldDescription>
+	</field>
+	<variable name="reading_1" class="java.lang.Double" resetType="Group" resetGroup="Meter Reading" calculation="Sum">
+		<variableExpression><![CDATA[$F{reading}]]></variableExpression>
+	</variable>
+	<variable name="lastReading_1" class="java.lang.Double" resetType="Group" resetGroup="Meter Reading" calculation="Sum">
+		<variableExpression><![CDATA[$F{lastReading}]]></variableExpression>
+	</variable>
+	<variable name="TotalReading" class="java.lang.String"/>
+	<variable name="reading_2" class="java.lang.Double" resetType="Group" resetGroup="Meter Reading" calculation="Sum">
+		<variableExpression><![CDATA[$F{reading}]]></variableExpression>
+	</variable>
+	<variable name="reading_3" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{reading}]]></variableExpression>
+	</variable>
+	<variable name="MeterReadingSubTotal" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[$F{relatedItem} + "-" + $V{reading_2}]]></variableExpression>
+	</variable>
+	<variable name="Price" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{unitPrice} * $F{reading}]]></variableExpression>
+	</variable>
+	<variable name="PriceTot" class="java.lang.Double" resetType="None" incrementType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$V{Price}]]></variableExpression>
+	</variable>
+	<variable name="SubPrice" class="java.lang.Double" resetType="None" incrementType="Report" calculation="Sum">
+		<variableExpression><![CDATA[162 * $V{reading_2}]]></variableExpression>
+	</variable>
+	<variable name="groupUnit" class="java.lang.Double" resetType="Group" resetGroup="Meter Reading">
+		<variableExpression><![CDATA[$F{unitPrice}]]></variableExpression>
+	</variable>
+	<variable name="groupPrice" class="java.lang.Double" resetType="None" incrementType="Group" incrementGroup="Meter Reading" calculation="Sum">
+		<variableExpression><![CDATA[$V{reading_2} * $V{groupUnit}]]></variableExpression>
+	</variable>
+	<group name="Meter Reading">
+		<groupExpression><![CDATA[$F{relatedItem}]]></groupExpression>
+		<groupHeader>
+			<band height="16">
+				<staticText>
+					<reportElement x="71" y="0" width="62" height="15" uuid="5b42f59f-d717-424b-a62a-2009b7535c44"/>
+					<textElement textAlignment="Right">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<text><![CDATA[Opening]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="1" y="0" width="70" height="15" uuid="f1e73c52-88ae-4e15-9728-3e78420f2305"/>
+					<textElement>
+						<font fontName="Tahoma" isBold="true" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{relatedItem}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="133" y="0" width="65" height="15" uuid="ddc2e807-a958-4da7-9fb3-f25512e4a099"/>
+					<textElement textAlignment="Right">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<text><![CDATA[Closing]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="198" y="0" width="48" height="15" uuid="a92550e2-22f9-487d-b91b-6690274783af"/>
+					<textElement textAlignment="Right">
+						<font fontName="Tahoma"/>
+					</textElement>
+					<text><![CDATA[Issues]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="29">
+				<textField>
+					<reportElement x="164" y="1" width="82" height="23" uuid="5920f38d-3a54-431e-a696-a095e901dec3"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{reading_2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="46" y="0" width="100" height="13" uuid="f1484e2c-f943-48ec-84e2-0c1d92c6a12a"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sub Total]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="0" width="246" height="1" uuid="f2b7b852-2ba3-4f8a-aec8-c0fdb2245e41"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="15" width="245" height="14" backcolor="#CCCCCC" uuid="d77a277d-22e7-4f69-aa27-bec602b43b3a"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Meter Readings]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="1" y="0" width="70" height="16" uuid="9d860a06-7d34-4a86-9637-1dbac05c36fb"/>
+				<textFieldExpression><![CDATA[""+$F{relatedPump}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="71" y="0" width="62" height="16" uuid="2bdd8b5c-b7ab-4c9a-9c55-f07ffa0e2a0a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{lastReading}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="198" y="0" width="48" height="16" uuid="321b3f86-a73b-4cc7-a29e-5b215c1925a7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{reading}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="134" y="0" width="64" height="16" uuid="338e4863-31a8-456d-b759-5452e4f47f9c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new Double(($F{reading} == null ? 0.0:$F{reading}.doubleValue()) +($F{lastReading} == null ? 0.0:$F{lastReading}.doubleValue()))]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="0" width="245" height="1" uuid="48e4ea3d-fdaf-46ad-832e-3332600e7ae2"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="1" width="245" height="16" backcolor="#CCCCCC" uuid="9e4c2a02-57d7-45a6-8722-bda416d58775"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="0" width="100" height="17" uuid="b1934099-d8bf-4571-a7fd-1f0684a3ea67"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Bulk Issues]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="0" width="245" height="1" uuid="1a3d1cb5-345e-4942-948a-9b73d273cd00"/>
+			</line>
+			<textField>
+				<reportElement x="146" y="1" width="100" height="16" uuid="1086b006-49d7-4ff8-b303-44e8c928e773"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalLiquidAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

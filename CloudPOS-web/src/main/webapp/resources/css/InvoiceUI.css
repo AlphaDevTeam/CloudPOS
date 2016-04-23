@@ -1,0 +1,252 @@
+body{
+    margin: 0px
+}
+
+.T_Header{
+    width: 100%;
+    height: 70px;
+    background-color: #000000;
+
+}
+.head_table{
+    width: 100%;
+    height: 70px;
+    font-family: Trebuchet MS bold;
+    font-size: small;
+    color: #dddddd;
+}
+
+.T_Content{
+    float: left;
+    // position: absolute;
+    width: 100%;
+    height: auto;
+    background-color: #000000; 
+    padding-bottom: 8px;
+}
+.T_Functions{
+    float: left;
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    background-color:  #000000;
+    margin-top: 3px;
+}
+
+.T_table{
+    margin-top: 63px;
+    margin-left: 50px;
+    float: left;
+    // position: absolute;
+    width: 670px;
+    height: auto;
+    background-color: #000000;
+    border-radius: 5px;
+
+}
+.T_invoice{
+    width: auto;
+    height: 300px;
+    background-color: #AFAFAF;
+
+}
+.T_cmy_Logo{
+    width: auto;
+    height: 190px;
+    overflow:scroll;
+    background-color: #D20005;
+    margin-top: 40px;
+    
+
+}
+
+#prduct_btn{
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+
+.T_data{
+    margin-top: 63px;
+    margin-left: 805px;
+    float: left;
+    position: absolute;
+    width: 472px;
+    height: auto;
+    background-color: #000000;
+    border-radius: 5px;
+}
+.T_date_Time{
+    color: #D20005;
+    width: auto;
+    height: 200px;
+    background-color:  appworkspace;
+    border-radius: 5px;  
+
+}
+
+.T_num_Pad{
+    width: auto;
+    height: auto;
+    background-color:  #000000;
+    border-radius: 5px;  
+}
+.num_pad_Table{
+    width: 472px;
+    height: auto;
+    color: #000000;
+
+}
+#cell_1{
+    width: 130px;
+
+}
+#cell_2{
+    width: 212px;
+
+}
+#cell_3{
+    width: 130px;
+}
+
+#B1,#B4,#B10{
+    width: 120px;
+    height: 50px;
+    background-color: #dddddd;  
+    margin-top: 5px;
+    margin-right: 5px;
+    border-radius: 3px;
+    margin-left: 5px;
+    color: #000000;
+    font-weight: bold;
+}
+#B2{
+    width: 212px;
+    height: 50px;
+    background-color: #ffffff;
+    border-color: #dddddd;
+    margin-top: 5px;
+    color: #000000;
+}
+#B3{
+    width: 120px;
+    height: 50px;
+    background-color: #dddddd;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    color: #000000;
+}
+#B5,#B6,#B7,#B11,#B12,#B13{
+    width: 66px;
+    height: 50px;
+    background-color:#dddddd;    
+    margin-top: 5px;
+    color: #000000;
+    font-weight: bold;
+}
+#B6,#B12{
+    margin-left: 2px;
+    margin-right: 2px;
+    color: #000000;
+}
+#B8,#B9{
+    width: 56px;
+    height: 50px;
+    margin-top: 5px;
+    background-color: #AFAFAF;  
+    color: #000000;
+    font-weight: bold;
+
+}
+#B8{
+    margin-left: 5px;
+    margin-right: 2px;
+    color: #000000;
+}
+#B14{
+    width: 120px;
+    height: 50px;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: #AFAFAF; 
+    color: #000000;
+    font-weight: bold;
+}
+#B15{
+    width: 138px;
+    height: 50px;
+    margin-top: 5px;
+    margin-right: 2px;
+    background-color:#dddddd;   
+    color: #000000;
+    font-weight: bold;
+}
+#B16{
+    width: 66px;
+    height: 50px;
+    margin-top: 5px;
+    background-color:#dddddd;   
+    color: #000000;
+    font-weight: bold;
+}
+
+.T_Conetent_2{
+    float: left;
+    // position: absolute;
+    width: 100%;
+    height: auto;
+    background-color:  #000000;
+}
+#Final_Line{
+    font-family: Trebuchet MS;
+    color: #ffffff;
+    font-size: large;
+    padding: 0px;
+    text-align: center;
+    float: left;
+    margin:  20px 0px 0px 0px;
+    width: 100%;
+    height: 30px;
+    background-color:#000000;
+    
+}
+
+
+
+#trash,#asterisk,#download,#Total,#Browse,#Search,#Scan,#Edit{
+    width: 100px;
+    height: 50px;
+    margin-top: 5px;
+    margin-left: 20px;
+}
+
+
+#Total{
+    width: 300px;
+    font-weight: bold;
+}
+
+#Browse:hover,#Search:hover,#Scan:hover,#Edit:hover{
+    opacity: 0.75;
+}
+
+#B2:hover,#B3:hover,#B5:hover,#B6:hover,#B7:hover,#B8:hover,#B11:hover,#B12:hover,#B13:hover,#B14:hover,#B15:hover,#B16:hover{
+    opacity: 0.75;
+}
+
+
+#asterisk{
+    margin-left: 50px;
+}
+#Browse{
+    margin-left: 80px;
+
+}
+#Browse,#Search,#Scan,#Edit{
+    background-color: #dddddd;
+    border-color: #dddddd;
+    color: #000000;
+    font-weight: bold;
+}

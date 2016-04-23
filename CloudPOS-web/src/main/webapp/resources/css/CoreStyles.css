@@ -1,0 +1,77 @@
+/* 
+    Document   : CoreStyles
+    Created on : Oct 26, 2012, 10:22:47 PM
+    Author     : Mihindu Gajaba Karunarathne
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+    background-color: black;
+    color: silver;
+}
+
+#AlphaLogo 
+{
+    background-color: black;
+    position: fixed;
+    top: 100px;
+    left: 100px;
+        
+}
+body
+{
+    background-color: black;
+    color: silver;
+}
+
+#InvalidAuth
+{
+    color: red;
+    border-color: greenyellow;
+    background-color: yellow;
+}
+
+#LoginForm{
+    position: fixed;
+    top: 250px;
+    left: 700px;
+}
+
+#verticalLine{
+    background-color: silver;
+    height: 400px;
+    width: 1px;
+    left: 600px;
+    position: fixed;
+    top: 100px;
+}
+
+#footerStyle{
+    background-color: black;
+    color: silver;
+    float:bottom;
+ }
+
+.ui-icon.fa {
+     text-indent:0px;
+     background-image:none;
+}
+.ui-message-title {
+    font: 28px "Lucida Console", Monaco, monospace;
+    text-align: center;
+}
+.ui-message-message p {
+    font: 20px "Lucida Console", Monaco, monospace;
+    letter-spacing: -1px;
+}
+
+.reportSection {
+    background: url('custom-reports.png') no-repeat top;
+    cursor: pointer;
+    background-position: top;
+    width: 128px;
+    height: 128px;
+    border: none;
+}

@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <p:focus for="meterReadingForm:RefNum"/>
+                    <h:form id="meterReadingForm">
+                        <p:growl id="messages" showDetail="true"/>  
+                        <h1><h:outputText value="Meter Reading"/></h1>
+                        <p:panelGrid id="readingPanel" columns="2">
+                            <p:outputLabel value="Ref Number : " for="RefNum" />
+                            <p:inputText id="RefNum" value="#{meterReadingHandler.referenceNumber}" title="Ref Number" required="true" />
+                            <p:outputLabel value="Date : " for="Date" />  
+                            <p:calendar id="Date" value="#{meterReadingHandler.current.relatedDate}" pattern="#{sessionHandler.defaultDateFormat}" title="Date" required="true">
+                                 <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
+                            </p:calendar> 
+                            <p:outputLabel value="Location : " for="location" />  
+                            <p:selectOneMenu id="location" value="#{meterReadingHandler.current.relatedLocation}" label="Location " converter="#{locationConvertor}"  required="true" >
+                                <f:selectItem itemLabel="Select One"  />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                                <p:ajax update="lastReading,relatedPump,RefNum" /> 
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Pump : " for="relatedPump" />
+                            <p:selectOneMenu id="relatedPump" value="#{meterReadingHandler.current.relatedPump}" label="Pump" converter="#{pumpConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{meterReadingHandler.pumpListAccordingToLocation}"/>
+                                <p:ajax update="lastReading" /> 
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Reading : " for="reading" />
+                            <p:inputText type="number" id="reading" value="#{meterReadingHandler.current.reading}" title="Reading" readonly="true" required="true">
+                                <f:convertNumber type="number"  />
+                            </p:inputText>
+                            <p:outputLabel value="Note : " for="note" />
+                            <p:inputText id="note" value="#{meterReadingHandler.current.note}" title="Note" />
+                            
+                            <p:outputLabel value="Last Reading : " for="lastReading" />
+                            <p:inputText type="number" id="lastReading" value="#{meterReadingHandler.lastReading}" title="Last Reading" readonly="true" required="true"/>
+                            
+                            <p:outputLabel value="Current Reading : " for="currentReading" />
+                            <p:inputText type="number" id="currentReading" value="#{meterReadingHandler.currentReading}" title="Current Reading" required="true" >
+                                  <f:convertNumber type="number"  />
+                                  <p:ajax event="keyup" listener="#{meterReadingHandler.calculateReading()}" update="reading,lastReading" />  
+                                   
+                            </p:inputText>
+                            
+                            <p:commandButton value="Save and Stay" action="#{meterReadingHandler.saveMeterReadingAndStay()}" update="meterReadingForm,messages" />
+                            <p:commandButton value="Save" action="#{meterReadingHandler.saveMeterReadingAndMoveToHome()}" />
+                            
+                        </p:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

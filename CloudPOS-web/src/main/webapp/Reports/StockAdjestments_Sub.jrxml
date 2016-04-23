@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StockAdjestments_Sub" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8500eac4-dc7f-4969-9549-55fc4928bc08">
+	<property name="ireport.zoom" value="1.7715610000000017"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="adjestmentQty" class="java.lang.Double">
+		<fieldDescription><![CDATA[adjestmentQty]]></fieldDescription>
+	</field>
+	<field name="adjestmentType" class="com.AlphaDevs.cloud.web.Enums.AdjestmentTypes">
+		<fieldDescription><![CDATA[adjestmentType]]></fieldDescription>
+	</field>
+	<field name="adjestmentItems" class="com.AlphaDevs.cloud.web.Entities.Items">
+		<fieldDescription><![CDATA[adjestmentItems]]></fieldDescription>
+	</field>
+	<variable name="adjestmentQty_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{adjestmentQty}]]></variableExpression>
+	</variable>
+	<variable name="MihiTest" class="java.lang.Double" resetType="None">
+		<variableExpression><![CDATA[$V{adjestmentQty_1}]]></variableExpression>
+	</variable>
+	<variable name="totalAdjestmentsAmount" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{adjestmentItems}.getUnitPrice() * $F{adjestmentQty}]]></variableExpression>
+	</variable>
+	<group name="AdjesmentType">
+		<groupExpression><![CDATA[$F{adjestmentType}]]></groupExpression>
+		<groupFooter>
+			<band height="17">
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="2" width="250" height="13" forecolor="#000000" backcolor="#CCCCCC" uuid="aa20b444-5fdb-48d7-aadd-9c828032071e"/>
+					<textElement textAlignment="Center">
+						<font isBold="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="149" y="0" width="100" height="14" uuid="1bcd0c4c-55db-48ba-abab-252d61a86475"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<bottomPen lineWidth="2.0" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{adjestmentQty_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="26" width="100" height="14" uuid="07b385e9-82ad-4d7b-bdf1-14cc3fea3cf5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="145" y="27" width="104" height="13" uuid="1d997670-8260-4272-80d3-eafd744f2579"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="12" width="250" height="14" backcolor="#CCCCCC" uuid="2aabe5f1-1209-4ac5-9ccb-343ad87f621a"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[Adjestments]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="159" height="15" uuid="98a5cdb3-50f7-43bc-b660-e448f62b2db3"/>
+				<textFieldExpression><![CDATA[""+$F{adjestmentType} + "( " + $F{adjestmentItems} + " )"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="0" width="101" height="15" uuid="b15ac4bc-d449-4abb-97d7-c8a12a3b6954"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{adjestmentQty}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="1" width="249" height="1" uuid="69fb74f5-3ffc-4e2c-8138-d10f8d845ab9"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+</jasperReport>

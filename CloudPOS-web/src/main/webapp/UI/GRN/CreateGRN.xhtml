@@ -1,0 +1,215 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <ui:insert name="title">WeBPOS - #{systemsHandler.current.header}</ui:insert>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form id="mainForm" target="_new">
+                        <p:growl id="messages" showDetail="true"/>  
+                        <h1><h:outputText value="Create GRN"/></h1>
+                        <h:panelGrid columns="6">
+                            <p:outputLabel value="CreditPeriod : " for="creditPeriod" />
+                            <p:inputText type="number" id="creditPeriod" value="#{gRNHandler.current.creditPeriod}" title="CreditPeriod" />
+                            <p:outputLabel  value="TotalAmount : " for="totalAmount" />
+                            <p:inputText type="number" id="totalAmount" value="#{gRNHandler.current.totalAmount}" title="TotalAmount" readonly="true" />
+
+                            <p:outputLabel value="GrnDate : " for="Date" />  
+                            <p:calendar required="true" id="Date" value="#{gRNHandler.current.grnDate}" pattern="#{sessionHandler.defaultDateFormat}" title="GRN Date">
+                                <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
+                            </p:calendar>
+
+
+                            <p:outputLabel  value="Grn No : " for="grnNo" />
+                            <p:inputText id="grnNo" required="true" requiredMessage="GRN Number is mising..!!"  value="#{gRNHandler.grnNumber}" title="GrnNo" readonly="#{systemsHandler.current.isGRNnumberAutoGenarated}" />
+                            <p:outputLabel value="Inv No : " for="invNo" />
+                            <p:inputText id="invNo" value="#{gRNHandler.current.invNo}" title="InvNo" />
+                            <p:outputLabel value="Location : " for="location" />
+
+                            <p:selectOneMenu id="location" value="#{gRNHandler.current.location}" label="Location " 
+                                             converter="#{locationConvertor}" required="true" >
+
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                                <p:ajax update="grnNo" /> 
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="PurchaseType : " for="purchaseType" />
+                            <p:selectOneMenu id="purchaseType" required="true" value="#{gRNHandler.current.purchaseType}" label="Purchase Type">
+                                <f:selectItem itemLabel="Select One"/>
+                                <f:selectItems value="#{purchaseTypeHandler.purchaseType}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Bill Type : " for="billType" />
+                            <p:selectOneMenu id="billType" required="true" value="#{gRNHandler.current.billStatus}" label="Bill Type">
+                                <f:selectItem itemLabel="Select One"/>
+                                <f:selectItems value="#{billStatusHandler.billStatus}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Supplier : " for="supplier" />
+                            <p:selectOneMenu id="supplier" required="true" value="#{gRNHandler.current.supplier}" label="Supplier" converter="#{supplierConvertor}">
+                                <f:selectItem itemLabel="Select One"/>
+                                <f:selectItems value="#{supplierHandler.allSuppliers()}"/>
+                            </p:selectOneMenu>
+
+
+                            <p:outputLabel value="Item : " for="acItem" />
+                            <p:autoComplete id="acItem" value="#{gRNHandler.currentDetails.grnItem}"   
+                                            completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}"  >
+                                <p:ajax event="itemSelect" listener="#{gRNHandler.handleSelect}" update="itemCost" />  
+                            </p:autoComplete>  
+                            <p:outputLabel value="Qty : " for="itemQty" />
+                            <p:inputText type="number" id="itemQty" title="Qty" value="#{gRNHandler.currentDetails.grnQty}" />
+
+                            <p:outputLabel value="Cost : " for="itemCost" />
+                            <p:inputText type="number" id="itemCost" title="Item Cost" value="#{gRNHandler.currentDetails.grnItemCost}" />
+
+                            <c:forEach begin="0" end="#{(gRNHandler.propList.size() - 1)}" var="a">
+                                <h:outputText value="#{gRNHandler.propList.get(a).propertyName}"/>
+                                <p:inputText value="#{gRNHandler.propList.get(a).propertyValue}" />
+                            </c:forEach> 
+
+                            <h:inputHidden/>
+                            <h:inputHidden/>
+                            <h:inputHidden/>
+                            <p:commandButton value="Add" action="#{gRNHandler.addItem()}" update="virtualList,totalAmount,acItem,itemQty,itemCost,:mainForm:messages"  /> 
+                            <p:commandButton ajax="false" value="Save" action="#{gRNHandler.addTEst()}" />
+                        </h:panelGrid>
+
+                        <br/>
+
+
+                        <p:dataTable  id="virtualList" editable="true" value="#{gRNHandler.virtualList}"
+                                      var="item" selection="#{gRNHandler.selectedGrnData}" selectionMode="single" 
+                                      rowKey="#{item.grnItem}">
+
+
+
+                            <p:ajax event="rowEdit" listener="#{gRNHandler.onEdit}" update=":mainForm:messages,:mainForm:totalAmount" />  
+                            <p:ajax event="rowEditCancel" listener="#{gRNHandler.onCancel}" update=":mainForm:messages,:mainForm:totalAmount" />  
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnItem"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnItem}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnItemCost"/>
+                                </f:facet>
+                                <p:cellEditor>  
+                                    <f:facet name="output">  
+                                        <h:outputText value="#{item.grnItemCost}" />  
+                                    </f:facet>  
+                                    <f:facet name="input">  
+                                        <p:inputText type="number" value="#{item.grnItemCost}" style="width:100%"/>  
+                                    </f:facet>  
+                                </p:cellEditor>
+
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnItemDiscountPerc"/>
+                                </f:facet>
+                                <p:cellEditor>  
+                                    <f:facet name="output">  
+                                        <h:outputText value="#{item.grnItemDiscountPerc}" />  
+                                    </f:facet>  
+                                    <f:facet name="input">  
+                                        <p:inputText type="number" value="#{item.grnItemDiscountPerc}" style="width:100%"/>  
+                                    </f:facet>  
+                                </p:cellEditor>
+
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Qty"/>
+                                </f:facet>
+                                <p:cellEditor>  
+                                    <f:facet name="output">  
+                                        <h:outputText  value="#{item.grnQty}" />  
+                                    </f:facet>  
+                                    <f:facet name="input">  
+                                        <p:inputText type="number" value="#{item.grnQty}" style="width:100%"/>  
+                                    </f:facet>  
+                                </p:cellEditor>
+                            </p:column>
+                            <f:facet name="footer">  
+                                <p:commandButton id="DeleteButton" value="Delete" icon="ui-icon-closethick"  
+                                                 onclick="confirmation.show()"/>  
+                            </f:facet>  
+
+                            <p:column headerText="Options" style="width:50px">  
+                                <p:rowEditor />  
+                            </p:column>  
+
+
+                        </p:dataTable>
+
+                        <p:confirmDialog id="confirmDialog" message="Are you sure about deleting item? "  
+                                         header="Are you sure ?" severity="alert" widgetVar="confirmation">  
+
+                            <p:commandButton id="confirm" value="Yes Sure" update=":mainForm:messages,:mainForm:totalAmount,virtualList" oncomplete="confirmation.hide()"  
+                                             actionListener="#{gRNHandler.removeSelectedItem}" />  
+                            <p:commandButton id="decline" value="Not Yet" onclick="confirmation.hide()" type="button" />   
+
+                        </p:confirmDialog>   
+
+                        <hr/>
+
+
+                        <p:layout style="min-width:400px;min-height:200px;">
+                            <p:layoutUnit position="west" resizable="true" size="200" minSize="200" maxSize="200">
+                                <h:panelGrid columns="1">
+                                    <p:outputLabel value="Amount:" for="cashAmount" />
+                                    <p:inputText type="number" id="cashAmount" value="#{gRNHandler.paymentDetails.cashAmount}" title="Cash Amount" />
+                                </h:panelGrid>
+                            </p:layoutUnit>
+                            <p:layoutUnit position="center" resizable="true" size="200" minSize="200" maxSize="200">
+                                <h:panelGrid columns="1">
+                                    <p:outputLabel value="Card Number : " for="cardNumber" />
+                                    <p:inputText id="cardNumber" value="#{gRNHandler.receivedCreditCardReceipts.cardNumber}" title="Card Number" />
+                                    <p:outputLabel value="Note : " for="note" />
+                                    <p:inputText id="note" value="#{gRNHandler.receivedCreditCardReceipts.note}" title="Note" />
+                                    <p:outputLabel value="Amount : " for="amount" />
+                                    <p:inputText type="number" id="amount" value="#{gRNHandler.receivedCreditCardReceipts.amount}" title="Amount" />
+                                    <p:outputLabel value="Terminal : " for="relatedTerminal" />
+                                    <p:selectOneMenu id="relatedTerminal" value="#{gRNHandler.receivedCreditCardReceipts.relatedTerminal}" converter="#{creditCardTerminalConvertor}" label="Terminal" >
+                                        <f:selectItem itemLabel="Select One" />  
+                                        <f:selectItems value="#{creditCardTerminalHandler.list}"/>
+                                    </p:selectOneMenu>
+
+                                </h:panelGrid>
+                            </p:layoutUnit>
+                            <p:layoutUnit position="east" resizable="true" size="200" minSize="200" maxSize="200">
+                                <p:panelGrid columns="1">
+                                    <p:outputLabel value="Cheque Number : " for="chequeNumber" />
+                                    <p:inputText id="chequeNumber" value="#{gRNHandler.receivedCheque.chequeNumber}"  title="Cheque Number" />
+                                    <p:outputLabel value="Cheque Note : " for="chequeNote" />
+                                    <p:inputText id="chequeNote" value="#{gRNHandler.receivedCheque.chequeNote}" title="Cheque Note" />
+                                    <p:outputLabel value="Cheque Date : " for="chequeDate" />
+                                    <p:calendar id="chequeDate" value="#{gRNHandler.receivedCheque.chequeDate}" pattern="#{sessionHandler.defaultDateFormat}" title="Cheque Date">
+                                        <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
+                                    </p:calendar>
+                                    <p:outputLabel value="Cheque Amount : " for="chequeAmount" />
+                                    <p:inputText type="number" id="chequeAmount" value="#{gRNHandler.receivedCheque.chequeAmount}" title="Cheque Amount" />
+                                </p:panelGrid>
+                            </p:layoutUnit>
+                        </p:layout>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

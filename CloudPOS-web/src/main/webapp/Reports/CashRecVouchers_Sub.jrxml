@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CashRecVouchers_Sub" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a0604f15-2012-488c-b165-3a26119535cb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="receiptAmount" class="java.lang.Double">
+		<fieldDescription><![CDATA[receiptAmount]]></fieldDescription>
+	</field>
+	<field name="receiptDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[receiptDescription]]></fieldDescription>
+	</field>
+	<field name="receiptNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[receiptNumber]]></fieldDescription>
+	</field>
+	<field name="receiptRefNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[receiptRefNumber]]></fieldDescription>
+	</field>
+	<field name="relatedSupplier" class="com.AlphaDevs.cloud.web.Entities.Supplier">
+		<fieldDescription><![CDATA[relatedSupplier]]></fieldDescription>
+	</field>
+	<variable name="receiptAmount_1" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{receiptAmount}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="35" width="80" height="14" uuid="2ab4222a-2beb-42cc-a2b0-205410fb4d7e"/>
+				<text><![CDATA[Sup/Cust]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="35" width="82" height="14" uuid="8db3e6fc-c746-4990-af98-8c63d8958206"/>
+				<text><![CDATA[Receipt Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="35" width="89" height="14" uuid="a33a73f0-b622-46a1-bdba-21227d7e2645"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="18" width="250" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="19aa3ad4-9a6e-4fe4-930a-ec84dcf25b47"/>
+				<textElement>
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Cash Received Vouchers  ( Cust/Sup )]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="80" height="15" uuid="2ed5740b-bea6-46f5-8555-220007669e8c"/>
+				<textFieldExpression><![CDATA[""+$F{relatedSupplier}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="82" height="15" uuid="bac014ed-8659-40c8-830e-eb89a3ec3f2e"/>
+				<textFieldExpression><![CDATA[$F{receiptNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="0" width="89" height="15" uuid="974e85da-19b3-4f4a-ab22-a52cf79674e4"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{receiptAmount}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="1" width="251" height="1" uuid="44e7981f-4ec4-486e-ade9-2d621c443738"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="1" width="251" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="93206cac-1b86-44e3-82bf-dcb213cc2701"/>
+				<textElement>
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Cash Payment Vouchers  ( Cust/Sup )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="251" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="8441d40d-d341-4f5b-a611-379e2bf584a0"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="162" y="0" width="89" height="16" uuid="5656733b-90cb-44eb-a5cb-0865a5277a90"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{receiptAmount_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

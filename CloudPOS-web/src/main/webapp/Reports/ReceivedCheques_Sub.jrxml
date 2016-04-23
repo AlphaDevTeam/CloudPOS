@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceivedCheques_Sub" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="dfe0fff9-80e7-49f2-b5c6-7a4c2ba32e62">
+	<property name="ireport.zoom" value="2.5937424601000023"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="chequeAmount" class="java.lang.Double">
+		<fieldDescription><![CDATA[chequeAmount]]></fieldDescription>
+	</field>
+	<field name="chequeNote" class="java.lang.String">
+		<fieldDescription><![CDATA[chequeNote]]></fieldDescription>
+	</field>
+	<field name="chequeNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[chequeNumber]]></fieldDescription>
+	</field>
+	<field name="relatedBankAccount" class="com.AlphaDevs.cloud.web.Entities.BankAccounts">
+		<fieldDescription><![CDATA[relatedBankAccount]]></fieldDescription>
+	</field>
+	<variable name="ChequeDetails" class="java.lang.String">
+		<variableExpression><![CDATA[$F{relatedBankAccount} + " - " + $F{chequeNote} ]]></variableExpression>
+	</variable>
+	<variable name="chequeAmount_1" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{chequeAmount}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="13" width="250" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="3a54a8f5-7042-4615-9352-e6593c76cf68"/>
+				<textElement>
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Received Cheques]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="29" width="77" height="15" uuid="25568f48-a3a0-4c1c-ae46-9fd0934cc2c7"/>
+				<text><![CDATA[Cheque Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="29" width="70" height="15" uuid="3e86ec70-b509-45a3-a014-f13ebab59600"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="87" y="29" width="93" height="15" uuid="f238bed0-b16d-4467-9187-7e78aa21129b"/>
+				<text><![CDATA[Cheque Details]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="1" width="250" height="1" uuid="17854a28-06b9-4291-82d9-56a5c5057c36"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="4" width="77" height="15" uuid="4de7aeba-d5be-4e4d-88d7-417d63b7565d"/>
+				<textFieldExpression><![CDATA[$F{chequeNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="4" width="70" height="15" uuid="ea09a5cc-e7d1-4869-b675-ff48ffda1af7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{chequeAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="87" y="4" width="93" height="15" uuid="b11f6906-e534-4cc4-8f04-be67e344f1a2"/>
+				<textFieldExpression><![CDATA[$V{ChequeDetails}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="250" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="136048b8-111d-4272-abb4-caf5b3db3d3a"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="180" y="0" width="70" height="16" uuid="024521ed-448e-49cc-b14f-28fa971f5cb1"/>
+				<box>
+					<topPen lineWidth="1.25" lineStyle="Double"/>
+					<bottomPen lineWidth="2.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{chequeAmount_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

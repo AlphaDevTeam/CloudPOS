@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <ui:insert name="title"> Title</ui:insert>
+    </h:head>
+    <h:body>
+        
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="GRN List"/></h1>
+                        <p:dataTable id="GrnList" value="#{gRNHandler.grnList}" var="item" paginator="true" lazy="true" rows="5" >
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <p:commandLink value="#{item.id}" action="#{gRNHandler.preapareList(item)}"  update=":formDet:GrnDetails"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="CreditPeriod"/>
+                                </f:facet>
+                                <h:outputText value="#{item.creditPeriod}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="TotalAmount"/>
+                                </f:facet>
+                                <h:outputText value="#{item.totalAmount}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnDate"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnDate}">
+                                    <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnNo"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnNo}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="InvNo"/>
+                                </f:facet>
+                                <h:outputText value="#{item.invNo}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Location"/>
+                                </f:facet>
+                                <h:outputText value="#{item.location}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="PurchaseType"/>
+                                </f:facet>
+                                <h:outputText value="#{item.purchaseType}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Supplier"/>
+                                </f:facet>
+                                <h:outputText value="#{item.supplier}"/>
+                            </p:column>
+<p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Logger"/>
+                                </f:facet>
+                                <h:outputText id ="Logger" value="#{ stringHelper.convertToUppercase(item.logger.user.userName)}(#{stringHelper.convertToUppercase(item.logger.terminal.terminalName)})"/>
+                                <p:overlayPanel appendToBody="true" id="LoggerPanel2" for="Logger" showEvent="mouseover" hideEvent="mouseout">
+                                    <p:panelGrid columns="2">  
+                                        <f:facet name="header">Logger Details</f:facet>  
+
+                                        <p:outputLabel value="USER : " />  
+                                        <p:outputLabel value="#{stringHelper.convertToUppercase(item.logger.user.userName)}" />
+
+                                        <p:outputLabel value="TERMINAL : " />  
+                                        <p:outputLabel value="#{stringHelper.convertToUppercase(item.logger.terminal.terminalName)}" />
+
+                                        <p:outputLabel value="TIMESTAMP : " />  
+                                        <p:outputLabel value="#{item.logger.trnTimeStamp}" />
+                                        
+                                        <p:outputLabel value="IP Address : " />  
+                                        <p:outputLabel value="#{item.logger.terminal.terminalIP}" />
+
+                                    </p:panelGrid>  
+                                </p:overlayPanel>  
+                            </p:column>
+                            
+
+                        </p:dataTable>
+
+                    </h:form>
+                </f:view>
+
+                <hr/>
+                <f:view>
+                    <h:form id="formDet" target="_new">
+                        <h1><h:outputText value="GRN Details"/></h1>
+                        <p:dataTable id="GrnDetails" value="#{gRNHandler.specificGrnList}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="RelatedGRN"/>
+                                </f:facet>
+                                <h:outputText value="#{item.relatedGRN}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnItem"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnItem}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnItemCost"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnItemCost}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnItemDiscountPerc"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnItemDiscountPerc}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnQty"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnQty}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                        <h:commandButton value="Print " action="#{gRNHandler.rePrintGRN()}"/>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+              
+        
+
+    </h:body>
+</html>
+

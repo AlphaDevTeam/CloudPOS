@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form id="mainForm">
+                        <h1><h:outputText value="Custom Email Configuration"/></h1>
+                        <p:growl id="messages"/>
+                        <h:panelGrid columns="2" id="panel">
+                            <h:outputLabel value="Sender Email : " for="fromEmailAddress" />
+                            <h:inputText id="fromEmailAddress" value="#{customEmailSettingsHandler.current.fromEmailAddress}" title="Sender Email" required="true"/>
+                            
+                            <h:outputLabel value="Email Password : " for="fromEmailPassword" />
+                            <h:inputText id="fromEmailPassword" value="#{customEmailSettingsHandler.current.fromEmailPassword}" title="Email Password" required="true" />
+                            
+                            <h:outputLabel value="Message Body : " for="messageBody" />
+                            <h:inputText id="messageBody" value="#{customEmailSettingsHandler.current.messageBody}" title="Message Body" />
+                            <h:outputLabel value="Email Subject : " for="emailSubject" />
+                            <h:inputText id="emailSubject" value="#{customEmailSettingsHandler.current.emailSubject}" title="Email Subject" />
+                            <h:outputLabel value="SMTP Server : " for="smtpServer" />
+                            <h:inputText id="smtpServer" value="#{customEmailSettingsHandler.current.smtpServer}" title="SMTP Server" />
+                           
+                            <h:outputLabel value="Location : " for="location" />
+                            <p:selectOneMenu id="location" value="#{customEmailSettingsHandler.current.relatedLocation}" label="Location " converter="#{locationConvertor}" >
+                                <f:selectItem itemLabel="Select One" itemValue="#{customEmailSettingsHandler.current.relatedLocation}" />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                            </p:selectOneMenu>
+                            <hr/><hr/>
+                            <h:outputLabel value="Email Name : " for="emailName" />
+                            <h:inputText id="emailName" value="#{customEmailSettingsHandler.emailName}" title="Email Name" />
+                            
+                            <h:outputLabel value="Email Address : " for="toEmailAddress" />
+                            <h:inputText id="toEmailAddress" value="#{customEmailSettingsHandler.emailAddress}" title="Email Address" />
+                            
+                            <h:outputLabel value="Attachment Prefix : " for="attachmentPrefix" />
+                            <h:inputText id="attachmentPrefix" value="#{customEmailSettingsHandler.current.attachmentPrefix}" title="Attachment Prefix" />
+
+                            <p:commandButton value="Add" action="#{customEmailSettingsHandler.addEmailToList()}" update="virtualList,panel,:mainForm:messages" />
+                        </h:panelGrid>
+                        
+                        <br/>
+                        <p:dataTable id="virtualList" paginator="true"  editable="true" value="#{customEmailSettingsHandler.virtualList}" var="item" selection="#{customEmailSettingsHandler.selectedEmail}" selectionMode="single" rowKey="#{item.name}">
+                                <p:ajax event="rowEdit" listener="#{customEmailSettingsHandler.onEdit}" update="virtualList,:mainForm:messages" />  
+                                <p:ajax event="rowEditCancel" listener="#{customEmailSettingsHandler.onCancel}" update="virtualList,:mainForm:messages" />  
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Name"/>
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{item.name}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText value="#{item.name}" style="width:100%"/>  
+                                            </f:facet>  
+                                        </p:cellEditor>
+
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Email"/>
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{item.emailAddress}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText value="#{item.emailAddress}" style="width:100%"/>  
+                                            </f:facet>  
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <f:facet name="footer">  
+                                        <p:commandButton id="DeleteButton" value="Delete" icon="ui-icon-closethick"  
+                                                          onclick="confirmation.show()"/>  
+                                    </f:facet>  
+
+                                    <p:column headerText="Options" style="width:50px">  
+                                        <p:rowEditor />  
+                                    </p:column>  
+
+
+                                </p:dataTable>
+                        <br/>
+                        <p:commandButton value="Save" action="#{customEmailSettingsHandler.createCusomEmailSetting()}" update="virtualList,panel,:mainForm:messages" />
+                                <p:confirmDialog id="confirmDialog" message="Are you sure about deleting item? "  header="Are you sure ?" severity="alert" widgetVar="confirmation">  
+
+                                        <p:commandButton id="confirm" value="Yes Sure" update="virtualList" oncomplete="confirmation.hide()"  
+                                                         actionListener="#{customEmailSettingsHandler.removeSelectedItem}" />  
+                                        <p:commandButton id="decline" value="Not Yet" onclick="confirmation.hide()" type="button" />   
+
+                               </p:confirmDialog>  
+                        
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

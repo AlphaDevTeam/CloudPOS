@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:body>
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                   <f:view>
+                    <h:form id="mainForm">
+                        <p:growl id="messages" showDetail="true"/>  
+                        <h1><h:outputText value="Create A Bank"/></h1>
+                        <h:panelGrid columns="2" id="panel">
+                            <p:outputLabel value="Bank Code : " for="bankCode" />
+                            <p:inputText id="bankCode" value="#{bankHandler.current.bankCode}" title="BankCode"/>
+                            <p:outputLabel value="Bank Name : " for="bankName" />
+                            <p:inputText id="bankName" value="#{bankHandler.current.bankName}" title="BankName"/>
+                            <p:commandButton value="Add" action="#{bankHandler.addBank()}" update="virtualList,panel,:mainForm:messages" />
+                        </h:panelGrid>
+                        <br/>
+                        <p:dataTable id="virtualList" paginator="true"  editable="true" value="#{bankHandler.virtualList}" var="item" selection="#{bankHandler.selectedBank}" selectionMode="single" rowKey="#{item.bankCode}">
+                            <p:ajax event="rowEdit" listener="#{bankHandler.onEdit}" update="virtualList,:mainForm:messages" />  
+                            <p:ajax event="rowEditCancel" listener="#{bankHandler.onCancel}" update="virtualList,:mainForm:messages" />  
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Bank Code"/>
+                                    </f:facet>
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{item.bankCode}" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText value="#{item.bankCode}" style="width:100%"/>  
+                                        </f:facet>  
+                                    </p:cellEditor>
+
+                                </p:column>
+                                <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Bank Name"/>
+                                        </f:facet>
+                                        <p:cellEditor>  
+                                            <f:facet name="output">  
+                                                <h:outputText value="#{item.bankName}" />  
+                                            </f:facet>  
+                                            <f:facet name="input">  
+                                                <p:inputText value="#{item.bankName}" style="width:100%"/>  
+                                            </f:facet>  
+                                        </p:cellEditor>
+
+                                 </p:column>
+                                
+                                <f:facet name="footer">  
+                                    <p:commandButton id="DeleteButton" value="Delete" icon="ui-icon-closethick"  
+                                                      onclick="confirmation.show()"/>  
+                                </f:facet>  
+
+                                <p:column headerText="Options" style="width:50px">  
+                                    <p:rowEditor />  
+                                </p:column>  
+
+
+                            </p:dataTable>
+                        <br/>
+                            <p:commandButton value="Save" action="#{bankHandler.saveList()}" update="virtualList,panel,:mainForm:messages" />
+                            <p:confirmDialog id="confirmDialog" message="Are you sure about deleting item? "  header="Are you sure ?" severity="alert" widgetVar="confirmation">  
+
+                                    <p:commandButton id="confirm" value="Yes Sure" update="virtualList" oncomplete="confirmation.hide()"  
+                                                     actionListener="#{bankHandler.removeSelectedItem}" />  
+                                    <p:commandButton id="decline" value="Not Yet" onclick="confirmation.hide()" type="button" />   
+
+                           </p:confirmDialog>   
+                        
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

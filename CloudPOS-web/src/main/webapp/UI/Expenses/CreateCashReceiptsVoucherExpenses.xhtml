@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Create Cash Receipts - Expenses"/></h1>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Receipt Number : " for="receiptNumber" />
+                            <p:inputText id="receiptNumber" value="#{cashReceiptsVoucherExpensesHandler.receiptNumber}" readonly="true" title="ReceiptNumber" required="true"/>
+                            <p:outputLabel value="Ref Number : " for="receiptRefNumber" />
+                            <p:inputText id="receiptRefNumber" value="#{cashReceiptsVoucherExpensesHandler.current.receiptRefNumber}" title="ReceiptRefNumber" required="true" />
+                            <p:outputLabel value="Date : " for="Date" />  
+                            <p:calendar id="Date" value="#{cashReceiptsVoucherExpensesHandler.current.receiptDate}" pattern="#{sessionHandler.defaultDateFormat}" title="Date" required="true">
+                                 <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
+                            </p:calendar>
+                            <p:outputLabel value="Description : " for="receiptDescription" />
+                            <p:inputText id="receiptDescription" value="#{cashReceiptsVoucherExpensesHandler.current.receiptDescription}" title="ReceiptDescription" required="true"/>
+                            <p:outputLabel value="Amount : " for="receiptAmount" />
+                            <p:inputText type="number" id="receiptAmount" value="#{cashReceiptsVoucherExpensesHandler.current.receiptAmount}" title="ReceiptAmount" required="true"/>
+                            <p:outputLabel value="Location : " for="itemLocation" />
+                            <p:selectOneMenu id="itemLocation" value="#{cashReceiptsVoucherExpensesHandler.current.receiptLocation}" label="Location" converter="#{locationConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                                <p:ajax update="receiptNumber"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Expense : " for="relatedExpenses" />
+                            <p:selectOneMenu id="relatedExpenses" value="#{cashReceiptsVoucherExpensesHandler.current.relatedExpenses}" label="RelatedExpenses" converter="#{expensesConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{expensesHandler.list}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton value="Save" action="#{cashReceiptsVoucherExpensesHandler.createReceipt()}"/>
+                           
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

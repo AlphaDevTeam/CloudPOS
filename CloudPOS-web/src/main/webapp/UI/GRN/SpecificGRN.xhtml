@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+
+
+                    <h:form>
+                        <h1><h:outputText value="View"/></h1>
+                        <p:panelGrid columns="10">
+                            <h:outputText value="SettledAmount:"/>
+                            <h:outputText value="#{gRNHandler.current.settledAmount}" title="SettledAmount" style="color: #D20005; background-color: lightblue"/>
+                            <h:outputText value="CreditPeriod:"/>
+                            <h:outputText value="#{gRNHandler.current.creditPeriod}" title="CreditPeriod" style="background-color: lightblue"/>
+                            <h:outputText value="TotalAmount:"/>
+                            <h:outputText value="#{gRNHandler.current.totalAmount}" title="TotalAmount" style="background-color: lightblue"/>
+                            <h:outputText value="BillStatus:"/>
+                            <h:outputText value="#{gRNHandler.current.billStatus}" title="BillStatus" style="background-color: lightblue"/>
+                            <h:outputText value="GrnDate:"/>
+                            <h:outputText value="#{gRNHandler.current.grnDate}" title="GrnDate" style="background-color: lightblue">
+                                <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />
+                            </h:outputText>
+                            <h:outputText value="GrnNo:"/>
+                            <h:outputText value="#{gRNHandler.current.grnNo}" title="GrnNo" style="background-color: lightblue"/>
+                            <h:outputText value="InvNo:"/>
+                            <h:outputText value="#{gRNHandler.current.invNo}" title="InvNo" style="background-color: lightblue"/>
+                            <h:outputText value="Location:"/>
+                            <h:outputText value="#{gRNHandler.current.location}" title="Location" style="background-color: lightblue"/>
+                            <h:outputText value="PurchaseType:"/>
+                            <h:outputText value="#{gRNHandler.current.purchaseType}" title="PurchaseType" style="background-color: lightblue"/>
+                            <h:outputText value="Supplier:"/>
+                            <h:outputText value="#{gRNHandler.current.supplier}" title="Supplier" style="background-color: lightblue"/>
+                        </p:panelGrid>
+                    </h:form>
+                </f:view>
+                
+                <f:view>
+                    <h:form id="formDet" target="_new">
+                        <h1><h:outputText value="GRN Details"/></h1>
+                        <p:dataTable id="GrnDetails" value="#{gRNHandler.specificGrnList}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="RelatedGRN"/>
+                                </f:facet>
+                                <h:outputText value="#{item.relatedGRN}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnItem"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnItem}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnItemCost"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnItemCost}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnItemDiscountPerc"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnItemDiscountPerc}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnQty"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnQty}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                        <h:commandButton value="Print " action="#{gRNHandler.rePrintGRN()}"/>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

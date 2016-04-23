@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <ui:insert name="title">WeBPOS - #{systemsHandler.current.header}</ui:insert>
+        <h:outputStylesheet name="./css/InvoiceUI.css"/>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"></link>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </h:head>
+    <h:body>
+
+        <h:panelGroup layout="block" class="T_Header">
+            <table border="0" class="head_table">
+
+                <tbody>
+                    <tr>                            
+                        <td style="width: 75px;"> <p:graphicImage name="Images/AlphaLogoBlack.jpg" height="60" width="75"/> </td>
+                        <td style="width: 1000px; "> <p:outputLabel  value="Alpha Development Team - WEB POS Beta V1"/> </td>
+
+                        <td style="width: 65px;"> <h:graphicImage name="Images/user.jpg" width="50" height="50" /></td>
+                        <td>   
+                            <p:outputLabel value="Loged User : " rendered="#{empty sessionHandler.sessionUser.userName ? false : true }"/>
+                            <p:outputLabel value="#{stringHelper.convertToUppercase(sessionHandler.sessionUser.userName)}" style="color: #e33b06;"/>
+                            <p:outputLabel value="#{empty sessionHandler.sessionUser.userName ? infoGrabber.logoutUser : asd}" rendered="false"  /><br/>
+                            <p:outputLabel value="Company : " rendered="#{empty sessionHandler.sessionUser.associatedCompany.companyName ? false : true }" style="margin-top: 10px;" />
+                            <p:outputLabel value="#{sessionHandler.sessionUser.associatedCompany.companyName}" style="color: #e33b06;"/>
+
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="T_Content">
+            <h:panelGroup layout="block" class="T_Functions">             
+
+                <button id="asterisk" type="button" class="btn btn-success"> <span class="glyphicon glyphicon-asterisk"></span> </button>
+                <button id="trash" type="button" class="btn btn-success"><span class="glyphicon glyphicon-trash"></span></button>
+                <button id="download" type="button" class="btn btn-success"><span class="glyphicon glyphicon-download"></span> </button>
+                <button id="Total" type="button" class="btn btn-success">TOTAL</button>
+                <button id="Browse" type="button" class="btn btn-success">BROWSE</button>
+                <button id="Search" type="button" class="btn btn-success">SEARCH</button>
+                <button id="Scan" type="button" class="btn btn-success">SCAN</button>
+                <button id="Edit" type="button" class="btn btn-success">EDIT</button>
+
+
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="T_table">
+                <h:form id="mainForm">
+                    <h:panelGroup layout="block" class="T_invoice">
+                        <p:dataTable style="width: 670px;float: left;padding-right: 0px;"  id="virtualList" editable="true" value="#{invoiceHandler.virtualList}" var="item" selection="#{invoiceHandler.selectedInvoiceDetails}" selectionMode="single" rowKey="#{item.item}">
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Invoice Item"/>
+                                </f:facet>
+                                <h:outputText value="#{item.item}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Unit Price"/>
+                                </f:facet>
+                                <p:cellEditor>  
+                                    <f:facet name="output">  
+                                        <h:outputText value="#{item.price}" />  
+                                    </f:facet>  
+                                    <f:facet name="input">  
+                                        <p:inputText value="#{item.price}" style="width:100%"/>  
+                                    </f:facet>  
+                                </p:cellEditor>
+
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Qty"/>
+                                </f:facet>
+                                <p:cellEditor>  
+                                    <f:facet name="output">  
+                                        <h:outputText value="#{item.itemQty}" />  
+                                    </f:facet>  
+                                    <f:facet name="input">  
+                                        <p:inputText value="#{item.itemQty}" style="width:100%"/>  
+                                    </f:facet>  
+                                </p:cellEditor>
+
+                            </p:column>
+
+                            <f:facet name="footer">  
+                                <p:commandButton id="DeleteButton" value="Delete" icon="ui-icon-closethick"  
+                                                 onclick="confirmation.show()"/>  
+                            </f:facet>  
+
+                            <p:column headerText="Options">  
+                                <p:rowEditor />  
+                            </p:column>  
+
+
+                        </p:dataTable>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" class="T_cmy_Logo"> 
+                        <h:form id="products"> 
+                            <c:forEach var="prds" items="#{productHandler.list}">
+                                <p:commandButton style="margin-left: 5px;margin-top: 5px;" class="btn btn-primary" value="#{prds.productDescription}" action="#{designHandler.getDesignlist(prds.id)}">
+                                 <f:ajax execute="@form" render="designs" />
+                                </p:commandButton>
+                            </c:forEach>
+                        </h:form> 
+                        
+                        <h:form id="designs">                            
+                            <c:forEach  var="item" items="#{designHandler.designList}">
+                                <p:commandButton style="margin-left: 5px;margin-top: 5px;" class="btn btn-primary" value="#{item.description}"   />
+                            </c:forEach>
+                        </h:form>
+                        
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="T_data">
+
+                <h:panelGroup layout="block" class="T_date_Time">
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="T_num_Pad">
+                    <table class="num_pad_Table" border="0">
+
+                        <tbody>
+                            <tr>
+                                <td id="cell_1"><h:panelGroup layout="block" id="B1"></h:panelGroup></td>
+                                <td id="cell_2"><button id="B2" type="button" class="btn btn-success"></button></td>
+                                <td id="cell_3"><button id="B3" type="button" class="btn btn-success"><span class="glyphicon glyphicon-remove-sign"></span></button></td>
+                            </tr>
+                            <tr>
+                                <td id="cell_1"><h:panelGroup layout="block" id="B4"></h:panelGroup></td>
+                                <td id="cell_2">
+                                    <button style="background-color: #AFAFAF; " id="B5" type="button" class="btn btn-success">/</button>
+                                    <button style="background-color: #AFAFAF; " id="B6" type="button" class="btn btn-success">*</button>
+                                    <button style="background-color: #AFAFAF; " id="B7" type="button" class="btn btn-success">%</button>
+                                </td>
+                                <td id="cell_3">
+                                    <button id="B8" type="button" class="btn btn-success">-</button>
+                                    <button id="B9" type="button" class="btn btn-success">+</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td id="cell_1"><button onmouseover="this.opacity:0.75" id="B10" type="button" class="btn btn-success">UPC CODE</button></td>
+                                <td id="cell_2">
+                                    <button id="B11" type="button" class="btn btn-success">7</button>
+                                    <button id="B12" type="button" class="btn btn-success">8</button>
+                                    <button id="B13" type="button" class="btn btn-success">9</button>
+                                </td>
+                                <td id="cell_3">
+                                    <button id="B14" type="button" class="btn btn-success">QUANTITY</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="cell_1"><h:panelGroup layout="block" id="B10"></h:panelGroup></td>
+                                <td id="cell_2">
+                                    <button id="B11" type="button" class="btn btn-success">4</button>
+                                    <button id="B12" type="button" class="btn btn-success">5</button>
+                                    <button id="B13" type="button" class="btn btn-success">6</button>
+                                </td>
+                                <td id="cell_3">
+                                    <button id="B14" type="button" class="btn btn-success">PRICE</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="cell_1"><h:panelGroup layout="block" id="B10"></h:panelGroup></td>
+                                <td id="cell_2">
+                                    <button id="B11" type="button" class="btn btn-success">1</button>
+                                    <button id="B12" type="button" class="btn btn-success">2</button>
+                                    <button id="B13" type="button" class="btn btn-success">3</button>
+                                </td>
+                                <td id="cell_3">
+                                    <button id="B14" type="button" class="btn btn-success">DISCOUNT</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="cell_1"><h:panelGroup layout="block" id="B10"></h:panelGroup></td>
+                                <td id="cell_2">
+                                    <button id="B15" type="button" class="btn btn-success">0</button>
+                                    <button id="B16" type="button" class="btn btn-success">.</button>
+
+                                </td>
+                                <td id="cell_3">
+                                    <button id="B14" type="button" class="btn btn-success"> <span class="glyphicon glyphicon-ok-sign"></span></button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </h:panelGroup>
+
+            </h:panelGroup>
+
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="T_Conetent_2">
+            <h:panelGroup layout="block" id="Final_Line">
+                <marquee>  <i>Powered by Alpha Development Team (Pvt) Ltd </i></marquee>
+            </h:panelGroup>
+        </h:panelGroup>
+
+    </h:body>
+</html>
+

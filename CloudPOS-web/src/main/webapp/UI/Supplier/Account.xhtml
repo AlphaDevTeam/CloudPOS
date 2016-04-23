@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <ui:insert name="title">WeBPOS - #{systemsHandler.current.header}</ui:insert>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Supplier / Customer Account"/></h1>
+                        <h:panelGrid  columns="7">
+                            <p:outputLabel value="Supplier : " for="Customer"/>
+                            <p:selectOneMenu required="true" id="Customer" value="#{customerTransactionHandler.current.supplier}" label="Customer" converter="#{supplierConvertor}" >
+                                <f:selectItem itemLabel="Select One"  /> 
+                                <f:selectItems value="#{supplierHandler.allSuppliers()}"  />
+                                <p:ajax partialSubmit="true" update="accountTable" /> 
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="From : " for="fromDate"/>
+                            <p:calendar id="fromDate" value="#{customerTransactionHandler.fromDate}" pattern="#{systemsHandler.current.dateTimeformat}" title="Date">
+                                <f:convertDateTime type="date" pattern="#{systemsHandler.current.dateTimeformat}" />  
+                                <p:ajax partialSubmit="true" update="accountTable" /> 
+                            </p:calendar>
+
+                            <p:outputLabel value="To : " for="toDate"/>
+                            <p:calendar id="toDate" value="#{customerTransactionHandler.toDate}" pattern="#{systemsHandler.current.dateTimeformat}" title="Date">
+                                <f:convertDateTime type="date" pattern="#{systemsHandler.current.dateTimeformat}" /> 
+                                <p:ajax partialSubmit="true" update="accountTable" /> 
+                            </p:calendar>
+                            <p:commandButton update="accountTable" value="Load" action="#{customerTransactionHandler.initCustomerAccount()}"/>
+                        </h:panelGrid>
+                        <br/>
+                        <p:dataTable id="accountTable" paginator="true" rows="15"   value="#{customerTransactionHandler.findSuppliersInTimePeriod}" var="item">
+
+                            <p:column rendered="false">
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Supplier"/>
+                                </f:facet>
+                                <h:outputText value="#{item.supplier}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header">
+                                    <h:outputText value="Date"/>
+                                </f:facet>
+                                <h:outputText value="#{item.date}">
+                                    <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Description"/>
+                                </f:facet>
+                                <h:outputText value="#{item.description}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="CR"/>
+                                </f:facet>
+                                <h:outputText value="#{item.CR}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="DR"/>
+                                </f:facet>
+                                <h:outputText value="#{item.DR}"/>
+                            </p:column>    
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Balance"/>
+                                </f:facet>
+                                <h:outputText value="#{item.balance}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Logger"/>
+                                </f:facet>
+                                <h:outputText id ="Logger" value="#{ stringHelper.convertToUppercase(item.logger.user.userName)}(#{stringHelper.convertToUppercase(item.logger.terminal.terminalName)})"/>
+                                <p:overlayPanel appendToBody="true" id="LoggerPanel2" for="Logger" showEvent="mouseover" hideEvent="mouseout">
+                                    <p:panelGrid columns="2">  
+                                        <f:facet name="header">Logger Details</f:facet>  
+
+                                        <p:outputLabel value="USER : " />  
+                                        <p:outputLabel value="#{stringHelper.convertToUppercase(item.logger.user.userName)}" />
+
+                                        <p:outputLabel value="TERMINAL : " />  
+                                        <p:outputLabel value="#{stringHelper.convertToUppercase(item.logger.terminal.terminalName)}" />
+
+                                        <p:outputLabel value="TIMESTAMP : " />  
+                                        <p:outputLabel value="#{item.logger.trnTimeStamp}" />
+                                        
+                                        <p:outputLabel value="IP Address : " />  
+                                        <p:outputLabel value="#{item.logger.terminal.terminalIP}" />
+
+                                    </p:panelGrid>  
+                                </p:overlayPanel>  
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:panel header="Export All Data">  
+                            <p:commandButton  ajax="false"  value="XLS">  
+                                <p:dataExporter type="xls" target="accountTable" fileName="accountTableXLS" />  
+                            </p:commandButton>  
+                            <p:commandButton  ajax="false" value="PDF">  
+                                <p:dataExporter type="pdf" target="accountTable" fileName="accountTablePDF" />  
+                            </p:commandButton>  
+                            <p:commandButton  ajax="false" value="XML">  
+                                <p:dataExporter type="xml" target="accountTable" fileName="accountTableXML" />  
+                            </p:commandButton>  
+                            <p:commandButton  ajax="false" value="CSV">  
+                                <p:dataExporter type="csv" target="accountTable" fileName="accountTableCSV" />  
+                            </p:commandButton>  
+
+                        </p:panel>  
+
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+
+
+    </h:body>
+</html>
+

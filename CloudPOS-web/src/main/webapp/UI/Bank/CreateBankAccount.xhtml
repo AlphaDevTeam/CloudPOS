@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                
+                <f:view>
+                    <h:form>
+                        <p:growl id="messages" showDetail="true"/>  
+                        <h1><h:outputText value="Create Bank Accounts"/></h1>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Account Code : " for="accountCode" />
+                            <p:inputText id="accountCode" value="#{bankAccountsHandler.current.accountCode}" title="Account Code" required="true" />
+                            <p:outputLabel value="Account Name : " for="accountName" />
+                            <p:inputText id="accountName" value="#{bankAccountsHandler.current.accountName}" title="Account Name" required="true" />
+                            <p:outputLabel value="Account Number : " for="accountNumber" />
+                            <p:inputText id="accountNumber" value="#{bankAccountsHandler.current.accountNumber}" title="Account Number" required="true" />
+                           
+                            <p:outputLabel value="Related Branch : " for="relatedBranch" />
+                            <p:selectOneMenu id="relatedBranch" value="#{bankAccountsHandler.current.relatedBranch}" label="Related Branch" converter="#{bankBranchConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One"  />  
+                                <f:selectItems value="#{bankBranchHandler.list}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Related Location:" for="relatedLocation" />
+                            <p:selectOneMenu id="relatedLocation" value="#{bankAccountsHandler.current.relatedLocation}" label="Related Location" converter="#{locationConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One"  />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton value="Save" action="#{bankAccountsHandler.persistBankAccount()}" update="messages"/>
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

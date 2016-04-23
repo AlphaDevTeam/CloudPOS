@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CashPayVouchers_Sub" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ffb879ee-4b63-4189-9a2b-1cc71f2c9aef">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="paymentAmount" class="java.lang.Double">
+		<fieldDescription><![CDATA[paymentAmount]]></fieldDescription>
+	</field>
+	<field name="paymentDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[paymentDescription]]></fieldDescription>
+	</field>
+	<field name="paymentLocation" class="com.AlphaDevs.cloud.web.Entities.Location">
+		<fieldDescription><![CDATA[paymentLocation]]></fieldDescription>
+	</field>
+	<field name="paymentNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[paymentNumber]]></fieldDescription>
+	</field>
+	<field name="paymentRefNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[paymentRefNumber]]></fieldDescription>
+	</field>
+	<field name="relatedSupplier" class="com.AlphaDevs.cloud.web.Entities.Supplier">
+		<fieldDescription><![CDATA[relatedSupplier]]></fieldDescription>
+	</field>
+	<field name="firstName" class="java.lang.String">
+		<fieldDescription><![CDATA[relatedSupplier.firstName]]></fieldDescription>
+	</field>
+	<variable name="paymentAmount_1" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{paymentAmount}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="34" width="82" height="15" uuid="c973a91e-99ed-406c-8864-bc29b2c0485e"/>
+				<text><![CDATA[Sup/Cust]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="34" width="85" height="15" uuid="eac24b1b-ab5c-40e9-8e41-7d9582816fef"/>
+				<text><![CDATA[Payment Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="167" y="34" width="84" height="15" uuid="365d65e1-3912-4803-81ba-b68492afead4"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="18" width="250" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="3b225d1e-fb15-4c58-9f04-ab6e2ff8404c"/>
+				<textElement>
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Cash Payment Vouchers  ( Cust/Sup )]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="82" height="16" uuid="da1c814b-1790-43ad-b734-95185b77a222"/>
+				<textFieldExpression><![CDATA[""+$F{relatedSupplier}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="82" y="0" width="85" height="16" uuid="7fa5329c-66f8-475f-8511-335e79a4044e"/>
+				<textFieldExpression><![CDATA[$F{paymentNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="167" y="0" width="84" height="16" uuid="3fc3b473-61d5-4bc2-8fb4-e3015ada23b8"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{paymentAmount}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="0" width="251" height="1" uuid="ec54937e-0205-46a4-9ba4-3e234280ec96"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="250" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="8bba2a49-af1f-490a-a5b9-39ad1c27eb5c"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="167" y="0" width="84" height="16" uuid="864267c3-c52e-429c-97dc-86f182f12316"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.25" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{paymentAmount_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

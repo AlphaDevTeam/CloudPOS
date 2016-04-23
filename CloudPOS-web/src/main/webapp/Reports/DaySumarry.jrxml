@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportTest" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a617bc7-cace-4f6e-a346-a7f4dda63640">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[".\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parameter1" class="java.lang.String"/>
+	<parameter name="date" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="location" class="com.AlphaDevs.cloud.web.Entities.Location">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="totalLiquidAmount" class="java.lang.Double"/>
+	<parameter name="totalAmount" class="java.lang.Double"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cashPaymentVouchersExpenses" class="java.util.List">
+		<fieldDescription><![CDATA[cashPaymentVouchersExpenses]]></fieldDescription>
+	</field>
+	<field name="stockAdjestments" class="java.util.List">
+		<fieldDescription><![CDATA[stockAdjestments]]></fieldDescription>
+	</field>
+	<field name="cashReceivedVouchersExpenses" class="java.util.List">
+		<fieldDescription><![CDATA[cashReceivedVouchersExpenses]]></fieldDescription>
+	</field>
+	<field name="cashPaymentVouchers" class="java.util.List">
+		<fieldDescription><![CDATA[cashPaymentVouchers]]></fieldDescription>
+	</field>
+	<field name="customerBalances" class="java.util.List">
+		<fieldDescription><![CDATA[customerBalances]]></fieldDescription>
+	</field>
+	<field name="cashReceivedVouchers" class="java.util.List">
+		<fieldDescription><![CDATA[cashReceivedVouchers]]></fieldDescription>
+	</field>
+	<field name="invoiceDetails" class="java.util.List">
+		<fieldDescription><![CDATA[invoiceDetails]]></fieldDescription>
+	</field>
+	<field name="meterReadings" class="java.util.List">
+		<fieldDescription><![CDATA[meterReadings]]></fieldDescription>
+	</field>
+	<field name="creditCardReceipts" class="java.util.List">
+		<fieldDescription><![CDATA[creditCardReceipts]]></fieldDescription>
+	</field>
+	<field name="bankDeposits" class="java.util.List">
+		<fieldDescription><![CDATA[bankDeposits]]></fieldDescription>
+	</field>
+	<field name="receivedCheques" class="java.util.List">
+		<fieldDescription><![CDATA[receivedCheques]]></fieldDescription>
+	</field>
+	<variable name="MihiTest" class="java.lang.Double" resetType="None"/>
+	<variable name="MeterReadingSubTotal" class="java.lang.String" resetType="None"/>
+	<variable name="totalAdjestmentsAmount" class="java.lang.Double"/>
+	<variable name="finalTotal" class="java.lang.Double">
+		<variableExpression><![CDATA[new Double(($P{totalLiquidAmount} == null ? 0.0:$P{totalLiquidAmount}.doubleValue()) - ($V{totalAdjestmentsAmount} == null ? 0.0:$V{totalAdjestmentsAmount}.doubleValue()))]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<ui:insert name="title">
+		<band height="58" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="58" backcolor="#CCFFCC" uuid="5483521d-2cc6-4e2a-938e-eadf1d387fe8"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="24" width="555" height="34" uuid="a6c9b67f-1dab-44bf-bb27-d2e073301535"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[WEB POS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="34" uuid="f5f8c38d-db00-42df-8b00-dbd3520c830e"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Alpha Development Team ( Pvt ) LTD]]></text>
+			</staticText>
+		</band>
+	</ui:insert>
+	<pageHeader>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="60" backcolor="#CCCCCC" uuid="ab3d3bae-02f3-4c28-a4dd-d2384aadb90e"/>
+				<textElement>
+					<font isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="188" height="20" uuid="eee5d588-3f6e-4739-a75e-ba924d4e1613"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[DAILY SALES & RECEIPT REPORT FOR ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="188" y="40" width="100" height="20" uuid="0e73a5f1-1455-4bd0-9a5d-fe39e57b259d"/>
+				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="367" y="40" width="188" height="20" uuid="5ba7adb3-67a2-4a37-aea9-7835a8ca2458"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="23" width="555" height="17" uuid="5ea2e70a-d999-4635-abc8-7fbd7bb0bd45"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$P{location}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="23" uuid="0e0d7680-dfd8-428b-959c-4a25621577a1"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[THUSHARI & SON - LANKA FILLING STATION]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="-2" width="555" height="1" uuid="3a665100-bf73-4961-bf21-6757025ab8dd"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="3" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="2" width="555" height="1" uuid="df77d467-eae8-4e0a-8790-948b59e2f99b"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="315" splitType="Stretch">
+			<subreport>
+				<reportElement positionType="Float" x="0" y="0" width="252" height="46" isRemoveLineWhenBlank="true" backcolor="#CCFFFF" uuid="fca816a3-95ce-4f2f-9d89-0e0a7894be49"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="location">
+					<subreportParameterExpression><![CDATA[$P{location}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="totalAmount">
+					<subreportParameterExpression><![CDATA[$P{totalAmount}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="totalLiquidAmount">
+					<subreportParameterExpression><![CDATA[$P{totalLiquidAmount}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="date">
+					<subreportParameterExpression><![CDATA[$P{date}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[$P{parameter1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{meterReadings})]]></dataSourceExpression>
+				<returnValue subreportVariable="MeterReadingSubTotal" toVariable="MeterReadingSubTotal"/>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "MeterReadings_Sub.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="288" y="0" width="267" height="46" isRemoveLineWhenBlank="true" uuid="39a6e068-0e72-469a-bade-1ef86d48cafe"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{invoiceDetails})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Invoices_Sub.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="47" width="252" height="39" isRemoveLineWhenBlank="true" uuid="95d771e6-db2b-4b46-b237-debb92f3c30e"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{stockAdjestments})]]></dataSourceExpression>
+				<returnValue subreportVariable="MihiTest" toVariable="MihiTest"/>
+				<returnValue subreportVariable="totalAdjestmentsAmount" toVariable="totalAdjestmentsAmount"/>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "StockAdjestments_Sub.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="288" y="48" width="267" height="39" isRemoveLineWhenBlank="true" uuid="af774c1c-8953-484c-a568-c6f28567a951"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{customerBalances})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "CustomerBalances_Sub.jasper"]]></subreportExpression>
+			</subreport>
+			<line direction="BottomUp">
+				<reportElement x="268" y="0" width="1" height="315" uuid="22adb4cd-91c2-475b-9472-743c87bd61fa"/>
+			</line>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="87" width="252" height="49" isRemoveLineWhenBlank="true" uuid="7f301e65-2b35-44f9-9eae-a6a5b97cae49"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{creditCardReceipts})]]></dataSourceExpression>
+				<returnValue subreportVariable="MihiTest" toVariable="MihiTest"/>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "CreditCardReceipts_Sub.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="288" y="87" width="267" height="49" isRemoveLineWhenBlank="true" uuid="da624c3c-59cc-4e9f-8db1-6d55b2a37db3"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{cashPaymentVouchersExpenses})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "CashPayExp_Sub.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="136" width="252" height="53" uuid="0a88a8e9-f647-4042-8d92-bde480a307ae"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{cashPaymentVouchers})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "CashPayVouchers_Sub.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="288" y="136" width="267" height="56" uuid="74d467d1-07d6-4dbd-b0d4-882e703a05f6"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{cashReceivedVouchers})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "CashRecVouchers_Sub.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="288" y="192" width="267" height="45" uuid="c95ea0fd-dbe9-45bc-b15f-b1bccf405ba9"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{cashReceivedVouchersExpenses})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "CashRecVouchersExp_Sub.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement positionType="Float" x="114" y="295" width="100" height="20" uuid="481acc91-e8d7-4252-be6c-232450a85bb2"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalAmount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="295" width="114" height="20" uuid="930faa94-0ba4-4fd4-9b76-3e117875f15f"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Amount]]></text>
+			</staticText>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="192" width="252" height="41" uuid="37ed8f94-9945-4bbb-a505-ecadd58257c6"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{bankDeposits})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "BankDeposits_Sub.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="288" y="237" width="267" height="42" uuid="ff75a892-105a-4ac1-92c5-8314777358ba"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{receivedCheques})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ReceivedCheques_Sub.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="435" y="0" width="80" height="20" uuid="e7900fcd-59e7-4769-b173-d8deba83fe99"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="0" width="40" height="20" uuid="916e9f4c-b91e-44b5-8ba8-d4af0efa9122"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="9" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+
+
+                <f:view>
+
+
+                    <h:form>
+                        <h1><h:outputText value="Arrange Menu Items"/></h1>
+                        <h:panelGrid columns="2">
+
+                            <p:dataTable id="checkboxDT" var="MI" value="#{pageHandler.listOfMenuItems}" selection="#{pageHandler.mylist}" rowKey="#{MI.id}" style="margin-bottom:0">
+                                <f:facet name="header">
+                                    Check Pages
+                                </f:facet>
+                                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                <p:column headerText="Id">
+                                    <h:outputText value="#{MI.id}" />
+                                </p:column>
+                                <p:column headerText="Titler">
+                                    <h:outputText value="#{MI.menuItemTitle}" />
+                                </p:column>
+                                <p:column headerText="Main Menu">
+                                    <h:outputText value="#{MI.parentMenu}" />
+                                </p:column>
+                                <p:column headerText="URL">
+                                    <h:outputText value="#{MI.url}" />
+                                </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton process="checkboxDT" update=":form:multiCarDetail" icon="ui-icon-search" value="View" oncomplete="PF('multiCarDialog').show()" />
+                                </f:facet>
+                            </p:dataTable>
+
+
+
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

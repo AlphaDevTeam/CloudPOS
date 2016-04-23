@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GrnReport_Details" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e93fe9ce-9ee0-4123-9812-3a6d69ca71d5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="grnItem" class="com.AlphaDevs.cloud.web.Entities.Items">
+		<fieldDescription><![CDATA[grnItem]]></fieldDescription>
+	</field>
+	<field name="grnItemCost" class="java.lang.Double">
+		<fieldDescription><![CDATA[grnItemCost]]></fieldDescription>
+	</field>
+	<field name="grnItemDiscountPerc" class="java.lang.Float">
+		<fieldDescription><![CDATA[grnItemDiscountPerc]]></fieldDescription>
+	</field>
+	<field name="grnQty" class="java.lang.Float">
+		<fieldDescription><![CDATA[grnQty]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="relatedGRN" class="com.AlphaDevs.cloud.web.Entities.GRN">
+		<fieldDescription><![CDATA[relatedGRN]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="39" y="2" width="100" height="20" uuid="8cf0e8bf-681b-4665-8304-313ac3fc1852"/>
+				<text><![CDATA[grnItem]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="286" y="2" width="100" height="20" uuid="4cd58eb1-2fb9-4b2b-aba3-9a2719be7ce1"/>
+				<text><![CDATA[grnItemCost]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="401" y="2" width="100" height="20" uuid="a6d7ca96-1849-4f7d-8d3a-4638294df51d"/>
+				<text><![CDATA[grnItemDiscountPerc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="516" y="2" width="100" height="20" uuid="e3de579a-d2e8-4d3b-8b80-7b7e577b55b5"/>
+				<text><![CDATA[grnQty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="174" y="2" width="100" height="20" uuid="c03bd31d-8989-40dd-8c97-836328599827"/>
+				<text><![CDATA[relatedGRN]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="39" y="0" width="235" height="20" uuid="479d63dd-382a-43c2-98ac-19df174d8b81"/>
+				<textFieldExpression><![CDATA[""+$F{grnItem}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="286" y="2" width="100" height="20" uuid="92219e51-0f2b-4e30-aefc-6cd2f5ac816f"/>
+				<textFieldExpression><![CDATA[$F{grnItemCost}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="401" y="2" width="100" height="20" uuid="b42f98f7-abbf-43e5-8d8a-ef061c46b5b5"/>
+				<textFieldExpression><![CDATA[$F{grnItemDiscountPerc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="516" y="2" width="100" height="20" uuid="f2c31107-d6e1-4029-87e4-9cb427f85b05"/>
+				<textFieldExpression><![CDATA[$F{grnQty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="2" width="100" height="20" uuid="05360f2f-ecb1-4e82-a778-05336506a3fa"/>
+				<textFieldExpression><![CDATA[""+$F{relatedGRN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="32" splitType="Stretch"/>
+	</summary>
+</jasperReport>

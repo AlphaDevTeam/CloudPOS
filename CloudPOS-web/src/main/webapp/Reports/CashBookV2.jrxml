@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CashBookV2" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d4a1e100-1652-446f-b67d-c11798235188">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="Header" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="CR" class="java.lang.Double">
+		<fieldDescription><![CDATA[CR]]></fieldDescription>
+	</field>
+	<field name="DR" class="java.lang.Double">
+		<fieldDescription><![CDATA[DR]]></fieldDescription>
+	</field>
+	<field name="balance" class="java.lang.Double">
+		<fieldDescription><![CDATA[balance]]></fieldDescription>
+	</field>
+	<field name="billStat" class="com.AlphaDevs.cloud.web.Enums.BillStatus">
+		<fieldDescription><![CDATA[billStat]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[description]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="location" class="com.AlphaDevs.cloud.web.Entities.Location">
+		<fieldDescription><![CDATA[location]]></fieldDescription>
+	</field>
+	<field name="logger" class="com.AlphaDevs.cloud.web.Entities.Logger">
+		<fieldDescription><![CDATA[logger]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<ui:insert name="title">
+		<band height="70" splitType="Stretch">
+			<image>
+				<reportElement x="-20" y="0" width="595" height="64" uuid="4360da9f-582d-4397-96e8-f0777bcce3d4"/>
+				<imageExpression><![CDATA["wood.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="0" y="5" width="263" height="33" uuid="4dcb4308-03b9-46d5-84ed-3b24f617218d"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Cash Book Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="63" y="38" width="200" height="21" forecolor="#FFFFFF" uuid="798d29fb-08f0-4dfa-bb3e-569ecc0482ba"/>
+				<textElement>
+					<font fontName="Arial" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Header}]]></textFieldExpression>
+			</textField>
+		</band>
+	</ui:insert>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="f4d261ac-2d72-4ee5-99fe-2cecfff90162"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="15" width="245" height="20" uuid="a63a9ea6-2764-423e-a239-b6e7af8c7897"/>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="245" y="16" width="100" height="20" uuid="d8e3d4c1-c806-4d2d-91a1-216a6af1db08"/>
+				<text><![CDATA[DR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="16" width="100" height="20" uuid="0c5e9dea-9d3e-4dd3-9610-038b65a62666"/>
+				<text><![CDATA[CR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="16" width="100" height="20" uuid="0bdf9614-7076-4061-b9bf-2432e795dc9b"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Balance]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="85752da3-01c2-4e7f-bd14-4e148808e2b6"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="0" y="1" width="245" height="15" uuid="7416c381-86e1-4516-bcc7-4414a4c99516"/>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="245" y="2" width="100" height="14" uuid="56958344-1475-4a4c-a0f3-c6666fc5ce20"/>
+				<textFieldExpression><![CDATA[$F{DR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="345" y="1" width="100" height="15" uuid="2773540d-4b7e-45a4-aaee-e2d9dbd0f7fd"/>
+				<textFieldExpression><![CDATA[$F{CR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="445" y="2" width="100" height="14" uuid="4d73f7e0-8c82-4b76-a02e-439df0da740e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{balance}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="0483bebd-79a4-4f23-af71-0d9b1c6535a6"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="f0536a93-652f-43db-9617-7108df7ac76a"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="ef3a30de-15e3-4827-90ff-4d5571a0fa76"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="4fd91521-f735-458e-bc43-5a2926f035e9"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="25b492b2-b999-45c1-a928-23b09017f7de"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Alpha Development Team (Pvt) Ltd]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

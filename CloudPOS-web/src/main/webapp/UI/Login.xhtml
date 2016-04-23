@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <ui:insert name="title">Alpha Service - Alpha Development Team Ltd </ui:insert>
+        <h:outputStylesheet name="css/CoreStyles.css"/>
+    </h:head>
+
+
+    <h:body>
+        <p:graphicImage id="AlphaLogo"  value="Alpha Development Team ( Pvt ) Ltd" name="Images/AlphaLogoBlack.jpg"/> 
+        <h:panelGroup layout="block" id="verticalLine"/>
+        <h:outputLabel id="InvalidAuth" value="Un-Authorized Access" rendered="#{infoGrabber.validTerminal}" />
+
+        <f:view>
+            <h:panelGroup layout="block" id="LoginForm">
+                <h:form>
+
+                    <p:growl id="message" autoUpdate="true"  />
+
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="UserName : " for="userName" />
+                        <p:inputText id="userName" value="#{userHandler.current.userName}" title="UserName" required="true" requiredMessage="Please Enter Username to Proceed"/>
+
+                        <p:outputLabel value="PassWord : " for="passWord" />
+                        <p:password id="passWord" value="#{userHandler.current.passWord}" title="PassWord" required="true" requiredMessage="Please Enter Password to Proceed"/>
+                        <center>
+                            <p:commandButton value="Login" action="#{userHandler.validateUser}" />
+                        </center>
+                    </h:panelGrid>
+                </h:form>
+            </h:panelGroup>
+        </f:view>
+
+        <footer>
+            <h:outputLabel value="Powered by Alpha Development Team ( Pvt ) Ltd | The Team that gives you the best | 0777117477 " />
+            <p>Powered by Alpha Development Team ( Pvt ) Ltd </p>
+            <p><time datetime="2012-03-01"></time></p>
+        </footer> 
+    </h:body>
+
+</html>
+

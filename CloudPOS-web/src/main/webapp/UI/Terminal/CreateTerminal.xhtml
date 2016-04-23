@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                
+                 <f:view>
+                    <h:form>
+                        
+                        <h1><h:outputText value="Create Terminal"/></h1>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Terminal Code : " for="terminalcode" />
+                            <p:inputText id="terminalcode" value="#{terminalHandler.current.terminalCode}" title="terminalcode" required="true" />
+                            
+                            <p:outputLabel value="Terminal IP Address : " for="terminalIP" />
+                            <p:inputText id="terminalIP" value="#{terminalHandler.current.terminalIP}" title="terminalIP" required="true"/>
+                            
+                            <p:outputLabel value="Terminal Name : " for="terminalname" />
+                            <p:inputText id="terminalname" value="#{terminalHandler.current.terminalName}" title="terminalname" required="true"/>
+
+
+                            <p:commandButton value="Save" action="#{terminalHandler.persisitTerminal()}"  />
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

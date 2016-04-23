@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+
+
+                    <h:form id="depositCheque">
+                        <h1><h:outputText value="List"/></h1>
+                        <p:outputLabel value="Cheque Status : " for="chequeStatus" />
+                        <p:selectOneMenu id="chequeStatus" required="true" value="#{chequesHandler.toStatus}" label="Cheque Status">
+                            <f:selectItem itemLabel="Select One"/>
+                            <f:selectItems value="#{chequeStatusHandler.chequeStatus}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="RelatedBankAccount : " for="relatedBankAccount" />
+                        <p:selectOneMenu id="relatedBankAccount" value="#{chequesHandler.current.relatedBankAccount}" label="RelatedBankAccount" converter="#{bankAccountConvertor}" >
+                            <f:selectItem itemLabel="Select One" />  
+                            <f:selectItems value="#{bankAccountsHandler.list}"/>
+                        </p:selectOneMenu>
+                        <p:dataTable id="dtChequeList" value="#{chequesHandler.list}" var="item" selection="#{chequesHandler.selectedDTCheques}" rowKey="#{item.id}" style="margin-bottom:0">
+                            <f:facet name="header">
+                                Cheques
+                            </f:facet>
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Payment Details"/>
+                                </f:facet>
+                                <h:outputText value="#{item.relatedPayment}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GRN Payment Details"/>
+                                </f:facet>
+                                <h:commandLink value="#{item.relatedPayment.documentType.documentName}" action="#{gRNHandler.preapareList(item.relatedPayment.documentID)}" />
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Received Date"/>
+                                </f:facet>
+                                <h:outputText value="#{item.chequeRecDate}">
+                                    <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="ChequeDate"/>
+                                </f:facet>
+                                <h:outputText value="#{item.chequeDate}">
+                                    <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Cheque Number"/>
+                                </f:facet>
+                                <h:outputText value="#{item.chequeNumber}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Cheque Note"/>
+                                </f:facet>
+                                <h:outputText value="#{item.chequeNote}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Status"/>
+                                </f:facet>
+                                <h:outputText value="#{item.status}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Location"/>
+                                </f:facet>
+                                <h:outputText value="#{item.relatedLocation}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Bank Account"/>
+                                </f:facet>
+                                <h:outputText value="#{item.relatedBankAccount}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Amount"/>
+                                </f:facet>
+                                <h:outputText value="#{item.chequeAmount}"/>
+                            </p:column>
+                            <f:facet name="footer">
+                                <p:commandButton process="dtChequeList,depositCheque" ajax="false" icon="ui-icon-search" value="Update" action="#{chequesHandler.updateCheques}" />
+                            </f:facet>
+                        </p:dataTable>
+
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

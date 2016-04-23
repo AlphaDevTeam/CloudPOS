@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <h:outputStylesheet name="css/ResponsiveCascadeStyleSheet.css"/>
+    </h:head>
+
+    <h:body>
+        <p:growl id="messages" autoUpdate="true"/>
+
+        <!-- Idle Check -->
+        <h:form>
+            <p:growl id="IdleMessages" autoUpdate="true"/>
+            <p:idleMonitor timeout="60000" onidle="idleDialog.show()" >
+                <p:ajax event="active" listener="#{idleMonitorView.onActive}" update="IdleMessages" />
+            </p:idleMonitor>
+            <p:confirmDialog id="confirmDialog"
+                             message="Please note that your session will be timed out soon " 
+                             header="Session Timeout" severity="alert" widgetVar="idleDialog">
+
+                <p:commandButton id="confirm" value="I'm Alive :)" update="IdleMessages"
+                                 oncomplete="idleDialog.hide()"
+                                 actionListener="#{idleMonitorView.onIdleRedirrect}" />
+
+                <p:commandButton id="Logout" value="Logout" update="IdleMessages"
+                                 oncomplete="idleDialog.hide()"
+                                 actionListener="#{sessionHandler.userLogout}" />
+
+            </p:confirmDialog>
+        </h:form>
+
+        <p:layout fullPage="true" style="min-width:available;min-height:available;">
+            <p:layoutUnit position="north" resizable="true" size="100" minSize="40" maxSize="200">
+                <ui:insert name="Rheader">
+                    <h:panelGrid columns="2">
+                        <p:graphicImage  class="image-cropper" name="Images/AlphaLogoBlack.jpg" height="50" width="50" style="margin-left: 15px; margin-right: auto; width: 75px; height: 75px" /> 
+                        <p:outputLabel value="Alpha Development Team - WEB POS Beta V1 - #{systemsHandler.current.header}" style="margin-left: 15px; margin-right: auto; width: 75px; height: 75px"/>
+                    </h:panelGrid>
+
+                </ui:insert>
+            </p:layoutUnit>
+            <p:layoutUnit position="south" resizable="true" size="35" minSize="10" maxSize="50" styleClass="ui-top" >
+                <ui:insert name="Rbottom" id="Rbottom" class="ui-top">
+                    <p:graphicImage  class="image-cropper" name="Images/AlphaLogoBlack.jpg" height="25" width="25" style="margin-left: 15px; margin-top: 0px; margin-right: auto; width: 20px; height: 20px" /> 
+                    <p:outputLabel value="Copyright © 2016 Alpha Development Team (Pvt) Ltd. All rights reserved." style="margin-left: 15px; margin-top: 0px; margin-right: auto; width: 10px; height: 10px"/>
+                </ui:insert> 
+            </p:layoutUnit>
+            <p:layoutUnit position="west" resizable="true" size="200" minSize="100" maxSize="200">
+                <ui:insert name="Rside"> 
+                    <h:panelGroup layout="block" class="image-cropper">
+                        <h:graphicImage value="#{sessionHandler.url}"  class="rounded" />
+                    </h:panelGroup>
+                    <p:clock  />
+                    <p:outputLabel value="Loged User" rendered="#{empty sessionHandler.sessionUser.userName ? false : true }" /><br/>
+                    <p:outputLabel value="#{stringHelper.convertToUppercase(sessionHandler.sessionUser.userName)}"/>
+                    <p:outputLabel value="#{empty sessionHandler.sessionUser.userName ? infoGrabber.logoutUser : noUser}" rendered="false" />
+                    <p:outputLabel value="Company" rendered="#{empty sessionHandler.sessionUser.associatedCompany.companyName ? false : true }" /><br/>
+                    <p:outputLabel value="#{sessionHandler.sessionUser.associatedCompany.companyName}"/>
+                    <h:form>
+                        <p:panelMenu model="#{menuItemHandler.menumodelsingle}" />
+                    </h:form>
+                </ui:insert>
+            </p:layoutUnit>
+            <p:layoutUnit position="center" resizable="true" size="500" minSize="400" maxSize="600" >
+                <ui:insert name="Rcontent">Content</ui:insert>
+            </p:layoutUnit>
+            <p:layoutUnit position="east" resizable="true" size="100" minSize="40" maxSize="200">
+                <h:form>
+                    <p:outputLabel for="advanced" value="Advanced:" /> 
+                    <p:themeSwitcher id="advanced" style="width:165px" effect="fade" var="t">
+                        <f:selectItem itemLabel="Choose Theme" itemValue="" />
+                        <f:selectItems value="[afterdark, afternoon, afterwork, aristo, black-tie, blitzer, bluesky, bootstrap, casablanca, cupertino, cruze, dark-hive, delta, dot-luv, eggplant, excite-bike, flick, glass-x, home, hot-sneaks, humanity, le-frog, midnight, mint-choc, overcast, pepper-grinder, redmond, rocket, sam, smoothness, south-street, start, sunny, swanky-purse, trontastic, ui-darkness, ui-lightness, vader]" var="theme" itemLabel="" itemValue="" />
+
+                        <p:column>
+                            <h:outputText styleClass="ui-theme ui-theme-" style="display-block" />
+                        </p:column>
+
+                        <p:column>
+
+                        </p:column>
+                    </p:themeSwitcher>
+                </h:form>
+            </p:layoutUnit>
+
+        </p:layout>
+
+    </h:body>
+</html>

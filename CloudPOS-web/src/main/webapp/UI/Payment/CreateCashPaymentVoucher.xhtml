@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Cash Payment Voucher - Customer / Supplier"/></h1>
+                        <h:panelGrid columns="4">
+                            
+                            <p:outputLabel value="Payment Number : " for="paymentNumber" />
+                            <p:inputText id="paymentNumber" value="#{cashPaymentVoucherHandler.paymentNumber}" title="PaymentNumber" required="true" />
+                            <p:outputLabel value="Payment Ref Number : " for="paymentRefNumber" />
+                            <p:inputText id="paymentRefNumber" value="#{cashPaymentVoucherHandler.current.paymentRefNumber}" title="PaymentRefNumber" required="true"/>
+                            <p:outputLabel value="Date : " for="Date" />  
+                            <p:calendar id="Date" value="#{cashPaymentVoucherHandler.current.paymentDate}" pattern="#{sessionHandler.defaultDateFormat}" title="Date" required="true">
+                                 <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
+                            </p:calendar>
+                            <p:outputLabel value="Description : " for="paymentDescription" />
+                            <p:inputText id="paymentDescription" value="#{cashPaymentVoucherHandler.current.paymentDescription}" title="PaymentDescription" required="true"/>
+                            <p:outputLabel value="Amount : " for="paymentAmount" />
+                            <p:inputText type="number" id="paymentAmount" value="#{cashPaymentVoucherHandler.current.paymentAmount}" title="PaymentAmount" required="true"/>
+                            <p:outputLabel value="Location : " for="paymentLocation" />
+                            <p:selectOneMenu id="paymentLocation" value="#{cashPaymentVoucherHandler.current.paymentLocation}" label="Location" converter="#{locationConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One"  />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                                <p:ajax update="paymentNumber" />
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Customer / Supplier : " for="relatedSupplier" />
+                            <p:selectOneMenu id="relatedSupplier" value="#{cashPaymentVoucherHandler.current.relatedSupplier}" label="Customer / Supplier" converter="#{supplierConvertor}" required="true" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Select One"  />  
+                                <f:selectItems value="#{supplierHandler.allSuppliers()}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:commandButton value="Save" action="#{cashPaymentVoucherHandler.createPayment()}" />
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+
+        </ui:composition>
+
+    </h:body>
+</html>

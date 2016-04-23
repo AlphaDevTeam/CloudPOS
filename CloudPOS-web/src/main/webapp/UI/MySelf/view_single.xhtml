@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <ui:insert name="title">WeBPOS - #{systemsHandler.current.header}</ui:insert>
+    </h:head>
+    <h:body>
+        <h2>Search By ID</h2>
+        <h:form>
+
+            <h:outputLabel value="Enter ID: " for="myselfid" />
+            <h:inputText id="myselfid" value="#{myselfHandler.my.id}" title="Name In Full" required="true"/>
+            <h:commandButton value="view"  action="#{myselfHandler.singleRecord()}"/>
+            <h:outputLabel value="#{myselfHandler.my.name}"  />
+            <h:commandButton value="delete"  action="#{myselfHandler.deleteRecord()}"/>
+        </h:form>
+
+        
+        
+         <h:form>
+
+            <h:outputLabel value="Enter Name: " for="myselfid2" />
+            <h:inputText id="myselfid2" value="#{myselfHandler.my.name}" title="Name In Full" required="true"/>
+            <h:commandButton value="load"  action="#{myselfHandler.singleRecordByName()}"/>
+            
+        </h:form>
+        
+        <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="Search"/></h1>
+                <h:dataTable value="#{myselfHandler.searchedNames}" var="item">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Name"/>
+                        </f:facet>
+                        <h:outputText value="#{item.name}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Age"/>
+                        </f:facet>
+                        <h:outputText value="#{item.age}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </f:view>
+
+
+    </h:body>
+</html>
+

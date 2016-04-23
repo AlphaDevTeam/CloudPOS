@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <ui:insert name="title">WeB PoS - #{systemsHandler.current.header}</ui:insert>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <p:growl id="message"/>
+                        <h1><h:outputText value="Manage Items"/></h1>
+                   
+                        <h:panelGrid columns="3" id="panel">
+                            <p:outputLabel value="Item Barcode : " for="itemBarcode" />
+                            <p:inputText id="itemBarcode" value="#{itemsHandler.current.itemBarcode}" title="Item Barcode" />
+                            <h:inputHidden/>
+                            <p:outputLabel value="Item Code : " for="itemCode" />
+                            <p:inputText id="itemCode" value="#{itemsHandler.current.itemCode}" title="Item Code" />
+                            <h:inputHidden/>
+                            <p:outputLabel value="Cost : " for="itemCost" />
+                            <p:inputText type="number" id="itemCost" value="#{itemsHandler.current.itemCost}" title="Cost" required="true" />
+                            <h:inputHidden/>
+                            <p:outputLabel value="Description : " for="itemDescription"  />
+                            <p:inputText id="itemDescription" value="#{itemsHandler.current.itemDescription}" title="Description" required="true" />
+                            <h:inputHidden/>
+
+
+
+                            <p:outputLabel value="UOM : " for="unitOfMeasurement" />              
+
+                            <p:selectOneMenu id="unitOfMeasurement" value="#{itemsHandler.current.unitOfMeasurement}" label="Unit Of Measurement" required="true" converter="#{unitsConvertor}" >
+                                <f:selectItem itemLabel="Select One"/>
+                                <f:selectItems value="#{unitsHandler.list}"/>
+                            </p:selectOneMenu>
+                            <p:commandLink value="Register New UOM" action="#{itemsHandler.redirectToUOM()}" immediate="true" >
+                                <f:ajax />
+                                #{unitsHandler.setRDStatus("FromItem")}
+                            </p:commandLink>
+
+
+                            <p:outputLabel value="Capacity : " for="itemCapacity" />
+                            <p:inputText type="number" id="itemCapacity" value="#{itemsHandler.current.capacity}" title="Capacity" />
+                            <h:inputHidden/>
+
+                            <p:outputLabel value="Location : " for="itemLocation" />
+                            <p:selectOneMenu id="itemLocation" value="#{itemsHandler.current.itemLocation}" label="Location" converter="#{locationConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                            </p:selectOneMenu>                            
+                            <p:commandLink value="Register New Location" action="#{itemsHandler.redirectToLocation()}" immediate="true" >
+                                <f:ajax />
+                                #{locationHandler.setRDStatus("FromItem")}
+                            </p:commandLink>
+
+
+                            <p:outputLabel value="Item : " for="itemName" />
+                            <p:inputText id="itemName" value="#{itemsHandler.current.itemName}" title="Item" required="true"  />
+                            <h:inputHidden/>
+
+                            <p:outputLabel value="Product : " for="itemProduct" />
+                            <p:selectOneMenu id="itemProduct" value="#{itemsHandler.current.itemProduct}" label="Product" converter="#{productConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{productHandler.list}" />
+                                <p:ajax update="itemProduct,itemDesign" /> 
+                            </p:selectOneMenu>
+                            <p:commandLink value="Register New Product" action="#{itemsHandler.redirectToProduct()}" immediate="true">
+                                <f:ajax />
+                                #{productHandler.setRDStatus("FromItem")}
+                            </p:commandLink>
+
+                            <p:outputLabel id="designText" value="Design : " for="itemDesign" />
+                            <p:selectOneMenu id="itemDesign" value="#{itemsHandler.current.itemDesign}" label="Design" required="true" converter="#{designConvertor}" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{itemsHandler.listSpec}"/>
+                            </p:selectOneMenu>
+                            <p:commandLink value="Register New Design" action="#{itemsHandler.redirectToDesign()}" immediate="true">
+                                
+                                #{designHandler.setRDStatus("FromItem")}
+                            </p:commandLink>
+
+
+                            <p:outputLabel value="Supplier : " for="itemSupplier" />
+                            <p:selectOneMenu id="itemSupplier" value="#{itemsHandler.current.itemSupplier}" label="Supplier" converter="#{supplierConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{supplierHandler.allSuppliers()}"/>
+                            </p:selectOneMenu>
+                            <p:commandLink value="Register New Supplier" action="#{itemsHandler.redirectToSupplier()}" immediate="true">
+                                <f:ajax />
+                                #{supplierHandler.setRDStatus("FromItem")}
+                            </p:commandLink>
+
+
+                            <p:outputLabel value="Reorder Level : " for="reorderLevel" />
+                            <p:inputText type="number" id="reorderLevel" value="#{itemsHandler.current.reorderLevel}" title="ReorderLevel" />
+                            <h:inputHidden/>
+
+                            <p:outputLabel value="Unit Price : " for="unitPrice" />
+                            <p:inputText type="number" id="unitPrice" value="#{itemsHandler.current.unitPrice}" title="UnitPrice" required="true" />
+                            <h:inputHidden/>
+                            <p:commandButton value="Save" action="#{itemsHandler.persistItem()}"/>
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
+

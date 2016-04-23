@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Fill Payment Details"/></h1>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Trnastion Type : " for="trnType" />
+                            <p:inputText id="trnType" value="#{paymentDetailsHandler.current.trnType}" title="TrnType" />
+                                                        
+                            <p:outputLabel value="CashAmount : " for="cashAmount" />
+                            <p:inputText id="cashAmount" value="#{paymentDetailsHandler.current.cashAmount}" title="CashAmount" />
+                            <p:outputLabel value="Credit Card Amount : " for="creditCardAmount" />
+                            <p:inputText id="creditCardAmount" value="#{paymentDetailsHandler.current.creditCardAmount}" title="CreditCardAmount" />
+                            <p:outputLabel value="Cheque Amount : " for="chequeAmount" />
+                            <p:inputText id="chequeAmount" value="#{paymentDetailsHandler.current.chequeAmount}" title="ChequeAmount" />
+                            <p:outputLabel value="Credit Amount : " for="creditAmount" />
+                            <p:inputText id="creditAmount" value="#{paymentDetailsHandler.current.creditAmount}" title="CreditAmount" />
+                            
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

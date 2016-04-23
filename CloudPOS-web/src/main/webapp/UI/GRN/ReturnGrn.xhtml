@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <ui:insert name="title">WeBPOS - #{systemsHandler.current.header}</ui:insert>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form id="mainForm" target="_new">
+                        <p:growl id="messages" showDetail="true"/>  
+                        <h1><h:outputText value="Create GRN"/></h1>
+                        <h:panelGrid columns="6">
+                            
+                            <p:outputLabel  value="Grn No : " for="grnNo" />
+                            <p:inputText id="grnNo" required="true" requiredMessage="GRN Number is mising..!!"  value="#{purchaseReturnHandler.grnReturnNumber}" title="GrnNo" readonly="#{systemsHandler.current.isGRNnumberAutoGenarated}" />
+                            
+                            <p:outputLabel value="Inv No : " for="invNo" />
+                            <p:inputText id="invNo" value="#{purchaseReturnHandler.current.invNo}" title="InvNo" />
+                           
+
+                            <p:outputLabel value="CreditPeriod : " for="creditPeriod" />
+                            <p:inputText id="creditPeriod" value="#{purchaseReturnHandler.current.creditPeriod}" title="CreditPeriod" />
+                            <p:outputLabel value="TotalAmount : " for="totalAmount" />
+                            <p:inputText id="totalAmount" value="#{purchaseReturnHandler.current.totalAmount}" title="TotalAmount" readonly="true" />
+
+                            <p:outputLabel value="GrnDate : " for="Date" />  
+                            <p:calendar required="true" id="Date" value="#{purchaseReturnHandler.current.grnRetDate}" pattern="#{sessionHandler.defaultDateFormat}" title="GRN Date">
+                                <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
+                            </p:calendar>
+
+
+
+                            <p:outputLabel value="Location : " for="location" />
+                            <p:selectOneMenu id="location" value="#{purchaseReturnHandler.current.location}" label="Location " 
+                                             converter="#{locationConvertor}" required="true" >
+
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                                <p:ajax update="grnNo" /> 
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="PurchaseType : " for="purchaseType" />
+                            <p:inputText required="true" id="purchaseType" value="#{purchaseReturnHandler.current.purchaseType}" title="PurchaseType" />
+                            <p:outputLabel value="Supplier : " for="supplier" />
+                            <p:selectOneMenu id="supplier" required="true" value="#{purchaseReturnHandler.current.supplier}" label="Supplier" converter="#{supplierConvertor}">
+                                <f:selectItem itemLabel="Select One"/>
+                                <f:selectItems value="#{supplierHandler.allSuppliers()}"/>
+                            </p:selectOneMenu>
+
+
+                            <p:outputLabel value="Item : " for="acItem" />
+                            <p:autoComplete id="acItem" value="#{purchaseReturnHandler.currentDetails.grnItem}"   
+                                            completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}"  >
+                                <p:ajax event="itemSelect" listener="#{purchaseReturnHandler.handleSelect}" update="itemCost" />  
+                            </p:autoComplete>  
+                            <p:outputLabel value="Qty : " for="itemQty" />
+                            <p:inputText id="itemQty" title="Qty" value="#{purchaseReturnHandler.currentDetails.grnQty}" />
+
+                            <p:outputLabel value="Cost : " for="itemCost" />
+                            <p:inputText id="itemCost" title="Item Cost" value="#{purchaseReturnHandler.currentDetails.grnItemCost}" />
+
+                            <h:inputHidden/>
+                            <h:inputHidden/>
+                            <h:inputHidden/>
+                            <p:commandButton value="Add" action="#{purchaseReturnHandler.addItem()}" update="virtualList,totalAmount,acItem,itemQty,itemCost,:mainForm:messages"  /> 
+                            <p:commandButton ajax="false" value="Save" action="#{purchaseReturnHandler.grnReturn()}"/>
+                        </h:panelGrid>
+
+                        <br/>
+
+
+                        <p:dataTable  id="virtualList" editable="true" value="#{purchaseReturnHandler.virtualList}"
+                                      var="item" selection="#{purchaseReturnHandler.selectedGrnData}" selectionMode="single" 
+                                      rowKey="#{item.grnItem}">
+
+
+
+                            <p:ajax event="rowEdit" listener="#{purchaseReturnHandler.onEdit}" update=":mainForm:messages,:mainForm:totalAmount" />  
+                            <p:ajax event="rowEditCancel" listener="#{purchaseReturnHandler.onCancel}" update=":mainForm:messages,:mainForm:totalAmount" />  
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnItem"/>
+                                </f:facet>
+                                <h:outputText value="#{item.grnItem}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnItemCost"/>
+                                </f:facet>
+                                <p:cellEditor>  
+                                    <f:facet name="output">  
+                                        <h:outputText value="#{item.grnItemCost}" />  
+                                    </f:facet>  
+                                    <f:facet name="input">  
+                                        <p:inputText value="#{item.grnItemCost}" style="width:100%"/>  
+                                    </f:facet>  
+                                </p:cellEditor>
+
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="GrnItemDiscountPerc"/>
+                                </f:facet>
+                                <p:cellEditor>  
+                                    <f:facet name="output">  
+                                        <h:outputText value="#{item.grnItemDiscountPerc}" />  
+                                    </f:facet>  
+                                    <f:facet name="input">  
+                                        <p:inputText value="#{item.grnItemDiscountPerc}" style="width:100%"/>  
+                                    </f:facet>  
+                                </p:cellEditor>
+
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Qty"/>
+                                </f:facet>
+                                <p:cellEditor>  
+                                    <f:facet name="output">  
+                                        <h:outputText value="#{item.grnQty}" />  
+                                    </f:facet>  
+                                    <f:facet name="input">  
+                                        <p:inputText value="#{item.grnQty}" style="width:100%"/>  
+                                    </f:facet>  
+                                </p:cellEditor>
+                            </p:column>
+                            <f:facet name="footer">  
+                                <p:commandButton id="DeleteButton" value="Delete" icon="ui-icon-closethick"  
+                                                 onclick="confirmation.show()"/>  
+                            </f:facet>  
+
+                            <p:column headerText="Options" style="width:50px">  
+                                <p:rowEditor />  
+                            </p:column>  
+
+
+                        </p:dataTable>
+
+                        <p:confirmDialog id="confirmDialog" message="Are you sure about deleting item? "  
+                                         header="Are you sure ?" severity="alert" widgetVar="confirmation">  
+
+                            <p:commandButton id="confirm" value="Yes Sure" update=":mainForm:messages,:mainForm:totalAmount,virtualList" oncomplete="confirmation.hide()"  
+                                             actionListener="#{purchaseReturnHandler.removeSelectedItem}" />  
+                            <p:commandButton id="decline" value="Not Yet" onclick="confirmation.hide()" type="button" />   
+
+                        </p:confirmDialog>   
+
+                        <hr/>
+
+
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

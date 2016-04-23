@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <ui:insert name="title">WeBPOS - #{systemsHandler.current.header}</ui:insert>
+    </h:head>
+    <h:body>
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Register A Supplier/Customer"/></h1>
+                        <h:panelGrid columns="2">
+
+                            <p:outputLabel value="First Name : " for="firstName" />
+                            <p:inputText id="firstName" value="#{supplierHandler.current.firstName}" title="FirstName" required="true" />
+
+
+                            <p:outputLabel value="Last Name : " for="lastName" />
+                            <p:inputText id="lastName" value="#{supplierHandler.current.lastName}" title="LastName" required="true" />
+
+                            <p:outputLabel value="Customer NIC : " for="custNIC" />
+                            <p:inputText id="custNIC" value="#{supplierHandler.current.custNIC}" title="CustNIC" required="true" />
+
+
+                            <p:outputLabel value="Address State : " for="addressState" />
+                            <p:inputText id="addressState" value="#{supplierHandler.current.addressState}" title="AddressState" required="true" />
+
+                            <p:outputLabel value="City : " for="city" />
+                            <p:inputText id="city" value="#{supplierHandler.current.city}" title="City" required="true" />
+
+                            <p:outputLabel value="Street : " for="street" />
+                            <p:inputText id="street" value="#{supplierHandler.current.street}" title="Street" required="true" />
+
+                            <p:outputLabel value="Zip Code : " for="zipCode" />
+                            <p:inputText id="zipCode" value="#{supplierHandler.current.zipCode}" title="ZipCode" required="true" />
+
+
+                            <p:outputLabel value="Email Address : " for="emailAddress" />
+                            <p:inputText id="emailAddress" value="#{supplierHandler.current.emailAddress}" title="EmailAddress" required="true" />
+
+                            <p:outputLabel value="Fax : " for="fax" />
+                            <p:inputText id="fax" value="#{supplierHandler.current.fax}" title="Fax" />
+
+                            <p:outputLabel value="Mobile : " for="mobile" />
+                            <p:inputText id="mobile" value="#{supplierHandler.current.mobile}" title="Mobile" required="true" />
+
+                            <p:outputLabel value="Phone : " for="phone" />
+                            <p:inputText id="phone" value="#{supplierHandler.current.phone}" title="Phone" />
+
+
+                            <p:outputLabel value="URL : " for="URL" />
+                            <p:inputText id="URL" value="#{supplierHandler.current.URL}" title="URL" required="true" />
+
+
+                            <p:outputLabel value="Credit Limit : " for="creditLimit" />
+                            <p:inputText id="creditLimit" value="#{supplierHandler.current.creditLimit}" title="CreditLimit" required="true" />
+
+                            <p:outputLabel value="Customer Category : " for="custcategory" />
+                            <p:selectOneMenu id="custcategory" value="#{supplierHandler.current.custcategory}" label="Custcategory" converter="#{managedConvertor}" required="true" >
+                                <f:selectItems value="#{customerCategoryHandler.list}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Customer Code : " for="custCode" />
+                            <p:inputText id="custCode" value="#{supplierHandler.current.custCode}" title="CustCode" />
+
+
+                            <p:outputLabel value="Vat Number : " for="vatNumber" />
+                            <p:inputText id="vatNumber" value="#{supplierHandler.current.vatNumber}" title="Vat Number"  />
+
+
+                            <p:outputLabel value="Inactive : " for="inactive" />
+                            <p:selectBooleanCheckbox id="inactive" value="#{supplierHandler.current.inactive}" label="Inactive" />  
+
+
+                            <p:commandButton value="Save" action="#{supplierHandler.createSup()}"/>
+
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
+

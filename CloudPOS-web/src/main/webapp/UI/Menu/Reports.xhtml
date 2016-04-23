@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                <h:form>
+                    <h1><h:outputText value="Reports"/></h1>
+                    <p:growl id="message"/>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Customer Account :"/>
+                        <p:commandButton value="Customer Account" action="./../../UI/Supplier/Account.xhtml"/>
+                        
+                        <p:outputLabel value="Stock Report :"/>
+                        <p:commandButton value="Stock Report" action="./../Reports/Stock.xhtml"/>
+                        
+                        <p:outputLabel value="Day Summary :"/>
+                        <p:commandButton value="Day Summary" action="./../Reports/DaySummary.xhtml"/>
+                        
+                        <p:outputLabel value="Item Bin Card :"/>
+                        <p:commandButton value="Item Bin Card" action="./../Reports/BinCard.xhtml"/>
+                        
+                        <p:outputLabel value="Cash Book :"/>
+                        <p:commandButton value="Cash Book" action="./../CashBook/CashBook.xhtml"/>
+                        
+                    </h:panelGrid>
+                </h:form>
+                    </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

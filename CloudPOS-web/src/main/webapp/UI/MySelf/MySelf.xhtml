@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <ui:insert name="title">WeBPOS - #{systemsHandler.current.header}</ui:insert>
+    </h:head>
+    <h:body>
+
+
+
+        <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="List"/></h1>
+                <p:dataTable value="#{myselfHandler.allMySelfRecords}" var="item" draggableColumns="true" paginator="true" rows="12">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Name"/>
+                        </f:facet>
+                        <h:outputText value="#{item.name}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Age"/>
+                        </f:facet>
+                        <h:outputText value="#{item.age}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </f:view>
+
+
+
+        <h3> This is MySelf </h3>
+        <h:outputLabel value="My Name is #{myselfHandler.my.name}"/>
+        <h:outputLabel value=" My Age is #{myselfHandler.my.age}"/>
+
+
+        <h:form>
+            <h:outputLabel value="Full Name: " for="fullname" />
+            <h:inputText id="fullname" value="#{myselfHandler.my.name}" title="Name In Full" required="true"/>
+            <h:outputLabel value="Age: " for="age" />
+            <h:inputText id="age" value="#{myselfHandler.my.age}" title="Age" required="true"/>
+            <h:commandButton value="view"  action="#{myselfHandler.saveMyself}"/>
+
+
+        </h:form>
+
+        <h:form>
+            <h:outputLabel value="Second Myself"/>
+            <h:commandButton value="Second Myself" action="view_single.xhtml"/>
+        </h:form>
+
+
+        <h:form>
+            <h:outputLabel value="Update My Self"/>
+            <h:commandButton value="Update My Self" action="Update_Myself.xhtml"/>
+        </h:form>
+    </h:body>
+</html>
+

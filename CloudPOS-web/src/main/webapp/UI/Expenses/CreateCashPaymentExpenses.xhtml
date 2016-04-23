@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Create Cash Payment - Expenses"/></h1>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Payment Number : " for="paymentNumber" />
+                            <p:inputText id="paymentNumber" value="#{cashPaymentVoucherExpensesHandler.paymentNumber}" readonly="true" title="PaymentNumber" />
+                            <p:outputLabel value="Date : " for="Date" />  
+                            <p:calendar id="Date" value="#{cashPaymentVoucherExpensesHandler.current.paymentDate}" pattern="#{sessionHandler.defaultDateFormat}" title="Date">
+                                 <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
+                            </p:calendar>
+                            <p:outputLabel value="Ref Number : " for="paymentRefNumber" />
+                            <p:inputText id="paymentRefNumber" value="#{cashPaymentVoucherExpensesHandler.current.paymentRefNumber}" title="PaymentRefNumber" />
+                            <p:outputLabel value="Description : " for="paymentDescription" />
+                            <p:inputText id="paymentDescription" value="#{cashPaymentVoucherExpensesHandler.current.paymentDescription}" title="PaymentDescription" />
+                            <p:outputLabel value="Amount : " for="paymentAmount" />
+                            <p:inputText type="number" id="paymentAmount" value="#{cashPaymentVoucherExpensesHandler.current.paymentAmount}" title="PaymentAmount" />
+                            <p:outputLabel value="Location : " for="itemLocation" />
+                            <p:selectOneMenu id="itemLocation" value="#{cashPaymentVoucherExpensesHandler.current.paymentLocation}" label="Location" converter="#{locationConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                                <p:ajax update="paymentNumber"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Expense : " for="relatedExpenses" />
+                            <p:selectOneMenu id="relatedExpenses" value="#{cashPaymentVoucherExpensesHandler.current.relatedExpenses}" label="RelatedExpenses" converter="#{expensesConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{expensesHandler.list}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton value="Save" action="#{cashPaymentVoucherExpensesHandler.createPayment()}"/>
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <link rel="stylesheet" href="../Reso/CoreStyles.css" type="text/css"/>
+       
+
+        <ui:insert name="title">WeBPOS - #{systemsHandler.current.header}</ui:insert>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Stock Report"/></h1>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Location : " for="relatedLocation" />
+                            <p:selectOneMenu id="relatedLocation" value="#{stockHandler.current.stockLocation}" label="Location" converter="#{locationConvertor}" required="true" >
+                                <p:ajax update="stockTable"/>                     
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{locationHandler.list}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        <br/>
+                        <p:dataTable  id="stockTable" value="#{stockHandler.loadStockData()}" var="item" paginator="true" lazy="true" rows="2">
+
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Stock Location"/>
+                                </f:facet>
+                                <h:outputText value="#{item.stockLocation}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Sock Item"/>
+                                </f:facet>
+                                <h:outputText value="#{item.sockItem.itemName}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Stock Qty"/>
+                                </f:facet>
+                                <h:outputText value="#{item.stockQty}"/>
+                            </p:column>
+                            <p:column style="width: 500px;">
+                                <f:facet name="header">
+                                    <h:outputText value="Chart"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+
+                                <p:chart  type="metergauge" model="#{chartHelper.getChart(item.stockQty,item.sockItem.reorderLevel,item.sockItem.capacity)}"  style="width:400px;height:250px" />
+
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
+

@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form target="_new">
+                    <h1><h:outputText value="Day Summary"/></h1>
+
+                        <h:panelGrid columns="2">
+                        <h:outputLabel value="Date : " for="Date" />  
+                        <p:calendar id="Date" value="#{daySummaryHandler.relatedDate}" pattern="#{sessionHandler.defaultDateFormat}" title="Date" required="true">
+                                 <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
+                        </p:calendar>
+                        <h:outputLabel value="Location : " for="paymentLocation" />
+                        <p:selectOneMenu id="paymentLocation" value="#{daySummaryHandler.relatedLocation}" required="true" label="Location" converter="#{locationConvertor}"  >
+                                <f:selectItem itemLabel="Select One"  />  
+                                <f:selectItems value="#{locationHandler.list}"/>
+                            </p:selectOneMenu>
+                        <p:commandButton value="Save" update="dataTable"/>  
+                        <p:commandButton value="Genarate Report" action="#{daySummaryHandler.genarateReport()}"/>  
+                        <p:commandButton value="Email Report" action="#{daySummaryHandler.emailReport()}"/>  
+                        </h:panelGrid>
+                        <br/>
+                        <p:dataTable id="dataTable" value="#{daySummaryHandler.InitReport()}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Description"/>
+                                </f:facet>
+                                <h:outputText value="#{item.descriptionColumn}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="DR"/>
+                                </f:facet>
+                                <h:outputText value="#{item.drColumn}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="CR"/>
+                                </f:facet>
+                                <h:outputText value="#{item.crColumn}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+          
+
+        </ui:composition>
+
+    </h:body>
+</html>

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <h:form> 
+                    <p:growl id="message"/>
+
+                    <p:dashboard id="board" model="#{dashboardHandler.model}" >
+                        <p:ajax event="reorder" listener="#{dashboardHandler.handleReorder}" update="message" />
+                        <p:panel id="sales" header="Sales Details" >
+                            <h:panelGrid columns="2" columnClasses="left,right" style="width:100%" >
+                                <p:chart type="line" model="#{dashboardHandler.animatedSalesModel}" style="width:400px;" />
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dashboard>
+                    <p:dashboard id="purchaseboard" model="#{dashboardHandler.model}" >
+                        <p:ajax event="reorder" listener="#{dashboardHandler.handleReorder}" update="message" />
+                        <p:panel id="purchase" header="Purchase Details" >
+                            <h:panelGrid columns="2" columnClasses="left,right" style="width:100%" >
+                                <p:chart type="line" model="#{dashboardHandler.animatedSalesModel}" style="width:400px;"  />
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dashboard>
+                </h:form> 
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>

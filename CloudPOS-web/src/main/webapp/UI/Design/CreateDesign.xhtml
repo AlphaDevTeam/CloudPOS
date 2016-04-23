@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <ui:insert name="title">WeBPOS - #{systemsHandler.current.header}</ui:insert>
+    </h:head>
+    <h:body>
+          <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Create A Product Design"/></h1>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Design Prefix : " for="designPrefix" />
+                            <p:inputText id="designPrefix" value="#{designHandler.current.designPrefix}" title="DesignPrefix" required="true" />
+                            <p:outputLabel value="Description : " for="description" />
+                            <p:inputText id="description" value="#{designHandler.current.description}" title="Description" required="true" />
+                            <p:outputLabel value="Design Code : " for="designCode" />
+                            <p:inputText id="designCode" value="#{designHandler.current.designCode}" title="DesignCode" required="true" />
+                            <p:outputLabel value="Design Profit Percentage : " for="designProfitPerc" />
+                            <p:inputText type="number" id="designProfitPerc" value="#{designHandler.current.designProfitPerc}" title="DesignProfitPerc" required="true" />
+                            
+                            
+                            <p:outputLabel value="Product : " for="product" />
+                            <p:selectOneMenu id="product" value="#{designHandler.current.product}" label="Product" converter="#{productConvertor}" rendered="true" >
+                                <f:selectItem itemLabel="Select One"/>
+                                <f:selectItems value="#{productHandler.list}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton value="Save" action="#{designHandler.persistDesign()}"/>
+                            
+                            
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+       
+    </h:body>
+</html>
+

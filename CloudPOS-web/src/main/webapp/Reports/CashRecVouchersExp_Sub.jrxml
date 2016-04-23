@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CashRecVouchersExp_Sub" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d3247a9a-c9a5-4287-b624-12887526b0f4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="receiptDescription" class="java.lang.String">
+		<fieldDescription><![CDATA[receiptDescription]]></fieldDescription>
+	</field>
+	<field name="receiptAmount" class="java.lang.Double">
+		<fieldDescription><![CDATA[receiptAmount]]></fieldDescription>
+	</field>
+	<field name="receiptNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[receiptNumber]]></fieldDescription>
+	</field>
+	<field name="receiptRefNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[receiptRefNumber]]></fieldDescription>
+	</field>
+	<field name="relatedExpenses" class="com.AlphaDevs.cloud.web.Entities.Expenses">
+		<fieldDescription><![CDATA[relatedExpenses]]></fieldDescription>
+	</field>
+	<variable name="receiptAmount_1" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{receiptAmount}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="18" width="250" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="9cbcd392-0302-44fe-ab45-ec53d37f026d"/>
+				<textElement>
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Cash Received Vouchers  ( EXP )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="34" width="80" height="16" uuid="2d309a5e-338c-4858-a78a-a8621b650f0b"/>
+				<text><![CDATA[Expense]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="34" width="82" height="16" uuid="45566517-b890-4bf9-8adc-93044b4ef8ee"/>
+				<text><![CDATA[Receipt Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="34" width="89" height="16" uuid="0dc797f7-c424-40dc-a758-0f6e13c12c0f"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="80" height="16" uuid="7d74b682-eab7-4ea7-87c6-995e4ec37eac"/>
+				<textFieldExpression><![CDATA[""+$F{relatedExpenses}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="1" width="250" height="1" uuid="b2415302-ef50-4983-b145-49062c850331"/>
+			</line>
+			<textField>
+				<reportElement x="80" y="0" width="82" height="16" uuid="44d3dc19-9da5-4355-858e-48fccd7b6b5a"/>
+				<textFieldExpression><![CDATA[$F{receiptNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="0" width="89" height="16" uuid="515011c9-e9ec-45b9-bd16-5094f82d9e13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{receiptAmount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="251" height="16" forecolor="#000000" backcolor="#CCCCCC" uuid="889665d1-d544-4e8f-a5b6-083f7bd1bf07"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="151" y="0" width="100" height="16" uuid="d7a718ea-f1b8-4c88-a798-f3abf3f30e8f"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{receiptAmount_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>
