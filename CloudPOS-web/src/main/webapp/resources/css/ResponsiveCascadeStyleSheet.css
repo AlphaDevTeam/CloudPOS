@@ -133,7 +133,7 @@ a:link:hover, a:visited:hover  {
 
 .ui-top, .ui-top .ui-layout, .ui-top .ui-layout-bd, .ui-top .ui-layout-unit {
     background-image: none;
-    background-color: red; }
+    background-color: gray; }
 
 #left_table{
     width: 100%;
