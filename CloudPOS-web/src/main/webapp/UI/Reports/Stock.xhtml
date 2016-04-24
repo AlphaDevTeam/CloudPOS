@@ -33,7 +33,7 @@
 
 
                             <p:column>
-                                <f:facet name="header">
+                                <f:facet name="header" rendered="false">
                                     <h:outputText value="Id"/>
                                 </f:facet>
                                 <h:outputText value="#{item.id}"/>
@@ -65,6 +65,24 @@
 
                                 <p:chart  type="metergauge" model="#{chartHelper.getChart(item.stockQty,item.sockItem.reorderLevel,item.sockItem.capacity)}"  style="width:400px;height:250px" />
 
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Unit Price"/>
+                                </f:facet>
+                                <h:outputText value="#{item.sockItem.unitPrice}"/>
+                            </p:column>
+                              <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Item Cost"/>
+                                </f:facet>
+                                  <h:outputText value="#{item.sockItem.itemCost}"/>
+                            </p:column>
+                             <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Item Code"/>
+                                </f:facet>
+                                 <h:outputText value="#{item.sockItem.itemCode}"/>
                             </p:column>
 
                         </p:dataTable>

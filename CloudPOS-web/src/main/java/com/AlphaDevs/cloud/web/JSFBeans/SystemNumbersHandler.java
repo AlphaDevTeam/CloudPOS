@@ -5,12 +5,12 @@ import com.AlphaDevs.cloud.web.Entities.Company;
 import com.AlphaDevs.cloud.web.Entities.Location;
 import com.AlphaDevs.cloud.web.Entities.SystemNumbers;
 import com.AlphaDevs.cloud.web.Enums.Document;
-import com.AlphaDevs.cloud.web.Extra.NumberFormatUtil;
 import com.AlphaDevs.cloud.web.SessionBean.SystemNumbersController;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
@@ -20,20 +20,37 @@ import javax.faces.bean.RequestScoped;
  */
 
 @ManagedBean
-@RequestScoped
-public class SystemNumbersHandler extends SuperHandler{
+@ViewScoped
+public class SystemNumbersHandler {
     
     @EJB
     private SystemNumbersController systemNumbersController;
     
     private SystemNumbers current;
+    private boolean editMode;
     
-    public SystemNumbersHandler() {
+    @PostConstruct
+    public void init(){
+        System.out.println("@PostConstruct : SystemNumbersHandler");
         if(current == null ){
             current = new SystemNumbers();
         }
+        setEditMode(false);
+    }
+    
+    public SystemNumbersHandler() {
+     
     }
 
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
+    }
+
+    
     public SystemNumbersController getSystemNumbersController() {
         return systemNumbersController;
     }
@@ -57,6 +74,16 @@ public class SystemNumbersHandler extends SuperHandler{
     public String createSystemNumber(){
         getSystemNumbersController().create(getCurrent());
         return "Home";
+    }
+    public String editSystemNumber(){
+        getSystemNumbersController().edit(getCurrent());
+        return "Home";
+    }
+    
+    public String preapareList(SystemNumbers systemNumbers) {
+        setCurrent(systemNumbers);
+        setEditMode(true);
+        return "Update";        
     }
     
     public List<SystemNumbers> getSpecific(Location relatedLocation , Company relatedCompany,Document relatedDocumnet){
