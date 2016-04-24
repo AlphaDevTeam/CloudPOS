@@ -508,7 +508,7 @@ public class GRNHandler {
             System.out.println("Grn : Added for Reprint " + printableGrn.getGrnNo() + " With :" + printableGrn.getId());
             GrnList.add(printableGrn);
             JRBeanCollectionDataSource beanCollection = new JRBeanCollectionDataSource(GrnList);
-            String reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/Reports/GrnReport.jasper");
+            String reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/Reports/GoodReceivedNote.jasper");
             System.out.println("Path : " + reportPath);
             JasperPrint jasPrint = JasperFillManager.fillReport(reportPath, new HashMap(), beanCollection);
             HttpServletResponse responce = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -535,7 +535,7 @@ public class GRNHandler {
             System.out.println("Grn : re d " + nn.getGrnNo() + " With :" + nn.getId());
             GrnList.add(nn);
             JRBeanCollectionDataSource beanCollection = new JRBeanCollectionDataSource(GrnList);
-            String reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/Reports/GrnReport.jasper");
+            String reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/Reports/GoodReceivedNote.jasper");
             System.out.println("Path : " + reportPath);
             JasperPrint jasPrint = JasperFillManager.fillReport(reportPath, new HashMap(), beanCollection);
             HttpServletResponse responce = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();

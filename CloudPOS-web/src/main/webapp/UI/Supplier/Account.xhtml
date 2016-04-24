@@ -7,6 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <ui:insert name="title">WeBPOS - #{systemsHandler.current.header}</ui:insert>
+         <h:outputStylesheet name="css/ResponsiveCascadeStyleSheet.css"/>
     </h:head>
     <h:body>
 
@@ -15,7 +16,7 @@
             <ui:define name="Rcontent">
                 <f:view>
                     <h:form>
-                        <h1><h:outputText value="Supplier / Customer Account"/></h1>
+                        <h1><p:outputLabel value="Supplier / Customer Account" /></h1>
                         <h:panelGrid  columns="7">
                             <p:outputLabel value="Supplier : " for="Customer"/>
                             <p:selectOneMenu required="true" id="Customer" value="#{customerTransactionHandler.current.supplier}" label="Customer" converter="#{supplierConvertor}" >
@@ -46,7 +47,7 @@
                                 </f:facet>
                                 <h:outputText value="#{item.id}"/>
                             </p:column>
-                            <p:column>
+                            <p:column rendered="false>
                                 <f:facet name="header">
                                     <h:outputText value="Supplier"/>
                                 </f:facet>
@@ -70,13 +71,13 @@
 
                             <p:column>
                                 <f:facet name="header">
-                                    <h:outputText value="CR"/>
+                                    <h:outputText value="Credit"/>
                                 </f:facet>
                                 <h:outputText value="#{item.CR}"/>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">
-                                    <h:outputText value="DR"/>
+                                    <h:outputText value="Debit"/>
                                 </f:facet>
                                 <h:outputText value="#{item.DR}"/>
                             </p:column>    
