@@ -8,7 +8,9 @@ import com.AlphaDevs.cloud.web.Enums.UserLevel;
 import com.AlphaDevs.cloud.web.Extra.AlphaConstant;
 import java.util.List;
 import java.util.Map;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 
 /**
  *
@@ -80,19 +82,50 @@ public class SessionDataHelper {
         return loggedLocation;
     }
 
-
-public static Systems getSystems() {
+    public static Systems getSystems() {
         Systems loggedSystems = null;
         Map<String, Object> sessionMap = SessionDataHelper.getSessionMap();
-        if (sessionMap != null && sessionMap.containsKey(AlphaConstant.SESSION_HEADR) && sessionMap.get(AlphaConstant.SESSION_HEADR) != null ) {
+        if (sessionMap != null && sessionMap.containsKey(AlphaConstant.SESSION_HEADR) && sessionMap.get(AlphaConstant.SESSION_HEADR) != null) {
             List<Systems> listOfSystems = (List<Systems>) sessionMap.get(AlphaConstant.SESSION_HEADR);
             loggedSystems = listOfSystems.get(0);
         }
         return loggedSystems;
     }
-    
-    public static UserX getDummyUser(){
-        return  new UserX("System", "123", UserLevel.DUMMY, null, new Company("Dummy", "Dummy"));
+
+    public static UserX getDummyUser() {
+        return new UserX("System", "123", UserLevel.DUMMY, null, new Company("Dummy", "Dummy"));
+    }
+
+    public static Flash getFlash() {
+        if (getExternalContext() != null && getExternalContext().getFlash() != null) {
+            return FacesContext.getCurrentInstance().getExternalContext().getFlash();
+        } else {
+            return null;
+        }
+    }
+
+    public static Object getFlash(String stringValue) {
+        if (getFlash() != null) {
+            return getFlash().get(stringValue);
+        } else {
+            return null;
+        }
     }
     
+    public static Object setFlash(String stringValue, Object object) {
+        if (getFlash() != null) {
+            return getFlash().put(stringValue,object);
+        } else {
+            return null;
+        }
+    }
+
+    public static ExternalContext getExternalContext() {
+        if (FacesContext.getCurrentInstance() != null && FacesContext.getCurrentInstance().getExternalContext() != null) {
+            return FacesContext.getCurrentInstance().getExternalContext();
+        } else {
+            return null;
+        }
+    }
+
 }
