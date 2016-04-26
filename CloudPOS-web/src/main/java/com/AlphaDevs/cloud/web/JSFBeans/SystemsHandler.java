@@ -1,7 +1,6 @@
 
 package com.AlphaDevs.cloud.web.JSFBeans;
 
-import com.AlphaDevs.cloud.web.Entities.Company;
 import com.AlphaDevs.cloud.web.Entities.Systems;
 import com.AlphaDevs.cloud.web.Extra.AlphaConstant;
 import com.AlphaDevs.cloud.web.Helpers.SessionDataHelper;
@@ -9,14 +8,10 @@ import com.AlphaDevs.cloud.web.SessionBean.SystemsController;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import org.primefaces.model.DashboardColumn;
-import org.primefaces.model.DefaultDashboardColumn;
-import org.primefaces.model.DefaultDashboardModel;
+import javax.faces.context.FacesContext;
 
 
 /**
@@ -35,7 +30,21 @@ public class SystemsHandler extends SuperHandler{
     private SystemsController systemsController;
     
     private Systems current;
-    
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    public void saveMessage() {
+        FacesContext context = FacesContext.getCurrentInstance();
+         
+        context.addMessage(null, new FacesMessage("Successful",  "Your message: " + message) );
+        context.addMessage(null, new FacesMessage("Second Message", "Additional Message Detail"));
+    }
     @PostConstruct
     public void init() {
        SessionDataHelper.getSessionMap().get(AlphaConstant.SESSION_HEADR);
