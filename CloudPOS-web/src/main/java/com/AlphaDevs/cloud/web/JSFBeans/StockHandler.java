@@ -3,6 +3,7 @@ package com.AlphaDevs.cloud.web.JSFBeans;
 import com.AlphaDevs.cloud.web.Entities.Items;
 import com.AlphaDevs.cloud.web.Entities.Stock;
 import com.AlphaDevs.cloud.web.Entities.Units;
+import com.AlphaDevs.cloud.web.Extra.AlphaUtil;
 import com.AlphaDevs.cloud.web.SessionBean.ItemsController;
 import com.AlphaDevs.cloud.web.SessionBean.StockController;
 import com.AlphaDevs.cloud.web.SessionBean.UnitsController;
@@ -63,13 +64,15 @@ public class StockHandler {
     public List<Stock> getList() {
         List<Stock> liquidStockList = new ArrayList<Stock>();
         if (getCurrent().getStockLocation() != null) {
-            Units searchUnit = getUnitsController().findUnitsByCode("L");
-            List<Items> liquidItems = getItemsController().findItemByUnit(searchUnit, getCurrent().getStockLocation());
-            if (liquidItems != null && !liquidItems.isEmpty()) {
-                for (Items item : liquidItems) {
-                    if (item != null) {
-                        Stock itemStock = getStockController().findSpecific(item);
-                        liquidStockList.add(itemStock);
+            List<Units> searchUnit = getUnitsController().findUnitsByCode("L");
+            if (searchUnit != null && !searchUnit.isEmpty()) {
+                List<Items> liquidItems = getItemsController().findItemByUnit(searchUnit.get(0), getCurrent().getStockLocation());
+                if (liquidItems != null && !liquidItems.isEmpty()) {
+                    for (Items item : liquidItems) {
+                        if (item != null) {
+                            Stock itemStock = getStockController().findSpecific(item);
+                            liquidStockList.add(itemStock);
+                        }
                     }
                 }
             }

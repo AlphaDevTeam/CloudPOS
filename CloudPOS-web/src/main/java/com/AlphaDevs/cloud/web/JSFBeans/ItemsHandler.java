@@ -30,7 +30,7 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class ItemsHandler {
-    
+
     @EJB
     private UnitsController unitsController;
     @EJB
@@ -39,18 +39,18 @@ public class ItemsHandler {
     private DesignController designController;
     @EJB
     private StockController stockController;
-    
+
     @EJB
     private ItemsController itemsController;
-    
+
     private Items current;
-    
+
     public ItemsHandler() {
         if (current == null) {
             current = new Items();
         }
     }
-    
+
     public Items getCurrent() {
         return current;
     }
@@ -94,39 +94,44 @@ public class ItemsHandler {
     public void setItemsController(ItemsController itemsController) {
         this.itemsController = itemsController;
     }
-    
+
     public void setCurrent(Items current) {
         this.current = current;
     }
-    
+
     public List<Items> getList() {
         List<Items> itemList = itemsController.findAll();
         System.out.println(itemList);
         return itemList;
     }
-    
+
     public List<String> getTempList() {
-        
+
         List<String> temp_list = new ArrayList<String>();
         List<Items> itemList = itemsController.findAll();
-        
+
         for (Items tempItem : itemList) {
             temp_list.add(tempItem.getItemName());
         }
-        
+
         return temp_list;
     }
-    
+
     public List<Items> getListOfLiquids(Location location) {
         if (location != null) {
-            Units searchUnit = unitsController.findUnitsByCode("L");
-            return itemsController.findItemByUnit(searchUnit, location);
+            List<Units> searchUnit = getUnitsController().findUnitsByCode("L");
+            if (searchUnit != null && !searchUnit.isEmpty()) {
+                return getItemsController().findItemByUnit(searchUnit.get(0), location);
+            } else {
+                return new ArrayList<>();
+            }
+
         } else {
-            return new ArrayList<Items>();
+            return new ArrayList<>();
         }
-        
+
     }
-    
+
     public String persistItem() {
         Logger Log = EntityHelper.createLogger("Create Item", getCurrent().getItemCode(), TransactionTypes.ITEM);
         getLoggerController().create(Log);
@@ -144,14 +149,14 @@ public class ItemsHandler {
         setCurrent(new Items());
         return "Home";
     }
-    
+
     public List<Design> getListSpec() {
         return designController.findSpecific(current.getItemProduct());
     }
-    
+
     public List<String> complete(String q) {
         List<String> tmpList = new ArrayList<String>();
-        
+
         for (Items it : itemsController.findLike(q)) {
             tmpList.add(it.getItemName() + " - " + it.getItemCode() + " - " + it.getItemDescription());
             System.out.println("Got it : " + it.getItemName() + it.getItemCode());
@@ -159,10 +164,10 @@ public class ItemsHandler {
         System.out.println("Hope" + q);
         return tmpList;
     }
-    
+
     public List<Items> completetest(String q) {
         return itemsController.findLike(q);
-        
+
     }
 
 //    public String redirectTo(String relevantPage) {
@@ -179,32 +184,32 @@ public class ItemsHandler {
 //
 //    }
     public String redirectToLocation() {
-        
+
         return "ToRegisterNewLocation";
-        
+
     }
-    
+
     public String redirectToProduct() {
-        
+
         return "ToRegisterNewProduct";
-        
+
     }
-    
+
     public String redirectToDesign() {
-        
+
         return "ToRegisterNewDesign";
-        
+
     }
-    
+
     public String redirectToSupplier() {
-        
+
         return "ToRegisterNewSupplier";
-        
+
     }
-    
+
     public String redirectToUOM() {
         return "ToRegisterNewUOM";
-        
+
     }
-    
+
 }

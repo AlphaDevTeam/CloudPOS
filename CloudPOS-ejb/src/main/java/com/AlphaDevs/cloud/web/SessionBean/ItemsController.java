@@ -2,6 +2,7 @@ package com.AlphaDevs.cloud.web.SessionBean;
 
 import com.AlphaDevs.cloud.web.Entities.Design;
 import com.AlphaDevs.cloud.web.Entities.Items;
+import com.AlphaDevs.cloud.web.Entities.Items_;
 import com.AlphaDevs.cloud.web.Entities.Location;
 import com.AlphaDevs.cloud.web.Entities.Product;
 import com.AlphaDevs.cloud.web.Entities.Units;
@@ -58,14 +59,13 @@ public class ItemsController extends AbstractFacade<Items> {
     }
 
     public List<Items> findItemByUnit(Units units, Location itemLocation) {
-        System.out.println("Location Rece: " + itemLocation.getId() + " - findItemByUnit");
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Items> q = cb.createQuery(Items.class);
         Root<Items> c = q.from(Items.class);
         q.select(c);
-        q.where(cb.equal(c.get("unitOfMeasurement"), units), cb.equal(c.get("ItemLocation"), itemLocation));
+        q.where(cb.equal(c.get(Items_.unitOfMeasurement), units), cb.equal(c.get(Items_.ItemLocation), itemLocation));
         if (getEntityManager().createQuery(q).getResultList() == null) {
-            return new ArrayList<Items>();
+            return new ArrayList<>();
         } else {
             return getEntityManager().createQuery(q).getResultList();
         }
@@ -76,8 +76,8 @@ public class ItemsController extends AbstractFacade<Items> {
         CriteriaQuery<Items> q = cb.createQuery(Items.class);
         Root<Items> c = q.from(Items.class);
         q.select(c);
-        q.where(cb.equal(c.get("ItemDesign"),design_ID ));
-        
+        q.where(cb.equal(c.get("ItemDesign"), design_ID));
+
         if (getEntityManager().createQuery(q).getResultList() == null) {
             return new ArrayList<Items>();
         } else {

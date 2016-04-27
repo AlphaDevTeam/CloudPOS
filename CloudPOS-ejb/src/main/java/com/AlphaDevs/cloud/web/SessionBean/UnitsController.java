@@ -2,6 +2,8 @@
 package com.AlphaDevs.cloud.web.SessionBean;
 
 import com.AlphaDevs.cloud.web.Entities.Units;
+import com.AlphaDevs.cloud.web.Entities.Units_;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
@@ -40,16 +42,14 @@ public class UnitsController extends AbstractFacade<Units> {
         em.persist(object);
     }
     
-    public Units findUnitsByCode(String unitCode) 
+    public List<Units> findUnitsByCode(String unitCode) 
     {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Units> q = cb.createQuery(Units.class);
         Root<Units> c = q.from(Units.class);
         q.select(c);
-        q.where(cb.equal(c.get("unitCode"), unitCode));
-        
-        return getEntityManager().createQuery(q).getSingleResult();
-        
+        q.where(cb.equal(c.get(Units_.unitCode), unitCode));
+        return getEntityManager().createQuery(q).getResultList();
     }
 
 }
