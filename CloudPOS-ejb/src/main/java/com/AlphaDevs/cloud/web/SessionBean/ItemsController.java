@@ -46,7 +46,7 @@ public class ItemsController extends AbstractFacade<Items> {
         Root<Items> c = q.from(Items.class);
         q.select(c);
         //ParameterExpression<Product> p = cb.parameter(Product.class);
-        Expression<String> path = c.get("ItemDescription");
+        Expression<String> path = c.get(Items_.ItemName);
         q.where(cb.like(path, "%" + query + "%"));
 
         /*CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
@@ -54,6 +54,18 @@ public class ItemsController extends AbstractFacade<Items> {
          Root<Design> root = cq.from(Design.class);
          cq.select(cq.from(Design.class)).where(cb.equal(root.get("product"), prod));
          */
+        return getEntityManager().createQuery(q).getResultList();
+
+    }
+
+    public List<Items> findLike(String query, Location location) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Items> q = cb.createQuery(Items.class);
+        Root<Items> c = q.from(Items.class);
+        q.select(c);
+        //ParameterExpression<Product> p = cb.parameter(Product.class);
+        Expression<String> path = c.get(Items_.ItemName);
+        q.where(cb.like(path, "%" + query + "%"), cb.equal(c.get(Items_.ItemLocation), location));
         return getEntityManager().createQuery(q).getResultList();
 
     }
@@ -76,10 +88,10 @@ public class ItemsController extends AbstractFacade<Items> {
         CriteriaQuery<Items> q = cb.createQuery(Items.class);
         Root<Items> c = q.from(Items.class);
         q.select(c);
-        q.where(cb.equal(c.get("ItemDesign"), design_ID));
+        q.where(cb.equal(c.get(Items_.ItemDesign), design_ID));
 
         if (getEntityManager().createQuery(q).getResultList() == null) {
-            return new ArrayList<Items>();
+            return new ArrayList<>();
         } else {
             return getEntityManager().createQuery(q).getResultList();
         }

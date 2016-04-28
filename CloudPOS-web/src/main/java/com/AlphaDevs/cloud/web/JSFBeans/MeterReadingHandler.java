@@ -1,5 +1,3 @@
-
-
 package com.AlphaDevs.cloud.web.JSFBeans;
 
 import com.AlphaDevs.cloud.web.Entities.ItemBincard;
@@ -23,51 +21,51 @@ import com.AlphaDevs.cloud.web.SessionBean.SystemNumbersController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 /**
  *
- * @author Mihindu Gajaba Karunarathne 
- * 
- * Alpha Development Team ( Pvt ) Ltd
- * www.AlphaDevs.com
- * Info@AlphaDevs.com
- * 
+ * @author Mihindu Gajaba Karunarathne
+ *
+ * Alpha Development Team ( Pvt ) Ltd www.AlphaDevs.com Info@AlphaDevs.com
+ *
  */
-
 @ManagedBean
 @SessionScoped
 public class MeterReadingHandler {
+
     @EJB
     private SystemNumbersController systemNumbersController;
     @EJB
     private PumpController pumpController;
-   
+
     @EJB
     private ItemBincardController itemBincardController;
     @EJB
     private StockController stockController;
-    
+
     @EJB
     private LoggerController loggerController;
-    
-    
+
     @EJB
     private MeterReadingController meterReadingController;
-    
 
     private MeterReading current;
     private double currentReading;
-    
+
     private SystemNumbers currentSystemNumber;
     private Document currentDocument;
-    
-    public MeterReadingHandler() {
-        
+
+    @PostConstruct
+    public void init() {
         setCurrentDocument(Document.METER_READING);
         current = new MeterReading();
+    }
+
+    public MeterReadingHandler() {
     }
 
     public Document getCurrentDocument() {
@@ -93,7 +91,7 @@ public class MeterReadingHandler {
     public void setSystemNumbersController(SystemNumbersController systemNumbersController) {
         this.systemNumbersController = systemNumbersController;
     }
-    
+
     public MeterReadingController getMeterReadingController() {
         return meterReadingController;
     }
@@ -105,7 +103,7 @@ public class MeterReadingHandler {
     public void setPumpController(PumpController pumpController) {
         this.pumpController = pumpController;
     }
-    
+
     public void setMeterReadingController(MeterReadingController meterReadingController) {
         this.meterReadingController = meterReadingController;
     }
@@ -118,52 +116,43 @@ public class MeterReadingHandler {
         this.current = current;
     }
 
-    public List<MeterReading> getList(){
+    public List<MeterReading> getList() {
         return getMeterReadingController().findAll();
     }
-    
-    public double getLastReading(){
-        //System.out.println("S" + getCurrent().getRelatedItem() + " - " + getCurrent().getRelatedLocation());
-        //return getMeterReadingController().findReadingByItem(getCurrent().getRelatedPump().getRelatedItem(),getCurrent().getRelatedLocation());
-        //return getPumpController().findReadingByPump(getCurrent().getRelatedPump(), getCurrent().getRelatedLocation());
-        if(getCurrent() != null && getCurrent().getRelatedPump()!= null && getCurrent().getRelatedPump().getLastReading() != null ){
+
+    public double getLastReading() {
+        if (getCurrent() != null && getCurrent().getRelatedPump() != null && getCurrent().getRelatedPump().getLastReading() != null) {
             return getCurrent().getRelatedPump().getLastReading();
-        }else{
+        } else {
             return 0;
         }
-        
     }
-    
-    public String getReferenceNumber(){
+
+    public String getReferenceNumber() {
         setCurrentSystemNumber(null);
         Map<String, Object> sessionMap = SessionDataHelper.getSessionMap();
         UserX loggedUser = (UserX) sessionMap.get(AlphaConstant.SESSION_USER);
-        if(loggedUser != null && getCurrent().getRelatedLocation() != null){
+        if (loggedUser != null && getCurrent().getRelatedLocation() != null) {
             List<SystemNumbers> systemNumbers = getSystemNumbersController().findSpecific(loggedUser.getAssociatedCompany(), getCurrent().getRelatedLocation(), getCurrentDocument());
-            if(systemNumbers != null && !systemNumbers.isEmpty()){
+            if (systemNumbers != null && !systemNumbers.isEmpty()) {
                 setCurrentSystemNumber(systemNumbers.get(0));
                 getCurrent().setReferenceNumber(getCurrentSystemNumber().getDocumentSystemNo());
             }
-            
         }
-        
-        return  getCurrentSystemNumber() != null ? getCurrentSystemNumber().getDocumentSystemNo() : "";
-        
+        return getCurrentSystemNumber() != null ? getCurrentSystemNumber().getDocumentSystemNo() : "";
     }
 
-    public void setReferenceNumber(String referrenccNumberre){
+    public void setReferenceNumber(String referrenccNumberre) {
         getCurrent().setReferenceNumber(referrenccNumberre);
     }
-    
-    public List<Pump> getPumpListAccordingToLocation(){
-        if(getCurrent() != null && getCurrent().getRelatedLocation() != null ){
+
+    public List<Pump> getPumpListAccordingToLocation() {
+        if (getCurrent() != null && getCurrent().getRelatedLocation() != null) {
             return getPumpController().findReadingByPump(getCurrent().getRelatedLocation());
-        }else{
-            return new ArrayList<Pump>();
+        } else {
+            return new ArrayList<>();
         }
-        
     }
-    
 
     public ItemBincardController getItemBincardController() {
         return itemBincardController;
@@ -196,60 +185,57 @@ public class MeterReadingHandler {
     public void setCurrentReading(double currentReading) {
         this.currentReading = currentReading;
     }
-    public void calculateReading(){
+
+    public void calculateReading() {
         //System.out.println("awas"  + getLastReading() + " -- " + getCurrentReading());
         getCurrent().setReading(getCurrentReading() - getLastReading());
     }
-    
-    private void saveMeterReading(){
-        Logger Log = EntityHelper.createLogger("Meter Reading", current.getNote(), TransactionTypes.READINGS);
-        loggerController.create(Log);
-        current.setLogger(Log);
-        
-        Stock stock = stockController.findSpecific(current.getRelatedPump().getRelatedItem());
-        stock.setStockQty((float) (stock.getStockQty() - current.getReading()));
-        
-        stockController.edit(stock);
-        
+
+    private void saveMeterReading() {
+        Logger Log = EntityHelper.createLogger("Meter Reading", getCurrent().toString(), TransactionTypes.READINGS);
+        getLoggerController().create(Log);
+        getCurrent().setLogger(Log);
+
+        Stock stock = getStockController().getItemStock(getCurrent().getRelatedLocation(), getCurrent().getRelatedPump().getRelatedItem());
+        stock.setStockQty((float) (stock.getStockQty() - getCurrent().getReading()));
+        getStockController().edit(stock);
+
         ItemBincard itemBin = new ItemBincard();
-        itemBin.setDescription("Meter Reading - " + getCurrent().getRelatedPump() + " - " + current.getNote());
-        itemBin.setItem(current.getRelatedPump().getRelatedItem());
-        itemBin.setTrnNumber(current.getReferenceNumber());
-        itemBin.setQty((current.getReading() * -1));
-        itemBin.setRelatedDate(current.getRelatedDate());
+        itemBin.setDescription("Meter Reading - " + getCurrent().getRelatedPump() + " - " + getCurrent() + getCurrent().getNote());
+        itemBin.setItem(getCurrent().getRelatedPump().getRelatedItem());
+        itemBin.setTrnNumber(getCurrent().getReferenceNumber());
+        itemBin.setQty((getCurrent().getReading() * -1));
+        itemBin.setRelatedDate(getCurrent().getRelatedDate());
         itemBin.setLog(Log);
         itemBin.setBalance(stock.getStockQty());
-        itemBincardController.create(itemBin);
-        
+        getItemBincardController().create(itemBin);
+
         Pump pump = getCurrent().getRelatedPump();
         pump.setLastReading(getCurrentReading());
         getPumpController().edit(pump);
-        
+
         //Increment the the Document No 
-        if(getCurrentSystemNumber() != null){
+        if (getCurrentSystemNumber() != null) {
             getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getIncrementedSystemNumber());
             getSystemNumbersController().edit(getCurrentSystemNumber());
         }
-        
-        
-        getCurrent().setLastReading(getLastReading() - getCurrent().getReading() );
+        getCurrent().setLastReading(getLastReading() - getCurrent().getReading());
         getMeterReadingController().create(getCurrent());
     }
-    
-    public void saveMeterReadingAndStay(){
-        
+
+    public void saveMeterReadingAndStay() {
+
         saveMeterReading();
         setCurrent(new MeterReading());
         setCurrentReading(0);
-        
+
     }
-    public String saveMeterReadingAndMoveToHome(){
+
+    public String saveMeterReadingAndMoveToHome() {
         saveMeterReading();
         setCurrent(new MeterReading());
         setCurrentReading(0);
         return "Home";
     }
-    
-     
-    
+
 }

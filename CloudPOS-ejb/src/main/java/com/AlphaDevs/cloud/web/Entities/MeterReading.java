@@ -151,7 +151,7 @@ public class MeterReading implements Serializable {
 
     @Override
     public String toString() {
-        return "com.AlphaDevs.cloud.web.Entities.MeterReading[ id=" + id + " ]";
+        return getReferenceNumber();
     }
 
 }

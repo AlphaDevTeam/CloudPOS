@@ -47,30 +47,38 @@
             </pe:layoutPane>
             <pe:layoutPane position="south" resizable="true" size="30" minSize="30" maxSize="30" >
                 <ui:insert name="Rbottom" id="Rbottom" class="ui-top">
-                    <p:graphicImage  class="image-cropper" name="Images/AlphaLogoBlack.jpg" height="25" width="25" style="margin-left: 15px; margin-top: 0px; margin-right: auto; width: 20px; height: 20px" /> 
-                    <p:outputLabel value="Copyright © 2016 Alpha Development Team (Pvt) Ltd. All rights reserved. Build # 16.1.0" style="margin-left: 15px; margin-top: 0px; margin-right: auto; width: 10px; height: 10px"/>
+                    <center>
+                        <p:graphicImage  class="image-cropper" name="Images/AlphaLogoBlack.jpg" height="25" width="25" style="margin-left: 15px; margin-top: 0px; margin-right: auto; width: 20px; height: 20px" /> 
+                        <p:outputLabel value="Copyright © 2016 Alpha Development Team (Pvt) Ltd. All rights reserved. Build # 16.1.0" style="margin-left: 15px; margin-top: 0px; margin-right: auto; width: 10px; height: 10px"/>
+                    </center>
                 </ui:insert> 
             </pe:layoutPane>
             <pe:layoutPane position="west" resizable="true" size="200" minSize="100" maxSize="200">
                 <ui:insert name="Rside"> 
-                    <h:panelGroup layout="block" class="image-cropper">
-                        <h:graphicImage value="#{sessionHandler.url}"  class="rounded" />
-                    </h:panelGroup>
-                    <p:clock  />
-                    <p:outputLabel value="Loged User" rendered="#{empty sessionHandler.sessionUser.userName ? false : true }" /><br/>
-                    <p:outputLabel value="#{stringHelper.convertToUppercase(sessionHandler.sessionUser.userName)}"/>
-                    <p:outputLabel value="#{empty sessionHandler.sessionUser.userName ? infoGrabber.logoutUser : noUser}" rendered="false" />
-                    <p:outputLabel value="Company" rendered="#{empty sessionHandler.sessionUser.associatedCompany.companyName ? false : true }" /><br/>
-                    <p:outputLabel value="#{sessionHandler.sessionUser.associatedCompany.companyName}"/>
-                    <h:form>
-                        <p:panelMenu model="#{menuItemHandler.menumodelsingle}" />
-                    </h:form>
+                    <center>
+                        <h:panelGroup layout="block" class="image-cropper">
+                            <h:graphicImage value="#{sessionHandler.url}"  class="rounded" />
+                        </h:panelGroup>
+                        <br/>
+                        <hr/>
+                        <br/>
+                        <p:clock  />
+                        <br/>
+                        <p:outputLabel value="Loged User" rendered="#{empty sessionHandler.sessionUser.userName ? false : true }" /> <br/>
+                        <p:outputLabel value="#{stringHelper.convertToUppercase(sessionHandler.sessionUser.userName)}"/> <br/>
+                        <p:outputLabel value="#{empty sessionHandler.sessionUser.userName ? infoGrabber.logoutUser : noUser}" rendered="false" /><br/>
+                        <p:outputLabel value="Company" rendered="#{empty sessionHandler.sessionUser.associatedCompany.companyName ? false : true }" /><br/>
+                        <p:outputLabel value="#{sessionHandler.sessionUser.associatedCompany.companyName}"/><br/>
+                        <h:form>
+                            <p:panelMenu model="#{menuItemHandler.menumodelsingle}" />
+                        </h:form>
+                    </center>
                 </ui:insert>
             </pe:layoutPane>
             <pe:layoutPane position="center" resizable="true" size="500" minSize="400" maxSize="600" >
                 <ui:insert name="Rcontent">Content</ui:insert>
             </pe:layoutPane>
-           
+
         </pe:layout>
     </h:body>
 </html>

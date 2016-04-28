@@ -40,7 +40,7 @@ import org.primefaces.model.chart.LineChartSeries;
 
 /**
  *
- * @author Mihindu
+ * @author Mihindu Karunarathne
  */
 @ManagedBean
 @SessionScoped

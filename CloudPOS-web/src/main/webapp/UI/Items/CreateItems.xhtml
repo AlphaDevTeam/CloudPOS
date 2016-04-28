@@ -17,7 +17,7 @@
                     <h:form>
                         <p:growl id="message"/>
                         <h1><h:outputText value="Manage Items"/></h1>
-                   
+
                         <h:panelGrid columns="3" id="panel">
                             <p:outputLabel value="Item Barcode : " for="itemBarcode" />
                             <p:inputText id="itemBarcode" value="#{itemsHandler.current.itemBarcode}" title="Item Barcode" />
@@ -31,11 +31,7 @@
                             <p:outputLabel value="Description : " for="itemDescription"  />
                             <p:inputText id="itemDescription" value="#{itemsHandler.current.itemDescription}" title="Description" required="true" />
                             <h:inputHidden/>
-
-
-
                             <p:outputLabel value="UOM : " for="unitOfMeasurement" />              
-
                             <p:selectOneMenu id="unitOfMeasurement" value="#{itemsHandler.current.unitOfMeasurement}" label="Unit Of Measurement" required="true" converter="#{unitsConvertor}" >
                                 <f:selectItem itemLabel="Select One"/>
                                 <f:selectItems value="#{unitsHandler.list}"/>
@@ -44,8 +40,6 @@
                                 <f:ajax />
                                 #{unitsHandler.setRDStatus("FromItem")}
                             </p:commandLink>
-
-
                             <p:outputLabel value="Capacity : " for="itemCapacity" />
                             <p:inputText type="number" id="itemCapacity" value="#{itemsHandler.current.capacity}" title="Capacity" />
                             <h:inputHidden/>
@@ -82,7 +76,7 @@
                                 <f:selectItems value="#{itemsHandler.listSpec}"/>
                             </p:selectOneMenu>
                             <p:commandLink value="Register New Design" action="#{itemsHandler.redirectToDesign()}" immediate="true">
-                                
+
                                 #{designHandler.setRDStatus("FromItem")}
                             </p:commandLink>
 

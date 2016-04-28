@@ -135,16 +135,15 @@ public class ItemsHandler {
     public String persistItem() {
         Logger Log = EntityHelper.createLogger("Create Item", getCurrent().getItemCode(), TransactionTypes.ITEM);
         getLoggerController().create(Log);
+
         getCurrent().setLogger(Log);
         getItemsController().create(getCurrent());
+
         Stock stock = new Stock();
         stock.setSockItem(getCurrent());
         stock.setRelatedCompany(SessionDataHelper.getLoggedCompany(true));
         stock.setStockLocation(getCurrent().getItemLocation());
-        String s = String.valueOf(getCurrent().getCapacity());
-        float f = Float.parseFloat(s);
-        stock.setStockQty(f);
-        stock.setRelatedCompany(getCurrent().getItemLocation().getRelatedCompany());
+        stock.setStockQty(0);
         getStockController().create(stock);
         setCurrent(new Items());
         return "Home";
@@ -155,19 +154,22 @@ public class ItemsHandler {
     }
 
     public List<String> complete(String q) {
-        List<String> tmpList = new ArrayList<String>();
+        List<String> tmpList = new ArrayList<>();
 
         for (Items it : itemsController.findLike(q)) {
             tmpList.add(it.getItemName() + " - " + it.getItemCode() + " - " + it.getItemDescription());
-            System.out.println("Got it : " + it.getItemName() + it.getItemCode());
         }
-        System.out.println("Hope" + q);
         return tmpList;
     }
 
     public List<Items> completetest(String q) {
-        return itemsController.findLike(q);
+        System.out.println("completetest : with " + q + " - " + getCurrent().getItemLocation() );
+        return itemsController.findLike(q,getCurrent().getItemLocation());
 
+    }
+
+    public List<Items> autoCompleteItems(String query) {
+        return getItemsController().findLike(query);
     }
 
 //    public String redirectTo(String relevantPage) {

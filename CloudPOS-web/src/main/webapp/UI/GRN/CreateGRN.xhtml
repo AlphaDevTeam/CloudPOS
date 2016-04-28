@@ -41,7 +41,7 @@
 
                                 <f:selectItem itemLabel="Select One" />  
                                 <f:selectItems value="#{locationHandler.list}"/>
-                                <p:ajax update="grnNo" /> 
+                                <p:ajax event="change" process="@this" update="grnNo,acItem,itemCost" /> 
                             </p:selectOneMenu>
 
                             <p:outputLabel value="PurchaseType : " for="purchaseType" />
@@ -56,7 +56,7 @@
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Supplier : " for="supplier" />
-                            <p:selectOneMenu id="supplier" required="true" value="#{gRNHandler.current.supplier}" label="Supplier" converter="#{supplierConvertor}">
+                            <p:selectOneMenu id="supplier" required="true" value="#{gRNHandler.current.supplier}" label="Supplier" converter="#{supplierConvertor}" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Select One"/>
                                 <f:selectItems value="#{supplierHandler.allSuppliers()}"/>
                             </p:selectOneMenu>
@@ -64,7 +64,7 @@
 
                             <p:outputLabel value="Item : " for="acItem" />
                             <p:autoComplete id="acItem" value="#{gRNHandler.currentDetails.grnItem}"   
-                                            completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}"  >
+                                            completeMethod="#{gRNHandler.autoCompleteItems}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}" >
                                 <p:ajax event="itemSelect" listener="#{gRNHandler.handleSelect}" update="itemCost" />  
                             </p:autoComplete>  
                             <p:outputLabel value="Qty : " for="itemQty" />

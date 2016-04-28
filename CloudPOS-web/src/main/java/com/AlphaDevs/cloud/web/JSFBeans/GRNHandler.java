@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -45,6 +46,8 @@ import org.primefaces.event.SelectEvent;
 @SessionScoped
 public class GRNHandler {
 
+    @EJB
+    private ItemsController itemsController;
     @EJB
     private PaymentDetailsController paymentDetailsController;
     @EJB
@@ -112,6 +115,14 @@ public class GRNHandler {
     }
 
     public GRNHandler() {
+    }
+
+    public ItemsController getItemsController() {
+        return itemsController;
+    }
+
+    public void setItemsController(ItemsController itemsController) {
+        this.itemsController = itemsController;
     }
 
     public String getGrnNumber() {
@@ -328,6 +339,11 @@ public class GRNHandler {
         currentDetails.setGrnItemCost(currentDetails.getGrnItem().getItemCost());
     }
 
+    public void handleKeyup(SelectEvent event) {
+        System.out.println("handleKeyup :" + event.toString());
+        System.out.println("handleKeyup :" + getCurrent().getLocation());
+    }
+
     public String addTEst() {
 
         if (getVirtualList().isEmpty()) {
@@ -345,7 +361,7 @@ public class GRNHandler {
             getPropertiesController().create(properties);
             System.out.println("Done");
         }
-        
+
         //Saving GRN
         getCurrent().setBillStatus(getCurrent().getBillStatus());
         getCurrent().setGrnDetails(getVirtualList());
@@ -639,6 +655,10 @@ public class GRNHandler {
         currentDetails = new GRNDetails();
     }
 
+    public List<Items> autoCompleteItems(String query) {
+        return getItemsController().findLike(query, getCurrent().getLocation());
+    }
+
     public Double getTotal() {
         double TotalValue = 0;
         for (GRNDetails details : getVirtualList()) {
@@ -652,7 +672,7 @@ public class GRNHandler {
 
         MessageHelper.addSuccessMessage(((GRNDetails) event.getObject()).getGrnItem().getItemCode() + " Updated!");
         for (GRNDetails det : getVirtualList()) {
-            if (det.getGrnItem().getId() == ((GRNDetails) event.getObject()).getGrnItem().getId()) {
+            if (Objects.equals(det.getGrnItem().getId(), ((GRNDetails) event.getObject()).getGrnItem().getId())) {
 
                 det.setGrnQty(((GRNDetails) event.getObject()).getGrnQty());
                 det.setGrnItemCost(((GRNDetails) event.getObject()).getGrnItemCost());

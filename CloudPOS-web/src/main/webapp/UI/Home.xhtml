@@ -10,26 +10,28 @@
         <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
 
             <ui:define name="Rcontent">
-                <h:form> 
-                    <p:growl id="message"/>
+                <h:form>
+                    <p:ribbon>
+                        <p:tab title="File">
+                            <p:ribbonGroup label="Options">
+                                <p:commandButton value="New" icon="ui-ribbonicon-new" styleClass="ui-ribbon-bigbutton" type="button"/>
+                                <p:commandButton value="Save" icon="ui-ribbonicon-save" styleClass="ui-ribbon-bigbutton" type="button"/>
+                            </p:ribbonGroup>
 
-                    <p:dashboard id="board" model="#{dashboardHandler.model}" >
-                        <p:ajax event="reorder" listener="#{dashboardHandler.handleReorder}" update="message" />
-                        <p:panel id="sales" header="Sales Details" >
-                            <h:panelGrid columns="2" columnClasses="left,right" style="width:100%" >
-                                <p:chart type="line" model="#{dashboardHandler.animatedSalesModel}" style="width:400px;" />
-                            </h:panelGrid>
-                        </p:panel>
-                    </p:dashboard>
-                    <p:dashboard id="purchaseboard" model="#{dashboardHandler.model}" >
-                        <p:ajax event="reorder" listener="#{dashboardHandler.handleReorder}" update="message" />
-                        <p:panel id="purchase" header="Purchase Details" >
-                            <h:panelGrid columns="2" columnClasses="left,right" style="width:100%" >
-                                <p:chart type="line" model="#{dashboardHandler.animatedSalesModel}" style="width:400px;"  />
-                            </h:panelGrid>
-                        </p:panel>
-                    </p:dashboard>
-                </h:form> 
+                        </p:tab>
+
+                        <p:tab title="Reports">
+                            <p:ribbonGroup label="Sales">
+                                <p:commandButton value="In" icon="ui-ribbonicon-zoomin" styleClass="ui-ribbon-bigbutton" type="button" />
+                                <p:commandButton value="Out" icon="ui-ribbonicon-zoomout" styleClass="ui-ribbon-bigbutton" type="button"/>   
+                            </p:ribbonGroup>
+                        </p:tab>
+                    </p:ribbon>
+
+                    <p:chart type="line" model="#{chartHandler.lineModel1}" style="height:300px;" responsive="true"/>
+
+                    <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                </h:form>
             </ui:define>
 
         </ui:composition>

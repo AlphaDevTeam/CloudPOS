@@ -63,7 +63,7 @@ public class GRN implements Serializable
     @OneToOne
     private Logger logger;
     
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Properties> extraz;
     
     public GRN(String grnNo, Date grnDate, Supplier supplier, String invNo, PurchaseType purchaseType, double CreditPeriod, double TotalAmount, double settledAmount, GRNFlags grnFlags, Location location, BillStatus billStatus, List<GRNDetails> gRNDetailss, Logger logger, PaymentDetails paymentDetails) {
@@ -103,9 +103,6 @@ public class GRN implements Serializable
     
     
     public List<Properties> getExtraz() {
-        if(extraz != null){
-            System.out.println("Extrasz : " + extraz.toArray().toString());
-        }
         return extraz;
     }
 
