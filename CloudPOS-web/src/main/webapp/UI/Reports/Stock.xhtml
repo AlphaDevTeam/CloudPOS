@@ -25,7 +25,7 @@
                             <p:selectOneMenu id="relatedLocation" value="#{stockHandler.current.stockLocation}" label="Location" converter="#{locationConvertor}" required="true" >
                                 <p:ajax update="stockTable"/>                     
                                 <f:selectItem itemLabel="Select One" />  
-                                <f:selectItems value="#{locationHandler.list}" />
+                                <f:selectItems value="#{locationHandler.locationList}" />
                             </p:selectOneMenu>
                         </h:panelGrid>
                         <br/>

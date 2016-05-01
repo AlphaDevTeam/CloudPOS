@@ -15,7 +15,7 @@
 
             <ui:define name="Rcontent">
                 <f:view>
-                    <h:form id="mainForm" target="_new">
+                    <h:form id="mainForm" >
                         <p:growl id="messages" showDetail="true"/>  
                         <h1><h:outputText value="Create GRN"/></h1>
                         <h:panelGrid columns="6">
@@ -34,16 +34,15 @@
                             <p:inputText id="grnNo" required="true" requiredMessage="GRN Number is mising..!!"  value="#{gRNHandler.grnNumber}" title="GrnNo" readonly="#{systemsHandler.current.isGRNnumberAutoGenarated}" />
                             <p:outputLabel value="Inv No : " for="invNo" />
                             <p:inputText id="invNo" value="#{gRNHandler.current.invNo}" title="InvNo" />
+                           
                             <p:outputLabel value="Location : " for="location" />
-
                             <p:selectOneMenu id="location" value="#{gRNHandler.current.location}" label="Location " 
                                              converter="#{locationConvertor}" required="true" >
-
                                 <f:selectItem itemLabel="Select One" />  
-                                <f:selectItems value="#{locationHandler.list}"/>
-                                <p:ajax event="change" process="@this" update="grnNo,acItem,itemCost" /> 
+                                <f:selectItems value="#{locationHandler.locationList}"/>
+                                <p:ajax event="itemSelect" process="@this" update="grnNo,acItem,itemCost" listener="#{gRNHandler.handleLocationSelect}" /> 
                             </p:selectOneMenu>
-
+                            
                             <p:outputLabel value="PurchaseType : " for="purchaseType" />
                             <p:selectOneMenu id="purchaseType" required="true" value="#{gRNHandler.current.purchaseType}" label="Purchase Type">
                                 <f:selectItem itemLabel="Select One"/>
@@ -64,8 +63,9 @@
 
                             <p:outputLabel value="Item : " for="acItem" />
                             <p:autoComplete id="acItem" value="#{gRNHandler.currentDetails.grnItem}"   
-                                            completeMethod="#{gRNHandler.autoCompleteItems}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}" >
+                                            forceSelection="true"  completeMethod="#{gRNHandler.autoCompleteItems}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}" >
                                 <p:ajax event="itemSelect" listener="#{gRNHandler.handleSelect}" update="itemCost" />  
+                                <p:ajax process="@this" update="itemCost" />
                             </p:autoComplete>  
                             <p:outputLabel value="Qty : " for="itemQty" />
                             <p:inputText type="number" id="itemQty" title="Qty" value="#{gRNHandler.currentDetails.grnQty}" />
@@ -82,7 +82,7 @@
                             <h:inputHidden/>
                             <h:inputHidden/>
                             <p:commandButton value="Add" action="#{gRNHandler.addItem()}" update="virtualList,totalAmount,acItem,itemQty,itemCost,:mainForm:messages"  /> 
-                            <p:commandButton ajax="false" value="Save" action="#{gRNHandler.addTEst()}" />
+                            <p:commandButton ajax="false" value="Save" action="#{gRNHandler.addTEst()}" onclick="this.form.target = '_blank'" />
                         </h:panelGrid>
 
                         <br/>
@@ -145,7 +145,7 @@
                                 </p:cellEditor>
                             </p:column>
                             <f:facet name="footer">  
-                                <p:commandButton id="DeleteButton" value="Delete" icon="ui-icon-closethick"  
+                                <p:commandButton ajax="true" id="DeleteButton" value="Delete" icon="ui-icon-closethick"  
                                                  onclick="confirmation.show()"/>  
                             </f:facet>  
 

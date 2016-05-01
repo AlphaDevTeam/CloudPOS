@@ -38,11 +38,12 @@
         <pe:layout fullPage="true" style="min-width:available;min-height:available;">
             <pe:layoutPane position="north" resizable="true" size="100" minSize="40" maxSize="200">
                 <ui:insert name="Rheader">
-                    <h:panelGrid columns="2">
-                        <p:graphicImage  class="image-cropper" name="Images/AlphaLogoBlack.jpg" height="50" width="50" style="margin-left: 15px; margin-right: auto; width: 75px; height: 75px" /> 
-                        <p:outputLabel value="Alpha Development Team - WEB POS Beta V1 - #{systemsHandler.current.header}" style="margin-left: 15px; margin-right: auto; width: 75px; height: 75px"/>
-                    </h:panelGrid>
-
+                    <h:panelGroup layout="block" style="background-color: black;color: gray;">
+                        <h:panelGrid columns="2">
+                            <p:graphicImage  class="image-cropper" name="Images/AlphaLogoBlack.jpg" height="50" width="50" style="margin-left: 15px; margin-right: auto; width: 75px; height: 75px" /> 
+                            <p:outputLabel value="Alpha Development Team - WEB POS Beta V1 - #{systemsHandler.current.header}" style="margin-left: 15px; margin-right: auto; width: 75px; height: 75px"/>
+                        </h:panelGrid>
+                    </h:panelGroup>
                 </ui:insert>
             </pe:layoutPane>
             <pe:layoutPane position="south" resizable="true" size="30" minSize="30" maxSize="30" >
@@ -53,26 +54,27 @@
                     </center>
                 </ui:insert> 
             </pe:layoutPane>
-            <pe:layoutPane position="west" resizable="true" size="200" minSize="100" maxSize="200">
+            <pe:layoutPane position="west" resizable="true" size="250" minSize="100" maxSize="250">
                 <ui:insert name="Rside"> 
-                    <center>
-                        <h:panelGroup layout="block" class="image-cropper">
-                            <h:graphicImage value="#{sessionHandler.url}"  class="rounded" />
-                        </h:panelGroup>
-                        <br/>
-                        <hr/>
-                        <br/>
-                        <p:clock  />
-                        <br/>
-                        <p:outputLabel value="Loged User" rendered="#{empty sessionHandler.sessionUser.userName ? false : true }" /> <br/>
-                        <p:outputLabel value="#{stringHelper.convertToUppercase(sessionHandler.sessionUser.userName)}"/> <br/>
-                        <p:outputLabel value="#{empty sessionHandler.sessionUser.userName ? infoGrabber.logoutUser : noUser}" rendered="false" /><br/>
-                        <p:outputLabel value="Company" rendered="#{empty sessionHandler.sessionUser.associatedCompany.companyName ? false : true }" /><br/>
-                        <p:outputLabel value="#{sessionHandler.sessionUser.associatedCompany.companyName}"/><br/>
-                        <h:form>
-                            <p:panelMenu model="#{menuItemHandler.menumodelsingle}" />
-                        </h:form>
-                    </center>
+                    <h:panelGroup layout="block" style="background-color: black;color: gray">
+                        <center>
+                            <h:panelGroup layout="block" class="image-cropper">
+                                <h:graphicImage value="#{sessionHandler.url}"  class="rounded" />
+                                <p:outputLabel value="#{stringHelper.convertToUppercase(sessionHandler.sessionUser.userName)}"/> <br/>
+                                <p:outputLabel value="#{sessionHandler.sessionUser.associatedCompany.companyName}"/><br/>
+                                <br/>
+                                <hr/>
+                                <br/>
+                            </h:panelGroup>
+
+                            <p:clock  />
+                            <br/>
+
+                            <h:form>
+                                <p:panelMenu model="#{menuItemHandler.menumodelsingle}" />
+                            </h:form>
+                        </center>
+                    </h:panelGroup>
                 </ui:insert>
             </pe:layoutPane>
             <pe:layoutPane position="center" resizable="true" size="500" minSize="400" maxSize="600" >

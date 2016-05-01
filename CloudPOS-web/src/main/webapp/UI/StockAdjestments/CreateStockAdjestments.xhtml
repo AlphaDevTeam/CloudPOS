@@ -10,34 +10,36 @@
 
         <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
 
-           
+
 
             <ui:define name="Rcontent">
                 <f:view>
                     <h:form>
                         <h1><h:outputText value="Create Stock Adjestments "/></h1>
                         <h:panelGrid columns="2">
-                            
+
                             <p:outputLabel value="Ref Number : " for="refNumber" />
                             <p:inputText id="refNumber" value="#{stockAdjestmentsHandler.refNumber}" title="Reference Number" />
                             <p:outputLabel value="Date : " for="Date" />  
                             <p:calendar id="Date" value="#{stockAdjestmentsHandler.current.adjestmentDate}" pattern="#{sessionHandler.defaultDateFormat}" title="Date">
-                                    <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
+                                <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
                             </p:calendar>
                             <p:outputLabel value="Description : " for="adjestmentDescription" />
                             <p:inputText id="adjestmentDescription" value="#{stockAdjestmentsHandler.current.adjestmentDescription}" title="Description" />
                             <p:outputLabel value="Qty : " for="adjestmentQty" />
                             <p:inputText type="number" id="adjestmentQty" value="#{stockAdjestmentsHandler.current.adjestmentQty}" title="Qty" />
-                            
+
                             <p:outputLabel value="Location : " for="adjestmentLocation" />
                             <p:selectOneMenu id="adjestmentLocation" value="#{stockAdjestmentsHandler.current.adjestmentLocation}" label="Location " converter="#{locationConvertor}" >
                                 <f:selectItem itemLabel="Select One" />  
-                                <f:selectItems value="#{locationHandler.list}"/>
-                                <p:ajax update="refNumber" /> 
+                                <f:selectItems value="#{locationHandler.locationList}"/>
+                                 <p:ajax event="itemSelect" process="@this" update="refNumber,adjestmentItem" listener="#{stockAdjestmentsHandler.handleLocationSelect}" /> 
                             </p:selectOneMenu>
+
                             <p:outputLabel value="Item : " for="adjestmentItem" />
                             <p:autoComplete id="adjestmentItem" value="#{stockAdjestmentsHandler.current.adjestmentItems}"   
-                                            completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}"  >
+                                            forceSelection="true" completeMethod="#{stockAdjestmentsHandler.autoCompleteItems}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}"  >
+                                <p:ajax process="@this" />
                             </p:autoComplete>  
                             <p:outputLabel value="Type : " for="adjestmentType" />
                             <p:selectOneMenu id="adjestmentType" value="#{stockAdjestmentsHandler.current.adjestmentType}" label="Type " >
@@ -50,7 +52,7 @@
 
             </ui:define>
 
-           
+
 
         </ui:composition>
 

@@ -24,7 +24,8 @@ public enum Document {
     CASH_RECEIPT_EXP("CashRecieptExpenses","Cash Receipt Voucher (Expenses)"),
     BANK_DEPOSIT("BankDeposit","Bank Deposit"),
     REQUEST("Request","Request"),
-    STOCK_ADJESTMENT("StockAdjestment","Stock Adjestment");
+    STOCK_ADJESTMENT("StockAdjestment","Stock Adjestments"),
+    STOCK_TRANSFER("StockTransfer","Stock Transfers");;
     
     private String fieldName;
     private String displayName;

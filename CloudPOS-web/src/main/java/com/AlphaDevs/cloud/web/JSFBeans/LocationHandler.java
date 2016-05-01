@@ -15,6 +15,7 @@ import com.AlphaDevs.cloud.web.SessionBean.LocationController;
 import com.AlphaDevs.cloud.web.SessionBean.LoggerController;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -40,14 +41,47 @@ public class LocationHandler {
     private String RDStatus;
     private Location current;
 
-    public LocationHandler() {
+    @PostConstruct
+    public void init() {
         if (current == null) {
             current = new Location();
         }
     }
 
-    public List<Location> getList() {
+    public LocationHandler() {
+
+    }
+
+    public CashBookBalanceController getCashBookBalanceController() {
+        return cashBookBalanceController;
+    }
+
+    public void setCashBookBalanceController(CashBookBalanceController cashBookBalanceController) {
+        this.cashBookBalanceController = cashBookBalanceController;
+    }
+
+    public LoggerController getLoggerController() {
+        return loggerController;
+    }
+
+    public void setLoggerController(LoggerController loggerController) {
+        this.loggerController = loggerController;
+    }
+
+    public LocationController getLocationController() {
+        return locationController;
+    }
+
+    public void setLocationController(LocationController locationController) {
+        this.locationController = locationController;
+    }
+
+    public List<Location> getListAll() {
         return locationController.findAll();
+    }
+
+    public List<Location> getLocationList() {
+        return getLocationController().findLocations(SessionDataHelper.getLoggedCompany(true));
     }
 
     public Location getCurrent() {
@@ -59,9 +93,9 @@ public class LocationHandler {
     }
 
     public String persistLocation() {
-        Logger Log = EntityHelper.createLogger("Create Location", current.getCode(), TransactionTypes.LOCATION);
-        loggerController.create(Log);
-        current.setLogger(Log);
+        Logger Log = EntityHelper.createLogger("Create Location", getCurrent().getCode(), TransactionTypes.LOCATION);
+        getLoggerController().create(Log);
+        getCurrent().setLogger(Log);
 
         Map<String, Object> sessionMap = SessionDataHelper.getSessionMap();
         UserX logUser = (UserX) sessionMap.get(AlphaConstant.SESSION_USER);
@@ -75,8 +109,8 @@ public class LocationHandler {
             CashBookBalance BalanceTax = new CashBookBalance(current, 0, 0, BillStatus.TAX);
             CashBookBalance BalanceNonTax = new CashBookBalance(current, 0, 0, BillStatus.NON_TAX);
 
-            cashBookBalanceController.create(BalanceTax);
-            cashBookBalanceController.create(BalanceNonTax);
+            getCashBookBalanceController().create(BalanceTax);
+            getCashBookBalanceController().create(BalanceNonTax);
             current = new Location();
             return getRDStatus();
         } else {

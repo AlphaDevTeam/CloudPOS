@@ -9,6 +9,7 @@ import com.AlphaDevs.cloud.web.Entities.CustomerTransaction;
 import com.AlphaDevs.cloud.web.Entities.Invoice;
 import com.AlphaDevs.cloud.web.Entities.InvoiceDetails;
 import com.AlphaDevs.cloud.web.Entities.ItemBincard;
+import com.AlphaDevs.cloud.web.Entities.Items;
 import com.AlphaDevs.cloud.web.Entities.Logger;
 import com.AlphaDevs.cloud.web.Entities.PaymentDetails;
 import com.AlphaDevs.cloud.web.Entities.Properties;
@@ -33,6 +34,7 @@ import com.AlphaDevs.cloud.web.SessionBean.CustomerBalanceController;
 import com.AlphaDevs.cloud.web.SessionBean.CustomerTransactionController;
 import com.AlphaDevs.cloud.web.SessionBean.InvoiceController;
 import com.AlphaDevs.cloud.web.SessionBean.ItemBincardController;
+import com.AlphaDevs.cloud.web.SessionBean.ItemsController;
 import com.AlphaDevs.cloud.web.SessionBean.LoggerController;
 import com.AlphaDevs.cloud.web.SessionBean.PaymentDetailsController;
 import com.AlphaDevs.cloud.web.SessionBean.PropertiesController;
@@ -61,7 +63,8 @@ import org.primefaces.event.SelectEvent;
 @ManagedBean
 @SessionScoped
 public class InvoiceHandler {
-
+    @EJB
+    private ItemsController itemsController;
     @EJB
     private CreditCardReceiptsController creditCardReceiptsController;
     @EJB
@@ -144,6 +147,14 @@ public class InvoiceHandler {
         return chequesController;
     }
 
+    public ItemsController getItemsController() {
+        return itemsController;
+    }
+
+    public void setItemsController(ItemsController itemsController) {
+        this.itemsController = itemsController;
+    }
+    
     public void setChequesController(ChequesController chequesController) {
         this.chequesController = chequesController;
     }
@@ -358,6 +369,15 @@ public class InvoiceHandler {
         return getCurrent().getExtraz();
     }
 
+    public void handleLocationSelect(SelectEvent event) {
+        getCurrentDetails().setItem(null);
+        getCurrentDetails().setPrice(0);
+    }
+    
+    public List<Items> autoCompleteItems(String query) {
+        return getItemsController().findLike(query, getCurrent().getLocation());
+    }
+
     public void addItem() {
         boolean isFound = false;
 
@@ -459,7 +479,7 @@ public class InvoiceHandler {
             getPropertiesController().create(properties);
             System.out.println("Done");
         }
-        
+
         //Saving Invoice
         getCurrent().setBillStatus(getCurrent().getBillStatus());
         getCurrent().setInvDetails(getVirtualList());
@@ -467,7 +487,6 @@ public class InvoiceHandler {
         getCurrent().setPaymentDetails(getPaymentDetails());
         getInvoiceController().create(getCurrent());
 
-        
         for (InvoiceDetails invDetails : getVirtualList()) {
             invDetails.setInvoice(getCurrent());
 
@@ -492,7 +511,7 @@ public class InvoiceHandler {
             }
 
         }
-      
+
         //Customer Transaction - Commercial Invoice
         CustomerTransaction customerTransactionEntry = getCustomerTransactionController().addCustomerTransactionEntry(getCurrentDocument().getDocumentDisplayName() + " - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getCustomer(), getCurrent().getTrnDate(), 0, getCurrent().getTotalAmount());
 
@@ -527,7 +546,7 @@ public class InvoiceHandler {
                     getPaymentDetails().setRelatedCheque(relatedCheque);
 
                     //Customer Transaction - GRN - CHEQUE
-                    CustomerTransaction customerTransactionEntryCheque = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CHEQUE - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getCustomer(), getCurrent().getTrnDate(), getPaymentDetails().getChequeAmount(),0);
+                    CustomerTransaction customerTransactionEntryCheque = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CHEQUE - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getCustomer(), getCurrent().getTrnDate(), getPaymentDetails().getChequeAmount(), 0);
                     customerBalance.setBalance(customerBalance.getBalance() + getPaymentDetails().getChequeAmount());
                     customerTransactionEntryCheque.setBalance(customerBalance.getBalance());
                     getCustomerTransactionController().edit(customerTransactionEntryCheque);
@@ -547,7 +566,7 @@ public class InvoiceHandler {
                     getPaymentDetails().setRelatedCreditCardReceipts(relatedCreditCardReceipt);
 
                     //Customer Transaction - GRN - CREDIT CARD
-                    CustomerTransaction customerTransactionEntryCC = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CREDIT CARD - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getCustomer(), getCurrent().getTrnDate(), getPaymentDetails().getCreditCardAmount(),0);
+                    CustomerTransaction customerTransactionEntryCC = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CREDIT CARD - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getCustomer(), getCurrent().getTrnDate(), getPaymentDetails().getCreditCardAmount(), 0);
                     customerBalance.setBalance(customerBalance.getBalance() + getPaymentDetails().getCreditCardAmount());
                     customerTransactionEntryCC.setBalance(customerBalance.getBalance());
                     getCustomerTransactionController().edit(customerTransactionEntryCC);
@@ -557,7 +576,7 @@ public class InvoiceHandler {
             if (getPaymentDetails().getCashAmount() > 0) {
 
                 //Customer Transaction - Commercial Invoice - CASH
-                CustomerTransaction customerTransactionEntryCash = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CASH - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getCustomer(), getCurrent().getTrnDate(), getPaymentDetails().getCashAmount(),0 );
+                CustomerTransaction customerTransactionEntryCash = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CASH - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getCustomer(), getCurrent().getTrnDate(), getPaymentDetails().getCashAmount(), 0);
                 customerBalance.setBalance(customerBalance.getBalance() + getPaymentDetails().getCashAmount());
                 customerTransactionEntryCash.setBalance(customerBalance.getBalance());
                 getCustomerTransactionController().edit(customerTransactionEntryCash);

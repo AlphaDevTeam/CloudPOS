@@ -23,7 +23,7 @@
                             <p:outputLabel value="Location : " for="relatedLocation" />
                             <p:selectOneMenu id="relatedLocation" value="#{creditCardTerminalHandler.current.relatedLocation}" label="Location " converter="#{locationConvertor}" >
                                 <f:selectItem itemLabel="Select One" />  
-                                <f:selectItems value="#{locationHandler.list}"/>
+                                <f:selectItems value="#{locationHandler.locationList}"/>
                             </p:selectOneMenu>
                             <p:commandButton value="Save" action="#{creditCardTerminalHandler.persistCreditCardTerminals()}" />
                         </h:panelGrid>

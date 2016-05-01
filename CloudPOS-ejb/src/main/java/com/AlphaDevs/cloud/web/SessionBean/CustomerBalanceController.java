@@ -72,7 +72,7 @@ public class CustomerBalanceController extends AbstractFacade<CustomerBalance>
         Root<CustomerBalance> c = q.from(CustomerBalance.class);
         q.select(c);
         //ParameterExpression<Product> p = cb.parameter(Product.class);
-        q.where(cb.equal(c.get("supplier"), supllier));
+        q.where(cb.equal(c.get(CustomerBalance_.supplier), supllier));
         
         if(!getEntityManager().createQuery(q).getResultList().isEmpty())
         {

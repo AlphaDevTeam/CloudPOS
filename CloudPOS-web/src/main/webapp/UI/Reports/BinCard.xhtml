@@ -46,7 +46,7 @@
                         <br/>
 
                         <p:dataTable id="BinCardTable" value="#{itemBinCardHandler.listOfItemBinCards}" var="item" paginator="true" rows="5" >
-                            <p:column>
+                            <p:column rendered="false">
                                 <f:facet name="header" rendered="false">
                                     <h:outputText value="Id"/>
                                 </f:facet>
@@ -60,12 +60,11 @@
                                     <f:convertDateTime pattern="#{systemsHandler.current.dateTimeformat}" />
                                 </h:outputText>
                             </p:column>
-
                             <p:column>
                                 <f:facet name="header">
-                                    <h:outputText value="Balance"/>
+                                    <h:outputText value="Item"/>
                                 </f:facet>
-                                <h:outputText value="#{item.balance}"/>
+                                <h:outputText value="#{item.item}"/>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">
@@ -75,21 +74,21 @@
                             </p:column>
                             <p:column>
                                 <f:facet name="header">
-                                    <h:outputText value="Qty"/>
-                                </f:facet>
-                                <h:outputText value="#{item.qty}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
                                     <h:outputText value="TrnNumber"/>
                                 </f:facet>
                                 <h:outputText value="#{item.trnNumber}"/>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">
-                                    <h:outputText value="Item"/>
+                                    <h:outputText value="Qty"/>
                                 </f:facet>
-                                <h:outputText value="#{item.item}"/>
+                                <h:outputText value="#{item.qty}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Balance"/>
+                                </f:facet>
+                                <h:outputText value="#{item.balance}"/>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">

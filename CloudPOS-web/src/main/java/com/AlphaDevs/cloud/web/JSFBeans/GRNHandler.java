@@ -338,6 +338,11 @@ public class GRNHandler {
     public void handleSelect(SelectEvent event) {
         currentDetails.setGrnItemCost(currentDetails.getGrnItem().getItemCost());
     }
+    
+    public void handleLocationSelect(SelectEvent event) {
+         getCurrentDetails().setGrnItem(null);
+         getCurrentDetails().setGrnItemCost(0);
+    }
 
     public void handleKeyup(SelectEvent event) {
         System.out.println("handleKeyup :" + event.toString());

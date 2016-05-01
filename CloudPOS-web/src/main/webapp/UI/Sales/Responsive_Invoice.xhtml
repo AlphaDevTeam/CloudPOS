@@ -43,7 +43,7 @@
                             <h:outputLabel value="Location : " for="location" />
                             <p:selectOneMenu id="location" value="#{invoiceHandler.current.location}" label="Location " converter="#{locationConvertor}" required="true" >
                                 <f:selectItem itemLabel="Select One" itemValue="#{invoiceHandler.current.location}" />  
-                                <f:selectItems value="#{locationHandler.list}"/>
+                                <f:selectItems value="#{locationHandler.locationList}"/>
                                 <p:ajax update="billNo" /> 
                             </p:selectOneMenu>
                             

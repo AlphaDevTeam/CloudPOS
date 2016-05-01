@@ -32,7 +32,7 @@
                             <h:outputLabel value="Location : " for="location" />
                             <p:selectOneMenu id="location" value="#{customEmailSettingsHandler.current.relatedLocation}" label="Location " converter="#{locationConvertor}" >
                                 <f:selectItem itemLabel="Select One" itemValue="#{customEmailSettingsHandler.current.relatedLocation}" />  
-                                <f:selectItems value="#{locationHandler.list}"/>
+                                <f:selectItems value="#{locationHandler.locationList}"/>
                             </p:selectOneMenu>
                             <hr/><hr/>
                             <h:outputLabel value="Email Name : " for="emailName" />

@@ -20,7 +20,7 @@
                         <p:outputLabel value="Location : " for="paymentLocation" />
                         <p:selectOneMenu id="paymentLocation" value="#{cashbookHandler.relatedLocation}" label="Location" converter="#{locationConvertor}" required="true" >
                             <f:selectItem itemLabel="Select One"  />  
-                            <f:selectItems value="#{locationHandler.list}"/>
+                            <f:selectItems value="#{locationHandler.locationList}"/>
                             <p:ajax partialSubmit="true" update="dataTable" /> 
                         </p:selectOneMenu>
 

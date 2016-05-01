@@ -22,7 +22,7 @@
                     </h:selectOneMenu>
                     <h:outputLabel value="Related Location : " for="relatedLocation" />
                     <h:selectOneMenu id="relatedLocation" value="#{systemsHandler.current.relatedLocation}" title="RelatedLocation" converter="#{locationConvertor}" >
-                        <f:selectItems value="#{locationHandler.list}"/>
+                        <f:selectItems value="#{locationHandler.locationList}"/>
                     </h:selectOneMenu>
                     <h:outputLabel value="Header : " for="header" />
                     <h:inputText id="header" value="#{systemsHandler.current.header}" title="Header" />

@@ -30,7 +30,7 @@
                             <p:outputLabel value="Location : " for="itemLocation" />
                             <p:selectOneMenu id="itemLocation" value="#{cashPaymentVoucherExpensesHandler.current.paymentLocation}" label="Location" converter="#{locationConvertor}" required="true" >
                                 <f:selectItem itemLabel="Select One" />  
-                                <f:selectItems value="#{locationHandler.list}"/>
+                                <f:selectItems value="#{locationHandler.locationList}"/>
                                 <p:ajax update="paymentNumber"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Expense : " for="relatedExpenses" />

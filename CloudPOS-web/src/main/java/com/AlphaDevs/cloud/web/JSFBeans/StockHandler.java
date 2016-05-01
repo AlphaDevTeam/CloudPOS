@@ -1,9 +1,11 @@
 package com.AlphaDevs.cloud.web.JSFBeans;
 
+import com.AlphaDevs.cloud.web.Entities.Company;
 import com.AlphaDevs.cloud.web.Entities.Items;
+import com.AlphaDevs.cloud.web.Entities.Location;
 import com.AlphaDevs.cloud.web.Entities.Stock;
 import com.AlphaDevs.cloud.web.Entities.Units;
-import com.AlphaDevs.cloud.web.Extra.AlphaUtil;
+import com.AlphaDevs.cloud.web.Helpers.SessionDataHelper;
 import com.AlphaDevs.cloud.web.SessionBean.ItemsController;
 import com.AlphaDevs.cloud.web.SessionBean.StockController;
 import com.AlphaDevs.cloud.web.SessionBean.UnitsController;
@@ -62,7 +64,7 @@ public class StockHandler {
     }
 
     public List<Stock> getList() {
-        List<Stock> liquidStockList = new ArrayList<Stock>();
+        List<Stock> liquidStockList = new ArrayList<>();
         if (getCurrent().getStockLocation() != null) {
             List<Units> searchUnit = getUnitsController().findUnitsByCode("L");
             if (searchUnit != null && !searchUnit.isEmpty()) {
@@ -70,7 +72,7 @@ public class StockHandler {
                 if (liquidItems != null && !liquidItems.isEmpty()) {
                     for (Items item : liquidItems) {
                         if (item != null) {
-                            Stock itemStock = getStockController().findSpecific(item);
+                            Stock itemStock = getStockController().findSpecific(item,getCurrent().getStockLocation(), SessionDataHelper.getLoggedCompany(true));
                             liquidStockList.add(itemStock);
                         }
                     }
@@ -88,13 +90,13 @@ public class StockHandler {
         this.current = current;
     }
 
-    public Stock getSpecificStock(Items item) {
-        return stockController.findSpecific(item);
+    public Stock getSpecificStock(Items item,Location location, Company company) {
+        return stockController.findSpecific(item,location,company);
     }
 
     public List<Stock> loadStockData() {
 
-        List<Stock> location_stock = new ArrayList<Stock>();
+        List<Stock> location_stock = new ArrayList<>();
         if (getStockController() != null && getCurrent().getStockLocation() != null) {
             return getStockController().getLocationStock(getCurrent().getStockLocation());
         }

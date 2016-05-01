@@ -40,8 +40,8 @@
                                 <p:outputLabel value="Location : " for="location" />
                                 <p:selectOneMenu id="location" value="#{invoiceHandler.current.location}" label="Location " converter="#{locationConvertor}" required="true" >
                                     <f:selectItem itemLabel="Select One" itemValue="#{invoiceHandler.current.location}" />  
-                                    <f:selectItems value="#{locationHandler.list}"/>
-                                    <p:ajax update="billNo" /> 
+                                    <f:selectItems value="#{locationHandler.locationList}"/>
+                                    <p:ajax event="itemSelect" process="@this" update="billNo,acItem,itemCost" listener="#{invoiceHandler.handleLocationSelect}" /> 
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="Customer : " for="customer" />
@@ -59,10 +59,10 @@
 
 
                                 <p:outputLabel value="Item : " for="acItem" />
-
                                 <p:autoComplete id="acItem" value="#{invoiceHandler.currentDetails.item}"   
-                                                completeMethod="#{itemsHandler.completetest}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}"  >
+                                                forceSelection="true" completeMethod="#{invoiceHandler.autoCompleteItems}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}"  >
                                     <p:ajax event="itemSelect" listener="#{invoiceHandler.handleSelect}" update="itemCost,QtyDisplay" />  
+                                    <p:ajax process="@this" update="itemCost" />
                                 </p:autoComplete>  
 
                                 <p:outputLabel id="QtyDisplay"  value="#{empty invoiceHandler.currentDetails.item.unitOfMeasurement ? 'Qty' : 'Qty ('.concat(invoiceHandler.currentDetails.item.unitOfMeasurement).concat(')') }"  for="itemQty" />

@@ -30,6 +30,7 @@ public enum TransactionTypes
     EMPLOYEE,
     JOB,
     STOCK_ADJ,
+    STOCK_TRANSFER,
     BANK_DEPOSIT,
     EMAIL_SETUP,
     TERMINAL,

@@ -23,7 +23,7 @@
                         <h:outputLabel value="Location : " for="paymentLocation" />
                         <p:selectOneMenu id="paymentLocation" value="#{daySummaryHandler.relatedLocation}" required="true" label="Location" converter="#{locationConvertor}"  >
                                 <f:selectItem itemLabel="Select One"  />  
-                                <f:selectItems value="#{locationHandler.list}"/>
+                                <f:selectItems value="#{locationHandler.locationList}"/>
                             </p:selectOneMenu>
                         <p:commandButton value="Save" update="dataTable"/>  
                         <p:commandButton value="Genarate Report" action="#{daySummaryHandler.genarateReport()}"/>  

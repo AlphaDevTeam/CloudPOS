@@ -1,5 +1,6 @@
 package com.AlphaDevs.cloud.web.SessionBean;
 
+import com.AlphaDevs.cloud.web.Entities.Company;
 import com.AlphaDevs.cloud.web.Entities.Items;
 import com.AlphaDevs.cloud.web.Entities.Location;
 import com.AlphaDevs.cloud.web.Entities.Stock;
@@ -37,14 +38,14 @@ public class StockController extends AbstractFacade<Stock> {
         return em;
     }
 
-    public Stock findSpecific(Items items) {
+    public Stock findSpecific(Items items,Company relatedCompany) {
 //        System.out.println(items.getItemName());
 //        System.out.println(items.getItemLocation().getDescription());
         Stock st = new Stock();
 
-        if (items != null) {
+        if (items != null && relatedCompany != null) {
             Location location = items.getItemLocation();
-            List<Stock> resultList = getLocatedItemList(items, location);
+            List<Stock> resultList = getLocatedItemList(items, location,relatedCompany);
             if (resultList != null && resultList.size() > 0 && resultList.get(0) != null && resultList.get(0).getStockLocation() != null) {
 
                 st = resultList.get(0);
@@ -59,17 +60,29 @@ public class StockController extends AbstractFacade<Stock> {
          cq.select(cq.from(Design.class)).where(cb.equal(root.get("product"), prod));
          */
     }
+    
+    public Stock findSpecific(Items items,Location location,Company relatedCompany) {
 
-    public List<Stock> getLocatedItemList(Items item, Location location) {
+        Stock stock = new Stock();
 
-        List<Stock> locatedItemList = new ArrayList<Stock>();
-        if (item != null && location != null) {
+        if (items != null && location != null && relatedCompany != null) {
+            List<Stock> resultList = getLocatedItemList(items, location,relatedCompany);
+            if (resultList != null && resultList.size() > 0 && resultList.get(0) != null && resultList.get(0).getStockLocation() != null) {
+                stock = resultList.get(0);
+            }
+        }
+        return stock;
+    }
 
+    public List<Stock> getLocatedItemList(Items item, Location location,Company relatedCompany) {
+
+        List<Stock> locatedItemList = new ArrayList<>();
+        if (item != null && location != null && relatedCompany != null) {
             CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
             CriteriaQuery<Stock> q = cb.createQuery(Stock.class);
             Root<Stock> c = q.from(Stock.class);
             q.select(c);
-            q.where(cb.equal(c.get("SockItem"), item), cb.equal(c.get("StockLocation"), location),cb.equal(c.get("relatedCompany"), location.getRelatedCompany()));
+            q.where(cb.equal(c.get(Stock_.SockItem), item), cb.equal(c.get(Stock_.StockLocation), location),cb.equal(c.get(Stock_.relatedCompany), relatedCompany));
             locatedItemList = getEntityManager().createQuery(q).getResultList();
         }
         return locatedItemList;
@@ -80,7 +93,7 @@ public class StockController extends AbstractFacade<Stock> {
         CriteriaQuery<Stock> q = cb.createQuery(Stock.class);
         Root<Stock> c = q.from(Stock.class);
         q.select(c);
-        q.where(cb.equal(c.get("StockLocation"), location));
+        q.where(cb.equal(c.get(Stock_.StockLocation), location));
         return getEntityManager().createQuery(q).getResultList();
     }
     

@@ -367,14 +367,14 @@ public class PurchaseReturnHandler
         {
            PurRet.setRelatedPurchaseRet(current);
            
-           Stock  stock = stockController.findSpecific(PurRet.getGrnItem());
+           Stock  stock = getStockController().findSpecific(PurRet.getGrnItem(),getCurrent().getLocation(), SessionDataHelper.getLoggedCompany(true));
            stock.setStockQty(stock.getStockQty() - PurRet.getGrnQty());
-           stockController.edit(stock);
+           getStockController().edit(stock);
            
            ItemBincard itemBin = new ItemBincard();
-           itemBin.setDescription("Purchase Return - " + current.getGrnRetNo());
+           itemBin.setDescription("Purchase Return - " + getCurrent().getGrnRetNo());
            itemBin.setItem(PurRet.getGrnItem());
-           itemBin.setTrnNumber(current.getInvNo());
+           itemBin.setTrnNumber(getCurrent().getInvNo());
            itemBin.setRelatedDate(getCurrent().getGrnRetDate());
            itemBin.setQty(PurRet.getGrnQty() * -1);
            itemBin.setLog(log);
@@ -385,11 +385,11 @@ public class PurchaseReturnHandler
         
         //Customer Transaction
         CustomerTransaction custTran = new CustomerTransaction();
-        custTran.setDescription("Purchase Return - " + current.getGrnRetNo());
-        custTran.setSupplier(current.getSupplier());
+        custTran.setDescription("Purchase Return - " + getCurrent().getGrnRetNo());
+        custTran.setSupplier(getCurrent().getSupplier());
         custTran.setDR(0);
         custTran.setDate(getCurrent().getGrnRetDate());
-        custTran.setCR(current.getTotalAmount());
+        custTran.setCR(getCurrent().getTotalAmount());
         
         //Getting Cust Balance
         CustomerBalance Balance = customerBalanceController.getCustomerBalanceObject(current.getSupplier());

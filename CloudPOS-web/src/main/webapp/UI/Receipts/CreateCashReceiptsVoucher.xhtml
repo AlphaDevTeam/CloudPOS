@@ -32,7 +32,7 @@
                             <p:outputLabel value="Receipt Location:" for="receiptLocation" />
                             <p:selectOneMenu id="receiptLocation" value="#{cashReceiptsVoucherHandler.current.receiptLocation}" required="true" converter="#{locationConvertor}" label="Receipt Location" >
                                 <f:selectItem itemLabel="Select One"  />  
-                                <f:selectItems value="#{locationHandler.list}"/>
+                                <f:selectItems value="#{locationHandler.locationList}"/>
                                 <p:ajax update="receiptNumber" />
                             </p:selectOneMenu>
                             
