@@ -173,7 +173,7 @@ public class UserHandler {
             Company company = new Company(request.getCompanyName().toUpperCase(), request.getCompanyName());
             UserX user = new UserX(request.getContactEmail(),"Demo", UserLevel.DEMO, log, company);
             Terminal terminal = new Terminal("Demo Terminal (" + request.getRequestNumber() + ")", "Demo Terminal (" + request.getRequestNumber() + ")", InfoGrabber.getTerminalString(), log);
-            Location location = new Location("Demo Location(" + request.getRequestNumber() + ")", "DEMO-" + request.getRequestNumber()  , log);
+            Location location = new Location("Demo Location(" + request.getRequestNumber() + ")", "DEMO-" + request.getRequestNumber()  , log,company);
             log.setTerminal(terminal);
             Systems sys = new Systems(request.getCompanyName().toUpperCase(), false, false, SessionDataHelper.getSystems() != null ? SessionDataHelper.getSystems().getDateTimeformat() : AlphaConstant.yyyy_MM_dd, company, location);
             getCompanyController().create(company);
@@ -183,7 +183,7 @@ public class UserHandler {
             getSystemsController().create(sys);
             MessageHelper.addSuccessMessage("Demo Account Created - " + request.getRequestNumber());
         } catch (ParseException ex) {
-            MessageHelper.addErrorMessage("Demo Account Requeted Error","Error");
+            MessageHelper.addErrorMessage("Demo Account Request Error","Error");
             java.util.logging.Logger.getLogger(UserHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "Home";

@@ -40,7 +40,7 @@
                 <ui:insert name="Rheader">
                     <h:panelGroup layout="block" style="background-color: black;color: gray;">
                         <h:panelGrid columns="2">
-                            <p:graphicImage  class="image-cropper" name="Images/AlphaLogoBlack.jpg" height="50" width="50" style="margin-left: 15px; margin-right: auto; width: 75px; height: 75px" /> 
+                            <p:graphicImage  class="image-cropper" name="Images/AlphaLogoBlack.jpg" height="50" width="50" style="margin-left: 15px; margin-right: auto; width: 75px; height: 75px;border-color: gray; border-style: solid;" /> 
                             <p:outputLabel value="Alpha Development Team - WEB POS Beta V1 - #{systemsHandler.current.header}" style="margin-left: 15px; margin-right: auto; width: 75px; height: 75px"/>
                         </h:panelGrid>
                     </h:panelGroup>
@@ -64,16 +64,18 @@
                                 <p:outputLabel value="#{sessionHandler.sessionUser.associatedCompany.companyName}"/><br/>
                                 <br/>
                                 <hr/>
-                                <br/>
                             </h:panelGroup>
 
-                            <p:clock  />
                             <br/>
-
-                            <h:form>
-                                <p:panelMenu model="#{menuItemHandler.menumodelsingle}" />
-                            </h:form>
+                            <hr/>
+                            <br/>
+                            <p:clock pattern="yyyy.MM.dd HH:mm:ss" mode="server" />
+                            <br/>
                         </center>
+                        <h:form>
+                            <p:panelMenu model="#{menuItemHandler.menumodelsingle}" />
+                        </h:form>
+
                     </h:panelGroup>
                 </ui:insert>
             </pe:layoutPane>

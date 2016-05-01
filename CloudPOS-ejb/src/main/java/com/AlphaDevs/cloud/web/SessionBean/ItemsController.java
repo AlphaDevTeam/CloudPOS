@@ -70,6 +70,15 @@ public class ItemsController extends AbstractFacade<Items> {
 
     }
 
+    public List<Items> findItems(Location location) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Items> q = cb.createQuery(Items.class);
+        Root<Items> c = q.from(Items.class);
+        q.select(c);
+        q.where(cb.equal(c.get(Items_.ItemLocation), location));
+        return getEntityManager().createQuery(q).getResultList();
+    }
+
     public List<Items> findItemByUnit(Units units, Location itemLocation) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Items> q = cb.createQuery(Items.class);

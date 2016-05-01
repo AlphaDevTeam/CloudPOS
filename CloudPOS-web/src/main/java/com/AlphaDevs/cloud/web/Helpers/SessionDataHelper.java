@@ -38,8 +38,10 @@ public class SessionDataHelper {
     public static void invalidateSessionData() {
         if (FacesContext.getCurrentInstance() != null) {
             FacesContext context = FacesContext.getCurrentInstance();
-            context.getExternalContext().getSessionMap().clear();
-            context.getExternalContext().invalidateSession();
+            if (context != null && context.getExternalContext() != null) {
+                context.getExternalContext().getSessionMap().clear();
+                context.getExternalContext().invalidateSession();
+            }
         }
     }
 
@@ -111,10 +113,10 @@ public class SessionDataHelper {
             return null;
         }
     }
-    
+
     public static Object setFlash(String stringValue, Object object) {
         if (getFlash() != null) {
-            return getFlash().put(stringValue,object);
+            return getFlash().put(stringValue, object);
         } else {
             return null;
         }

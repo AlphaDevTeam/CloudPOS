@@ -68,7 +68,12 @@ public class Location implements Serializable
         this.Logger = Logger;
     }
 
-   
+    public Location(String Description, String Code, Logger Logger, Company relatedCompany) {
+        this.Description = Description;
+        this.Code = Code;
+        this.Logger = Logger;
+        this.relatedCompany = relatedCompany;
+    }
 
     public String getCode() {
         return Code;

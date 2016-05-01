@@ -3,15 +3,15 @@
 <!-- =========== FULL CONFIGURATION FILE ================================== -->
 
 <faces-config version="2.0"
-    xmlns="http://java.sun.com/xml/ns/javaee" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+              xmlns="http://java.sun.com/xml/ns/javaee" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
     
     <application>
         <action-listener>org.primefaces.application.DialogActionListener</action-listener>
-         <navigation-handler>org.primefaces.application.DialogNavigationHandler</navigation-handler>
-         <view-handler>org.primefaces.application.DialogViewHandler</view-handler>
-     </application>
+        <navigation-handler>org.primefaces.application.DialogNavigationHandler</navigation-handler>
+        <view-handler>org.primefaces.application.DialogViewHandler</view-handler>
+    </application>
     
     <navigation-rule>
         <from-view-id>/UI/Login.xhtml</from-view-id>
@@ -24,6 +24,22 @@
             <redirect/>
             <from-outcome>BeforeHome</from-outcome>
             <to-view-id>/UI/SessionValidator/ValidateSession.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
+    <navigation-rule>
+        <from-view-id>/Tools/Admin/Requests.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
+    <navigation-rule>
+        <from-view-id>/Tools/Client/RequestDemo.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>  
     
@@ -55,21 +71,21 @@
         </navigation-case>        
     </navigation-rule> 
     
-     <navigation-rule>
+    <navigation-rule>
         <from-view-id>/Admin/UI/SystemNumbers/ListSystemNumbers.xhtml</from-view-id>
         <navigation-case>
             <redirect/>
             <from-outcome>Update</from-outcome>
             <to-view-id>Admin/UI/SystemNumbers/CreateSystemNumbers.xhtml</to-view-id>
         </navigation-case>      
-         <navigation-case>
+        <navigation-case>
             <redirect/>
             <from-outcome>Home</from-outcome>
             <to-view-id>/Test.xhtml</to-view-id>
         </navigation-case>       
     </navigation-rule> 
     
-      <navigation-rule>
+    <navigation-rule>
         <from-view-id>/UI/Cheque/ChequesDeposit.xhtml</from-view-id>
         <navigation-case>
             <redirect/>
@@ -87,7 +103,7 @@
         </navigation-case>        
     </navigation-rule>
     
-      <navigation-rule>
+    <navigation-rule>
         <from-view-id>/Test.xhtml</from-view-id>
         <navigation-case>
             <redirect/>
@@ -180,7 +196,7 @@
             <from-outcome>Home</from-outcome>
             <to-view-id>/Test.xhtml</to-view-id>
         </navigation-case>
-         <navigation-case>
+        <navigation-case>
             <redirect/>
             <from-outcome>FromItem</from-outcome>
             <to-view-id>/UI/Items/CreateItems.xhtml</to-view-id>
@@ -260,7 +276,7 @@
         
     </navigation-rule>
     
-     <navigation-rule>
+    <navigation-rule>
         <from-view-id>/Admin/UI/Company/CreateCompany.xhtml</from-view-id>
         <navigation-case>
             <redirect/>
@@ -281,7 +297,7 @@
     </navigation-rule>    
     
     
-     <navigation-rule>
+    <navigation-rule>
         <from-view-id>/Admin/UI/UserManagement/UserManagement.xhtml</from-view-id>
         <navigation-case>
             <redirect/>
@@ -352,21 +368,21 @@
             <from-outcome>Home</from-outcome>
             <to-view-id>/Test.xhtml</to-view-id>
         </navigation-case>
-         <navigation-case>
+        <navigation-case>
             <redirect/>
             <from-outcome>FromItem</from-outcome>
             <to-view-id>/UI/Items/CreateItems.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     
-     <navigation-rule>
+    <navigation-rule>
         <from-view-id>/UI/Units/CreateUnits.xhtml</from-view-id>
         <navigation-case>
             <redirect/>
             <from-outcome>Home</from-outcome>
             <to-view-id>/Test.xhtml</to-view-id>
         </navigation-case>
-         <navigation-case>
+        <navigation-case>
             <redirect/>
             <from-outcome>FromItem</from-outcome>
             <to-view-id>/UI/Items/CreateItems.xhtml</to-view-id>

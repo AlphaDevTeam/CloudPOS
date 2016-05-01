@@ -12,9 +12,8 @@
 
             <ui:define name="Rcontent">
                 <f:view>
-
-
                     <h:form>
+                        <p:growl id="growl" sticky="true" showDetail="true"/>
                         <p:selectOneMenu value="#{accessRequestHandler.selectedStatus}" >
                             <f:selectItems value="#{accessRequestHandler.statuses}" />
                             <p:ajax partialSubmit="true" update="dtRequests" /> 

@@ -11,40 +11,41 @@
 
 
             <h:form>
-                <h1><h:outputText value="Create/Edit"/></h1>
-                <p:panelGrid columns="2">
+                <h:outputText value="Stock Trnasfer"/>
+                <h:panelGrid columns="2">
                     <p:outputLabel value="Transfer Number : " for="refNumber" />
-                    <p:inputText id="refNumber" value="#{stockTransferHandler.current.refNumber}" title="RefNumber" />
+                    <p:inputText id="refNumber" required="true" requiredMessage="Transfer Number is mising..!!"  value="#{stockTransferHandler.refNumber}" title="TransferNo" readonly="#{systemsHandler.current.isGRNnumberAutoGenarated}" />
                     <p:outputLabel value="Date : " for="transferDate" />
                     <p:calendar id="transferDate" value="#{stockTransferHandler.current.transferDate}" pattern="#{sessionHandler.defaultDateFormat}" title="TransferDate" >
                         <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
                     </p:calendar>
-                     <p:outputLabel value="Transfer From : " for="transferFromLocation" />
-                    <p:selectOneMenu id="transferFromLocation" value="#{stockTransferHandler.current.transferFromLocation}" >
+                    <p:outputLabel value="Transfer From : " for="transferFromLocation" />
+                    <p:selectOneMenu id="transferFromLocation" value="#{stockTransferHandler.current.transferFromLocation}" converter="#{locationConvertor}" required="true" >
+                        <f:selectItem itemLabel="Select One"  />  
+                        <f:selectItems value="#{locationHandler.locationList}"/>
+                        <p:ajax event="itemSelect" process="@this" update="refNumber,acItem" listener="#{stockTransferHandler.handleLocationSelect}" /> 
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Transfer To : " for="transferToLocation" />
+                    <p:selectOneMenu id="transferToLocation" value="#{stockTransferHandler.current.transferToLocation}" converter="#{locationConvertor}" required="true" >
                         <f:selectItem itemLabel="Select One"  />  
                         <f:selectItems value="#{locationHandler.locationList}"/>
                     </p:selectOneMenu>
-                    <p:outputLabel value="Transfer To : " for="transferToLocation" />
-                    <p:selectOneMenu id="transferToLocation" value="#{stockTransferHandler.current.transferToLocation}" >
-                        <f:selectItem itemLabel="Select One"  />  
-                                <f:selectItems value="#{locationHandler.locationList}"/>
-                    </p:selectOneMenu>
-                   
-                    
-                    
                     <p:outputLabel value="TransferDescription:" for="transferDescription" />
                     <p:inputText id="transferDescription" value="#{stockTransferHandler.current.transferDescription}" title="TransferDescription" />
                     <p:outputLabel value="TransferQty:" for="transferQty" />
                     <p:inputText id="transferQty" value="#{stockTransferHandler.current.transferQty}" title="TransferQty" />
-                    <p:outputLabel value="TransferItem:" for="transferItem" />
-                    <p:selectOneMenu id="transferItem" value="#{stockTransferHandler.current.transferItem}" >
-                        <!-- TODO: update below reference to list of available items-->
-                        <f:selectItems value="#{fixme}"/>
+                    <p:outputLabel value="Item : " for="acItem" />
+                    <p:autoComplete id="acItem" value="#{stockTransferHandler.current.transferItem}"   
+                                    forceSelection="true"  completeMethod="#{stockTransferHandler.autoCompleteItems}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}" >
+                        
+                    </p:autoComplete>  
+                    <p:outputLabel value="Transfer Type :" for="transferType" />
+                    <p:selectOneMenu id="transferType" value="#{stockTransferHandler.current.transferType}" >
+                        <f:selectItem itemLabel="Select One"  />  
+                        <f:selectItems value="#{stockTransferTypeHandler.transferTypes}"/>
                     </p:selectOneMenu>
-                    <p:outputLabel value="TransferType:" for="transferType" />
-                    <p:inputText id="transferType" value="#{stockTransferHandler.current.transferType}" title="TransferType" />
-                   
-                </p:panelGrid>
+                    <p:commandButton value="Save" action="#{stockTransferHandler.persistStockTransfer}"/>
+                </h:panelGrid>
             </h:form>
         </f:view>
 

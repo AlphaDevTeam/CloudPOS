@@ -107,7 +107,7 @@ public class ItemsHandler {
 
     public List<String> getTempList() {
 
-        List<String> temp_list = new ArrayList<String>();
+        List<String> temp_list = new ArrayList<>();
         List<Items> itemList = itemsController.findAll();
 
         for (Items tempItem : itemList) {
@@ -115,6 +115,14 @@ public class ItemsHandler {
         }
 
         return temp_list;
+    }
+
+    public List<Items> getListOfItems(Location location) {
+        if (location != null) {
+            return getItemsController().findItems(location);
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     public List<Items> getListOfLiquids(Location location) {
@@ -163,13 +171,16 @@ public class ItemsHandler {
     }
 
     public List<Items> completetest(String q) {
-        System.out.println("completetest : with " + q + " - " + getCurrent().getItemLocation() );
-        return itemsController.findLike(q,getCurrent().getItemLocation());
+        System.out.println("completetest : with " + q + " - " + getCurrent().getItemLocation());
+        return itemsController.findLike(q, getCurrent().getItemLocation());
 
     }
 
     public List<Items> autoCompleteItems(String query) {
         return getItemsController().findLike(query);
+    }
+    public List<Items> autoCompleteItems(String query,Location location) {
+        return getItemsController().findLike(query,location);
     }
 
 //    public String redirectTo(String relevantPage) {

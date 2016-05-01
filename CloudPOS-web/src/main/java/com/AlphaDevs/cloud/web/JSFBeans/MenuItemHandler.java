@@ -177,9 +177,9 @@ public class MenuItemHandler {
         DefaultMenuItem menuitem = new DefaultMenuItem();
         this.menumodelsingle.addElement(menuitem);
 
-        Set<Menu> testTest = new HashSet<Menu>();
+        Set<Menu> testTest = new HashSet<>();
 
-        Set<MenuItem> menuItemSet = new HashSet<MenuItem>();
+        Set<MenuItem> menuItemSet = new HashSet<>();
 
         for (MenuItem menuItem : userMenuController.findSpecificMenu(loggedUser)) {
             testTest.add(menuItem.getParentMenu());
@@ -192,7 +192,7 @@ public class MenuItemHandler {
         for (Menu testTest1 : testTest) {
             DefaultSubMenu submenu = new DefaultSubMenu();
             submenu.setLabel(testTest1.getMenuTitle());
-            submenu.setIcon("fa fa-yelp");
+            submenu.setIcon("fa fa-bar-chart");
             this.menumodelsingle.addElement(submenu);
 
             for (MenuItem menuItem : testTest1.getMenuitem()) {

@@ -144,7 +144,8 @@ public class StockTransferHandler {
         getCurrent().setTransferQty(Double.valueOf("0"));
         getCurrent().setTransferToLocation(null);
     }
-
+    
+   
     public List<Items> autoCompleteItems(String query) {
         return getItemsController().findLike(query, getCurrent().getTransferFromLocation());
     }
@@ -167,7 +168,7 @@ public class StockTransferHandler {
         getCurrent().setRefNumber(refNumber);
     }
 
-    public String persistStockAdjestment() {
+    public String persistStockTransfer() {
         Logger log = EntityHelper.createLogger("Stock Transfer - (" + getCurrent().getTransferFromLocation() + "-" + getCurrent().getTransferToLocation() + ")" , getCurrent().getRefNumber(), TransactionTypes.STOCK_TRANSFER);
         getLoggerController().create(log);
 

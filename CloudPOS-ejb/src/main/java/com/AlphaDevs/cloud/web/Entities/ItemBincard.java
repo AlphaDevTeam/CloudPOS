@@ -33,30 +33,13 @@ public class ItemBincard implements Serializable
     private BillStatus billStat;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date relatedDate;
+    @OneToOne
+    private Location location;
 
     public ItemBincard() {
     }
 
-    public ItemBincard(Items item, String Description, double Qty, double Balance, String TrnNumber, Logger log) {
-        this.item = item;
-        this.Description = Description;
-        this.Qty = Qty;
-        this.Balance = Balance;
-        this.TrnNumber = TrnNumber;
-        this.log = log;
-    }
-
-    public ItemBincard(Items item, String Description, double Qty, double Balance, String TrnNumber, Logger log, BillStatus billStat) {
-        this.item = item;
-        this.Description = Description;
-        this.Qty = Qty;
-        this.Balance = Balance;
-        this.TrnNumber = TrnNumber;
-        this.log = log;
-        this.billStat = billStat;
-    }
-
-    public ItemBincard(Items item, String Description, double Qty, double Balance, String TrnNumber, Logger log, BillStatus billStat, Date relatedDate) {
+    public ItemBincard(Items item, String Description, double Qty, double Balance, String TrnNumber, Logger log, BillStatus billStat, Date relatedDate, Location location) {
         this.item = item;
         this.Description = Description;
         this.Qty = Qty;
@@ -65,12 +48,21 @@ public class ItemBincard implements Serializable
         this.log = log;
         this.billStat = billStat;
         this.relatedDate = relatedDate;
+        this.location = location;
     }
-    
+
     public Date getRelatedDate() {
         return relatedDate;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+    
     public void setRelatedDate(Date relatedDate) {
         this.relatedDate = relatedDate;
     }

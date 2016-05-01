@@ -19,10 +19,19 @@
                         <h1> <h:outputText value="List Of Item Bin Card"/> </h1>
 
                         <h:panelGrid columns="2">
+
+                            <p:outputLabel value="Location : " for="location" />
+                            <p:selectOneMenu id="location" value="#{itemBinCardHandler.current.location}" label="Location " 
+                                             converter="#{locationConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{locationHandler.locationList}"/>
+                                <p:ajax event="itemSelect" process="@this" update="item" listener="#{itemBinCardHandler.handleLocationSelect}" /> 
+                            </p:selectOneMenu>
+
                             <p:outputLabel value="Item : " for="item" />
                             <p:selectOneMenu id="item" value="#{itemBinCardHandler.current.item}" title="Item" converter="#{itemConvertor}" required="true">
                                 <f:selectItem itemLabel="Select One"/>
-                                <f:selectItems value="#{itemsHandler.list}"/>  
+                                <f:selectItems value="#{itemsHandler.getListOfItems(itemBinCardHandler.current.location)}"/>  
                                 <p:ajax partialSubmit="true" update="BinCardTable" /> 
                             </p:selectOneMenu>
 
