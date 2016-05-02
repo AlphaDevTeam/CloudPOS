@@ -22,6 +22,7 @@ import javax.faces.application.FacesMessage;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
@@ -43,7 +44,7 @@ import org.primefaces.event.SelectEvent;
  *
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class GRNHandler {
 
     @EJB
@@ -399,15 +400,15 @@ public class GRNHandler {
         }
 
         //Customer Transaction - GRN
-        CustomerTransaction customerTransactionEntry = getCustomerTransactionController().addCustomerTransactionEntry(getCurrentDocument().getDocumentDisplayName() + " - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getSupplier(), getCurrent().getGrnDate(), getCurrent().getTotalAmount(), 0);
+        CustomerTransaction customerTransactionEntry = getCustomerTransactionController().addCustomerTransactionEntry(getCurrentDocument().getDocumentDisplayName() + " - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getSupplier(), getCurrent().getGrnDate(), 0,getCurrent().getTotalAmount());
 
         //Getting Cust Balance
         CustomerBalance customerBalance = getCustomerBalanceController().getCustomerBalanceObject(getCurrent().getSupplier());
         if (customerBalance != null) {
-            customerBalance.setBalance(customerBalance.getBalance() + getCurrent().getTotalAmount());
+            customerBalance.setBalance(customerBalance.getBalance() - getCurrent().getTotalAmount());
             getCustomerBalanceController().edit(customerBalance);
         } else {
-            customerBalance = new CustomerBalance(getCurrent().getSupplier(), getCurrent().getTotalAmount());
+            customerBalance = new CustomerBalance(getCurrent().getSupplier(), (getCurrent().getTotalAmount() * -1));
             getCustomerBalanceController().create(customerBalance);
         }
 
@@ -433,8 +434,8 @@ public class GRNHandler {
                     getPaymentDetails().setRelatedCheque(relatedCheque);
 
                     //Customer Transaction - GRN - CHEQUE
-                    CustomerTransaction customerTransactionEntryCheque = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CHEQUE - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getSupplier(), getCurrent().getGrnDate(), 0, getPaymentDetails().getChequeAmount());
-                    customerBalance.setBalance(customerBalance.getBalance() - getPaymentDetails().getChequeAmount());
+                    CustomerTransaction customerTransactionEntryCheque = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CHEQUE - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getSupplier(), getCurrent().getGrnDate(), getPaymentDetails().getChequeAmount(),0);
+                    customerBalance.setBalance(customerBalance.getBalance() + getPaymentDetails().getChequeAmount());
                     customerTransactionEntryCheque.setBalance(customerBalance.getBalance());
                     getCustomerTransactionController().edit(customerTransactionEntryCheque);
                 }
@@ -453,8 +454,8 @@ public class GRNHandler {
                     getPaymentDetails().setRelatedCreditCardReceipts(relatedCreditCardReceipt);
 
                     //Customer Transaction - GRN - CREDIT CARD
-                    CustomerTransaction customerTransactionEntryCC = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CREDIT CARD - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getSupplier(), getCurrent().getGrnDate(), 0, getPaymentDetails().getCreditCardAmount());
-                    customerBalance.setBalance(customerBalance.getBalance() - getPaymentDetails().getCreditCardAmount());
+                    CustomerTransaction customerTransactionEntryCC = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CREDIT CARD - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getSupplier(), getCurrent().getGrnDate(), getPaymentDetails().getCreditCardAmount(),0);
+                    customerBalance.setBalance(customerBalance.getBalance() + getPaymentDetails().getCreditCardAmount());
                     customerTransactionEntryCC.setBalance(customerBalance.getBalance());
                     getCustomerTransactionController().edit(customerTransactionEntryCC);
                 }
@@ -463,8 +464,8 @@ public class GRNHandler {
             if (getPaymentDetails().getCashAmount() > 0) {
 
                 //Customer Transaction - GRN - CASH
-                CustomerTransaction customerTransactionEntryCash = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CASH - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getSupplier(), getCurrent().getGrnDate(), 0, getPaymentDetails().getCashAmount());
-                customerBalance.setBalance(customerBalance.getBalance() - getPaymentDetails().getCashAmount());
+                CustomerTransaction customerTransactionEntryCash = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CASH - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getSupplier(), getCurrent().getGrnDate(), getPaymentDetails().getCashAmount(),0);
+                customerBalance.setBalance(customerBalance.getBalance() + getPaymentDetails().getCashAmount());
                 customerTransactionEntryCash.setBalance(customerBalance.getBalance());
                 getCustomerTransactionController().edit(customerTransactionEntryCash);
 

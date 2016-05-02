@@ -15,7 +15,7 @@
 
             <ui:define name="Rcontent">
                 <f:view>
-                    <h:form id="mainForm" >
+                    <h:form id="mainForm" target="_new">
                         <p:growl id="messages" showDetail="true"/>  
                         <h1><h:outputText value="Create GRN"/></h1>
                         <h:panelGrid columns="6">
@@ -82,7 +82,7 @@
                             <h:inputHidden/>
                             <h:inputHidden/>
                             <p:commandButton value="Add" action="#{gRNHandler.addItem()}" update="virtualList,totalAmount,acItem,itemQty,itemCost,:mainForm:messages"  /> 
-                            <p:commandButton ajax="false" value="Save" action="#{gRNHandler.addTEst()}" onclick="this.form.target = '_blank'" />
+                            <p:commandButton ajax="false" value="Save" action="#{gRNHandler.addTEst()}"  />
                         </h:panelGrid>
 
                         <br/>

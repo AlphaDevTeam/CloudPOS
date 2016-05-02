@@ -513,12 +513,12 @@ public class InvoiceHandler {
         }
 
         //Customer Transaction - Commercial Invoice
-        CustomerTransaction customerTransactionEntry = getCustomerTransactionController().addCustomerTransactionEntry(getCurrentDocument().getDocumentDisplayName() + " - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getCustomer(), getCurrent().getTrnDate(), 0, getCurrent().getTotalAmount());
+        CustomerTransaction customerTransactionEntry = getCustomerTransactionController().addCustomerTransactionEntry(getCurrentDocument().getDocumentDisplayName() + " - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getCustomer(), getCurrent().getTrnDate(),getCurrent().getTotalAmount(),0);
 
         //Getting Cust Balance
         CustomerBalance customerBalance = getCustomerBalanceController().getCustomerBalanceObject(getCurrent().getCustomer());
         if (customerBalance != null) {
-            customerBalance.setBalance(customerBalance.getBalance() - getCurrent().getTotalAmount());
+            customerBalance.setBalance(customerBalance.getBalance() + getCurrent().getTotalAmount());
             getCustomerBalanceController().edit(customerBalance);
         } else {
             customerBalance = new CustomerBalance(getCurrent().getCustomer(), getCurrent().getTotalAmount());
@@ -546,8 +546,8 @@ public class InvoiceHandler {
                     getPaymentDetails().setRelatedCheque(relatedCheque);
 
                     //Customer Transaction - GRN - CHEQUE
-                    CustomerTransaction customerTransactionEntryCheque = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CHEQUE - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getCustomer(), getCurrent().getTrnDate(), getPaymentDetails().getChequeAmount(), 0);
-                    customerBalance.setBalance(customerBalance.getBalance() + getPaymentDetails().getChequeAmount());
+                    CustomerTransaction customerTransactionEntryCheque = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CHEQUE - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getCustomer(), getCurrent().getTrnDate(),0, getPaymentDetails().getChequeAmount());
+                    customerBalance.setBalance(customerBalance.getBalance() - getPaymentDetails().getChequeAmount());
                     customerTransactionEntryCheque.setBalance(customerBalance.getBalance());
                     getCustomerTransactionController().edit(customerTransactionEntryCheque);
                 }
@@ -566,8 +566,8 @@ public class InvoiceHandler {
                     getPaymentDetails().setRelatedCreditCardReceipts(relatedCreditCardReceipt);
 
                     //Customer Transaction - GRN - CREDIT CARD
-                    CustomerTransaction customerTransactionEntryCC = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CREDIT CARD - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getCustomer(), getCurrent().getTrnDate(), getPaymentDetails().getCreditCardAmount(), 0);
-                    customerBalance.setBalance(customerBalance.getBalance() + getPaymentDetails().getCreditCardAmount());
+                    CustomerTransaction customerTransactionEntryCC = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CREDIT CARD - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getCustomer(), getCurrent().getTrnDate(), 0,getPaymentDetails().getCreditCardAmount());
+                    customerBalance.setBalance(customerBalance.getBalance() - getPaymentDetails().getCreditCardAmount());
                     customerTransactionEntryCC.setBalance(customerBalance.getBalance());
                     getCustomerTransactionController().edit(customerTransactionEntryCC);
                 }
@@ -576,8 +576,8 @@ public class InvoiceHandler {
             if (getPaymentDetails().getCashAmount() > 0) {
 
                 //Customer Transaction - Commercial Invoice - CASH
-                CustomerTransaction customerTransactionEntryCash = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CASH - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getCustomer(), getCurrent().getTrnDate(), getPaymentDetails().getCashAmount(), 0);
-                customerBalance.setBalance(customerBalance.getBalance() + getPaymentDetails().getCashAmount());
+                CustomerTransaction customerTransactionEntryCash = getCustomerTransactionController().addCustomerTransactionEntry("PAID - " + getCurrentDocument().getDocumentDisplayName() + " - CASH - " + getCurrent(), getCurrent().getBillStatus(), logger, getCurrent().getCustomer(), getCurrent().getTrnDate(),0, getPaymentDetails().getCashAmount());
+                customerBalance.setBalance(customerBalance.getBalance() - getPaymentDetails().getCashAmount());
                 customerTransactionEntryCash.setBalance(customerBalance.getBalance());
                 getCustomerTransactionController().edit(customerTransactionEntryCash);
 

@@ -13,7 +13,11 @@
 
     <h:body>
         <p:growl id="messages" autoUpdate="true"/>
-
+        <h:outputStylesheet library="css" name="animate.css"/>
+        <h:outputStylesheet library="css" name="core-layout.css"/>
+        <h:outputStylesheet library="css" name="font-awesome.css"/>
+        <h:outputStylesheet library="css" name="volt-font.css"/>
+        <h:outputStylesheet library="css" name="volt-layout.css"/>
         <!-- Idle Check -->
         <h:form>
             <p:growl id="IdleMessages" autoUpdate="true"/>
@@ -60,11 +64,13 @@
                         <center>
                             <h:panelGroup layout="block" class="image-cropper">
                                 <h:graphicImage value="#{sessionHandler.url}"  class="rounded" />
-                                <p:outputLabel value="#{stringHelper.convertToUppercase(sessionHandler.sessionUser.userName)}"/> <br/>
-                                <p:outputLabel value="#{sessionHandler.sessionUser.associatedCompany.companyName}"/><br/>
                                 <br/>
                                 <hr/>
                             </h:panelGroup>
+                            <br/>
+                            <br/>
+                            <p:outputLabel value="#{stringHelper.convertToUppercase(sessionHandler.sessionUser.userName)}"/> <br/>
+                            <p:outputLabel value="#{sessionHandler.sessionUser.associatedCompany.companyName}"/><br/>
 
                             <br/>
                             <hr/>

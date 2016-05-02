@@ -17,6 +17,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +33,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  *
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class CashbookHandler {
 
     @EJB
