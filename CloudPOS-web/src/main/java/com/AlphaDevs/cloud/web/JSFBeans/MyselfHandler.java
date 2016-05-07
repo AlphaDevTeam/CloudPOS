@@ -10,14 +10,14 @@ import com.AlphaDevs.cloud.web.SessionBean.MyselfController;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author Kumuditha_2
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class MyselfHandler {
 
     @EJB

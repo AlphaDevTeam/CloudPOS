@@ -4,7 +4,6 @@ import com.AlphaDevs.cloud.web.Entities.CashBookBalance;
 import com.AlphaDevs.cloud.web.Entities.Location;
 import com.AlphaDevs.cloud.web.Entities.Logger;
 import com.AlphaDevs.cloud.web.Entities.UserX;
-import com.AlphaDevs.cloud.web.Enums.BillStatus;
 import com.AlphaDevs.cloud.web.Enums.TransactionTypes;
 import com.AlphaDevs.cloud.web.Extra.AlphaConstant;
 import com.AlphaDevs.cloud.web.Helpers.EntityHelper;
@@ -18,7 +17,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
@@ -28,7 +27,7 @@ import javax.faces.bean.SessionScoped;
  *
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class LocationHandler {
 
     @EJB
@@ -93,40 +92,30 @@ public class LocationHandler {
     }
 
     public String persistLocation() {
+
         Logger Log = EntityHelper.createLogger("Create Location", getCurrent().getCode(), TransactionTypes.LOCATION);
         getLoggerController().create(Log);
         getCurrent().setLogger(Log);
 
         Map<String, Object> sessionMap = SessionDataHelper.getSessionMap();
         UserX logUser = (UserX) sessionMap.get(AlphaConstant.SESSION_USER);
-
+        getCurrent().setRelatedCompany(logUser.getAssociatedCompany());
+        getLocationController().create(getCurrent());
         if (getRDStatus() != null) {
-            System.out.println(RDStatus);
-            getCurrent().setRelatedCompany(logUser.getAssociatedCompany());
-            locationController.create(current);
-
-            MessageHelper.addSuccessMessage("New Location Added!");
-            CashBookBalance BalanceTax = new CashBookBalance(current, 0, 0, BillStatus.TAX);
-            CashBookBalance BalanceNonTax = new CashBookBalance(current, 0, 0, BillStatus.NON_TAX);
-
-            getCashBookBalanceController().create(BalanceTax);
-            getCashBookBalanceController().create(BalanceNonTax);
-            current = new Location();
+            persistCashbookBalance(getCurrent());
             return getRDStatus();
         } else {
-            getCurrent().setRelatedCompany(logUser.getAssociatedCompany());
-            locationController.create(current);
-
-            MessageHelper.addSuccessMessage("New Location Added!");
-            CashBookBalance BalanceTax = new CashBookBalance(current, 0, 0, BillStatus.TAX);
-            CashBookBalance BalanceNonTax = new CashBookBalance(current, 0, 0, BillStatus.NON_TAX);
-
-            cashBookBalanceController.create(BalanceTax);
-            cashBookBalanceController.create(BalanceNonTax);
-            current = new Location();
+            persistCashbookBalance(getCurrent());
             return "Home";
         }
+    }
 
+    private void persistCashbookBalance(Location location) {
+        List<CashBookBalance> locationCashbookBalances = EntityHelper.createCashbookBalances(location);
+        for (CashBookBalance locationCashbookBalance : locationCashbookBalances) {
+            getCashBookBalanceController().create(locationCashbookBalance);
+        }
+        MessageHelper.addSuccessMessage("New Location Added!");
     }
 
     /**

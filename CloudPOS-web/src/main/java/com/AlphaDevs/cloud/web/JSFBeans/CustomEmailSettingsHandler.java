@@ -12,13 +12,10 @@ import com.AlphaDevs.cloud.web.Helpers.MessageHelper;
 import com.AlphaDevs.cloud.web.SessionBean.CustomEmailSettingsController;
 import com.AlphaDevs.cloud.web.SessionBean.LoggerController;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import org.primefaces.event.RowEditEvent;
 
 /**
@@ -32,7 +29,7 @@ import org.primefaces.event.RowEditEvent;
  */
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class CustomEmailSettingsHandler {
     @EJB
     private LoggerController loggerController;

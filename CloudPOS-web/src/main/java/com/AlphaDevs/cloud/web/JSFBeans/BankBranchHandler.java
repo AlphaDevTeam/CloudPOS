@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import org.primefaces.event.RowEditEvent;
 
 /**
@@ -24,7 +23,7 @@ import org.primefaces.event.RowEditEvent;
  */
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class BankBranchHandler {
     @EJB
     private BankBranchController bankBranchController;

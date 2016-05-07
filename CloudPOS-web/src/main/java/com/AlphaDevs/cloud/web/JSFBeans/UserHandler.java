@@ -22,7 +22,6 @@ import com.AlphaDevs.cloud.web.SessionBean.UserController;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -30,8 +29,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -40,7 +38,7 @@ import javax.faces.context.FacesContext;
  *
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class UserHandler {
     @EJB
     private CompanyController companyController;

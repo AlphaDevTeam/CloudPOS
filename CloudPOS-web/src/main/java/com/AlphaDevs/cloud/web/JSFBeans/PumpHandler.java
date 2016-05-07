@@ -1,23 +1,18 @@
 
 package com.AlphaDevs.cloud.web.JSFBeans;
 
-import com.AlphaDevs.cloud.web.Entities.Items;
 import com.AlphaDevs.cloud.web.Entities.Logger;
 import com.AlphaDevs.cloud.web.Entities.Pump;
-import com.AlphaDevs.cloud.web.Entities.Units;
 import com.AlphaDevs.cloud.web.Enums.TransactionTypes;
 import com.AlphaDevs.cloud.web.Helpers.EntityHelper;
 import com.AlphaDevs.cloud.web.Helpers.MessageHelper;
-import com.AlphaDevs.cloud.web.SessionBean.ItemsController;
 import com.AlphaDevs.cloud.web.SessionBean.LoggerController;
 import com.AlphaDevs.cloud.web.SessionBean.PumpController;
-import com.AlphaDevs.cloud.web.SessionBean.UnitsController;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
@@ -30,7 +25,7 @@ import javax.faces.bean.SessionScoped;
  */
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class PumpHandler {
     @EJB
     private LoggerController loggerController;

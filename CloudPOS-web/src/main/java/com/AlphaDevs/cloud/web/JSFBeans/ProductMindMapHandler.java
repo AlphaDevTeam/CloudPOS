@@ -13,7 +13,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import org.primefaces.model.mindmap.DefaultMindmapNode;
 import org.primefaces.model.mindmap.MindmapNode;
 
@@ -22,7 +22,7 @@ import org.primefaces.model.mindmap.MindmapNode;
  * @author AlphaDevs
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ProductMindMapHandler {
     @EJB
     private DesignController designController;

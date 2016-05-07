@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +36,7 @@ import org.primefaces.event.SelectEvent;
  */
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class PurchaseReturnHandler 
 {
     @EJB

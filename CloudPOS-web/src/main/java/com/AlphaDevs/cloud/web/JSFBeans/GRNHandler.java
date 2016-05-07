@@ -487,6 +487,7 @@ public class GRNHandler {
                 cashBook.setLocation(getCurrent().getLocation());
                 cashBook.setLogger(logger);
 
+                
                 CashBookBalance cashBalance = getCashBookBalanceController().getCashBookBalanceObject(getCurrent().getLocation(), getCurrent().getBillStatus());
                 if (cashBalance != null) {
                     cashBalance.setCashBalance(cashBalance.getCashBalance() - getPaymentDetails().getCashAmount());

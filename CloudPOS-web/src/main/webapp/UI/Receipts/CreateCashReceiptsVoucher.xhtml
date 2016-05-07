@@ -33,7 +33,7 @@
                             <p:outputLabel value="Description:" for="receiptDescription" />
                             <p:inputText id="receiptDescription" value="#{cashReceiptsVoucherHandler.current.receiptDescription}" title="Receipt Description" />
                             <p:outputLabel value="Amount:" for="receiptAmount" />
-                            <p:inputText type="number" id="receiptAmount" value="#{cashReceiptsVoucherHandler.current.receiptAmount}" title="Amount" />
+                            <p:inputText type="number" id="receiptAmount" value="#{cashReceiptsVoucherHandler.current.receiptAmount}" title="Amount" required="true"/>
                             <p:outputLabel value="Receipt Location:" for="receiptLocation" />
                             <p:selectOneMenu id="receiptLocation" value="#{cashReceiptsVoucherHandler.current.receiptLocation}" required="true" converter="#{locationConvertor}" label="Receipt Location" >
                                 <f:selectItem itemLabel="Select One"  />  

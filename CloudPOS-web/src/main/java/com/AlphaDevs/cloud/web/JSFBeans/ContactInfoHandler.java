@@ -6,7 +6,7 @@ import com.AlphaDevs.cloud.web.Entities.ContactInfo;
 import com.AlphaDevs.cloud.web.SessionBean.ContactInfoController;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
@@ -16,7 +16,7 @@ import javax.faces.bean.SessionScoped;
  */
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ContactInfoHandler 
 {
     @EJB

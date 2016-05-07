@@ -12,7 +12,6 @@ import com.AlphaDevs.cloud.web.Entities.CustomEmailSettings;
 import com.AlphaDevs.cloud.web.Entities.CustomerBalance;
 import com.AlphaDevs.cloud.web.Entities.GRN;
 import com.AlphaDevs.cloud.web.Entities.Invoice;
-import com.AlphaDevs.cloud.web.Entities.InvoiceDetails;
 import com.AlphaDevs.cloud.web.Entities.Location;
 import com.AlphaDevs.cloud.web.Entities.MeterReading;
 import com.AlphaDevs.cloud.web.Entities.StockAdjestments;
@@ -48,7 +47,7 @@ import java.util.Map;
 import javax.activation.DataSource;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.ServletOutputStream;
@@ -66,7 +65,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  *
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class DaySummaryHandler {
 
     @EJB

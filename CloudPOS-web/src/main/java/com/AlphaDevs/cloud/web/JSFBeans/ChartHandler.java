@@ -3,10 +3,9 @@ package com.AlphaDevs.cloud.web.JSFBeans;
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
@@ -17,7 +16,7 @@ import org.primefaces.model.chart.LineChartSeries;
  * @author Mihindu Karunarathne
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ChartHandler implements Serializable {
 
     private LineChartModel lineModel1;

@@ -6,8 +6,7 @@ import com.AlphaDevs.cloud.web.SessionBean.CompanyController;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
@@ -15,7 +14,7 @@ import javax.faces.bean.SessionScoped;
  *
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class CompanyHandler {
 
     @EJB

@@ -2,17 +2,20 @@
 
 package com.AlphaDevs.cloud.web.Helpers;
 
+import com.AlphaDevs.cloud.web.Entities.CashBookBalance;
 import com.AlphaDevs.cloud.web.Entities.Company;
 import com.AlphaDevs.cloud.web.Entities.Location;
 import com.AlphaDevs.cloud.web.Entities.Logger;
 import com.AlphaDevs.cloud.web.Entities.Terminal;
 import com.AlphaDevs.cloud.web.Entities.UserX;
+import com.AlphaDevs.cloud.web.Enums.BillStatus;
 import com.AlphaDevs.cloud.web.Enums.TransactionTypes;
 import com.AlphaDevs.cloud.web.Extra.AlphaConstant;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 import javax.faces.context.FacesContext;
 
 /**
@@ -59,6 +62,25 @@ public class EntityHelper
                 return null;
             }
             
+        }
+        catch(Exception ex)
+        {
+            MessageHelper.addErrorMessage("Error - createLogger", ex.toString());
+            return null;
+        }
+        
+    }
+    
+    public static List<CashBookBalance> createCashbookBalances(Location location)
+    {
+        List<CashBookBalance> listCashbookBalance = new ArrayList<>();
+        try
+        {
+            for (BillStatus billStatus : BillStatus.values()) {
+                CashBookBalance cashbookBalance = new CashBookBalance(location, 0,0, billStatus);
+                listCashbookBalance.add(cashbookBalance);
+            }
+            return listCashbookBalance;
         }
         catch(Exception ex)
         {
