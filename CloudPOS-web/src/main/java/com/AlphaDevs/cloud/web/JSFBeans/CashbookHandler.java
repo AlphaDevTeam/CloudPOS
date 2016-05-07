@@ -194,7 +194,7 @@ public class CashbookHandler {
 //        System.out.println(getRelatedLocation().toString());
 //        System.out.println(getFromDate().toString());
 //        System.out.println(getToDate().toString());
-        setListOfCashBookRecords(getCashbookController().getCashBookRecordsInTimePeriod(getRelatedLocation(), getFromDate(), getToDate()));
+        setListOfCashBookRecords(getCashbookController().getCashBookRecordsInTimePeriod(getRelatedLocation(), getFromDate(), getToDate(),getCurrent().getBillStat()));
 
     }
 

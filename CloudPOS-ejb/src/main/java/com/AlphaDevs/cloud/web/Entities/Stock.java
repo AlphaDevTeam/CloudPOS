@@ -1,6 +1,7 @@
 
 package com.AlphaDevs.cloud.web.Entities;
 
+import com.AlphaDevs.cloud.web.Enums.BillStatus;
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -30,6 +31,7 @@ public class Stock implements Serializable
     private Location StockLocation;
     @OneToOne
     private Company relatedCompany;
+    private BillStatus billStatus;
 
     public Company getRelatedCompany() {
         return relatedCompany;
@@ -52,6 +54,14 @@ public class Stock implements Serializable
         return SockItem;
     }
 
+    public BillStatus getBillStatus() {
+        return billStatus;
+    }
+
+    public void setBillStatus(BillStatus billStatus) {
+        this.billStatus = billStatus;
+    }
+    
     public void setSockItem(Items SockItem) {
         this.SockItem = SockItem;
     }

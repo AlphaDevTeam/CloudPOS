@@ -40,6 +40,7 @@ public class PaymentDetails implements Serializable
     private double creditAmount;
     private double totalAmount;
     private long documentID;
+    private double settledAmount;
     
     @OneToOne
     private Cheques relatedCheque;
@@ -101,6 +102,14 @@ public class PaymentDetails implements Serializable
         return totalAmount;
     }
 
+    public double getSettledAmount() {
+        return settledAmount;
+    }
+
+    public void setSettledAmount(double settledAmount) {
+        this.settledAmount = settledAmount;
+    }
+    
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }

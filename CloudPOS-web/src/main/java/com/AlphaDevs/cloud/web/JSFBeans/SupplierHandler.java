@@ -1,6 +1,7 @@
 package com.AlphaDevs.cloud.web.JSFBeans;
 
 import com.AlphaDevs.cloud.web.Entities.*;
+import com.AlphaDevs.cloud.web.Enums.BillStatus;
 import com.AlphaDevs.cloud.web.Enums.TransactionTypes;
 import com.AlphaDevs.cloud.web.Helpers.EntityHelper;
 import com.AlphaDevs.cloud.web.Helpers.MessageHelper;
@@ -9,6 +10,7 @@ import com.AlphaDevs.cloud.web.SessionBean.LoggerController;
 import com.AlphaDevs.cloud.web.SessionBean.SupplierController;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -33,16 +35,11 @@ public class SupplierHandler {
     private Address currentAddress;
     private ContactInfo currentContact;
     private String RDStatus;
-    
-  
 
-    
-    
-
-    public SupplierHandler() {
+    @PostConstruct
+    public void init() {
         if (current == null) {
             current = new Supplier();
-
         }
         if (currentAddress == null) {
             currentAddress = new Address();
@@ -50,6 +47,26 @@ public class SupplierHandler {
         if (currentContact == null) {
             currentContact = new ContactInfo();
         }
+    }
+
+    public LoggerController getLoggerController() {
+        return loggerController;
+    }
+
+    public void setLoggerController(LoggerController loggerController) {
+        this.loggerController = loggerController;
+    }
+
+    public CustomerBalanceController getCustomerBalanceController() {
+        return customerBalanceController;
+    }
+
+    public void setCustomerBalanceController(CustomerBalanceController customerBalanceController) {
+        this.customerBalanceController = customerBalanceController;
+    }
+
+    public SupplierHandler() {
+
     }
 
     public Supplier getCurrent() {
@@ -61,32 +78,32 @@ public class SupplierHandler {
     }
 
     public String createSup() {
-        Logger Log = EntityHelper.createLogger("Create Supplier", current.getFirstName(), TransactionTypes.SUPPLIER);
-        loggerController.create(Log);
-        current.setLogger(Log);
+        Logger Log = EntityHelper.createLogger("Create Supplier", getCurrent().getFirstName(), TransactionTypes.SUPPLIER);
+        getLoggerController().create(Log);
+        getCurrent().setLogger(Log);
 
         if (getRDStatus() != null) {
-            supplierController.create(current);
-            CustomerBalance CustBal = new CustomerBalance();
-            CustBal.setBalance(0);
-            CustBal.setSupplier(current);
-            customerBalanceController.create(CustBal);
-            current = new Supplier();
+            persistSupplier();
             MessageHelper.addSuccessMessage("Supplier Added!");
             return getRDStatus();
 
         } else {
-
-            supplierController.create(current);
-            CustomerBalance CustBal = new CustomerBalance();
-            CustBal.setBalance(0);
-            CustBal.setSupplier(current);
-            customerBalanceController.create(CustBal);
-             current = new Supplier();
+            persistSupplier();
             MessageHelper.addSuccessMessage("Supplier Added!");
             return "Home";
         }
 
+    }
+
+    private void persistSupplier() {
+        getSupplierController().create(getCurrent());
+        for (BillStatus billStatus : BillStatus.values()) {
+            CustomerBalance CustBal = new CustomerBalance();
+            CustBal.setBalance(0);
+            CustBal.setBillStatus(billStatus);
+            CustBal.setSupplier(getCurrent());
+            getCustomerBalanceController().create(CustBal);
+        }
     }
 
     public List<Supplier> allSuppliers() {
@@ -116,8 +133,6 @@ public class SupplierHandler {
     public void setSupplierController(SupplierController supplierController) {
         this.supplierController = supplierController;
     }
-    
-    
 
     /**
      * @return the RDStatus

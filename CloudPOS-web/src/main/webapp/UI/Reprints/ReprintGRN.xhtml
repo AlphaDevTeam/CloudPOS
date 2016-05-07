@@ -15,7 +15,13 @@
             <ui:define name="Rcontent">
                 <f:view>
                     <h:form>
-                        <h1><h:outputText value="GRN List"/></h1>
+                        <h1><h:outputText value="GRN Reprint"/></h1>
+                        <h:outputLabel value="Location : " for="relatedLocation" />
+                        <p:selectOneMenu id="relatedLocation" value="#{gRNHandler.current.location}" label="Location" converter="#{locationConvertor}" required="true" >
+                                <p:ajax update="GrnList"/>                     
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{locationHandler.locationList}" />
+                            </p:selectOneMenu>
                         <p:dataTable id="GrnList" value="#{gRNHandler.grnList}" var="item" paginator="true" lazy="true" rows="5" >
                             <p:column>
                                 <f:facet name="header">

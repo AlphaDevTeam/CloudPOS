@@ -6,6 +6,7 @@ import com.AlphaDevs.cloud.web.Entities.Location;
 import com.AlphaDevs.cloud.web.Entities.Logger;
 import com.AlphaDevs.cloud.web.Entities.Stock;
 import com.AlphaDevs.cloud.web.Entities.Units;
+import com.AlphaDevs.cloud.web.Enums.BillStatus;
 import com.AlphaDevs.cloud.web.Enums.TransactionTypes;
 import com.AlphaDevs.cloud.web.Helpers.EntityHelper;
 import com.AlphaDevs.cloud.web.Helpers.SessionDataHelper;
@@ -152,6 +153,8 @@ public class ItemsHandler {
         stock.setRelatedCompany(SessionDataHelper.getLoggedCompany(true));
         stock.setStockLocation(getCurrent().getItemLocation());
         stock.setStockQty(0);
+        //Fix me - Hardcoding the value Tax for Now
+        stock.setBillStatus(BillStatus.TAX);
         getStockController().create(stock);
         setCurrent(new Items());
         return "Home";

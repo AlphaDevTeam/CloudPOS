@@ -96,6 +96,16 @@ public class GRNController extends AbstractFacade<GRN>
         q.where(cb.between(c.get(GRN_.grnDate), from,to),cb.equal(c.get(GRN_.location), location));
         return getEntityManager().createQuery(q).getResultList();
     }
+    
+    public List<GRN> findByLocation(Location location) 
+    {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<GRN> q = cb.createQuery(GRN.class);
+        Root<GRN> c = q.from(GRN.class);
+        q.select(c);
+        q.where(cb.equal(c.get(GRN_.location), location));
+        return getEntityManager().createQuery(q).getResultList();
+    }
    
     
 }

@@ -181,7 +181,7 @@ public class CashPaymentVoucherHandler {
         
         //Creating Logger
         Logger log = EntityHelper.createLogger("Cash Payament Voucher - " + getCurrent().getPaymentDescription() , getCurrent().getPaymentNumber(), TransactionTypes.CASHPAY);
-        loggerController.create(log);
+        getLoggerController().create(log);
         getCurrent().setRelatedLogger(log);
         
         getCurrent().setRelatedCompany(EntityHelper.getLoggedCompany()); 
@@ -191,17 +191,17 @@ public class CashPaymentVoucherHandler {
         custTran.setDescription("Cash Payament Voucher - " + getCurrent().getPaymentNumber() + "-" + getCurrent().getPaymentRefNumber() + " - "+ getCurrent().getPaymentDescription());
         custTran.setSupplier(getCurrent().getRelatedSupplier());
         custTran.setDate(getCurrent().getPaymentDate());
+        custTran.setBillStat(getCurrent().getBillStatus());
         custTran.setDR(getCurrent().getPaymentAmount());
         custTran.setCR(0);
         
         //Getting Cust Balance
-        CustomerBalance Balance = customerBalanceController.getCustomerBalanceObject(getCurrent().getRelatedSupplier());
+        CustomerBalance Balance = getCustomerBalanceController().getCustomerBalanceObject(getCurrent().getRelatedSupplier(),getCurrent().getBillStatus());
         if(Balance != null)
         {
             Balance.setBalance(Balance.getBalance() + getCurrent().getPaymentAmount() );
-            customerBalanceController.edit(Balance);
+            getCustomerBalanceController().edit(Balance);
             custTran.setBalance(Balance.getBalance());
-            
         }
         else
         {
@@ -216,11 +216,12 @@ public class CashPaymentVoucherHandler {
         cashBook.setDescription("Cash Payament Voucher - " + current.getPaymentNumber() + "-" + getCurrent().getPaymentRefNumber() + " - "+ getCurrent().getPaymentDescription());
         cashBook.setCR(getCurrent().getPaymentAmount());
         cashBook.setDR(0);
+        cashBook.setBillStat(getCurrent().getBillStatus());
         cashBook.setRelatedDate(getCurrent().getPaymentDate());
         cashBook.setLocation(getCurrent().getPaymentLocation());
         cashBook.setLogger(log);
 
-        CashBookBalance cashBalance = cashBookBalanceController.getCashBookBalanceObject(getCurrent().getPaymentLocation(), BillStatus.TAX);
+        CashBookBalance cashBalance = cashBookBalanceController.getCashBookBalanceObject(getCurrent().getPaymentLocation(), getCurrent().getBillStatus());
         
         if(cashBalance != null)
         {
@@ -233,7 +234,7 @@ public class CashPaymentVoucherHandler {
             cashBook.setBalance(getCurrent().getPaymentAmount());
         }
 
-        cashbookController.create(cashBook);
+        getCashbookController().create(cashBook);
         
         //Increment the the Document No 
         if(getCurrentSystemNumber() != null){

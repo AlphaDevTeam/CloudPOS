@@ -1,6 +1,7 @@
 
 package com.AlphaDevs.cloud.web.Entities;
 
+import com.AlphaDevs.cloud.web.Enums.BillStatus;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -40,6 +41,8 @@ public class CashPaymentVoucher implements Serializable {
     private Supplier relatedSupplier;
     @OneToOne
     private Logger relatedLogger;
+    
+    private BillStatus billStatus;
 
     public CashPaymentVoucher() {
     }
@@ -76,6 +79,15 @@ public class CashPaymentVoucher implements Serializable {
         return id;
     }
 
+    public BillStatus getBillStatus() {
+        return billStatus;
+    }
+
+    public void setBillStatus(BillStatus billStatus) {
+        this.billStatus = billStatus;
+    }
+    
+    
     public void setId(Long id) {
         this.id = id;
     }

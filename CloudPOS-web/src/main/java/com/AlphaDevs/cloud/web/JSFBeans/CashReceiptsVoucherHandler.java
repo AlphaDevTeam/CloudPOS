@@ -10,7 +10,6 @@ import com.AlphaDevs.cloud.web.Entities.CustomerTransaction;
 import com.AlphaDevs.cloud.web.Entities.Logger;
 import com.AlphaDevs.cloud.web.Entities.SystemNumbers;
 import com.AlphaDevs.cloud.web.Entities.UserX;
-import com.AlphaDevs.cloud.web.Enums.BillStatus;
 import com.AlphaDevs.cloud.web.Enums.Document;
 import com.AlphaDevs.cloud.web.Enums.TransactionTypes;
 import com.AlphaDevs.cloud.web.Extra.AlphaConstant;
@@ -181,11 +180,12 @@ public class CashReceiptsVoucherHandler {
         custTran.setDescription("Cash Receipt Voucher - " + getCurrent().getReceiptNumber() + "-" + getCurrent().getReceiptRefNumber()+ " - "+ getCurrent().getReceiptDescription());
         custTran.setSupplier(getCurrent().getRelatedSupplier());
         custTran.setDR(0);
+        custTran.setBillStat(getCurrent().getBillStatus());
         custTran.setDate(getCurrent().getReceiptDate());
         custTran.setCR(getCurrent().getReceiptAmount());
         
         //Getting Cust Balance
-        CustomerBalance Balance = getCustomerBalanceController().getCustomerBalanceObject(getCurrent().getRelatedSupplier());
+        CustomerBalance Balance = getCustomerBalanceController().getCustomerBalanceObject(getCurrent().getRelatedSupplier(),getCurrent().getBillStatus());
         if(Balance != null)
         {
             Balance.setBalance(Balance.getBalance() - getCurrent().getReceiptAmount() );
@@ -205,12 +205,13 @@ public class CashReceiptsVoucherHandler {
         CashBook cashBook = new CashBook();
         cashBook.setDescription("Cash Receipt Voucher - " + getCurrent().getReceiptNumber()+ "-" + getCurrent().getReceiptRefNumber() + " - "+ getCurrent().getReceiptDescription());
         cashBook.setCR(0);
+        cashBook.setBillStat(getCurrent().getBillStatus());
         cashBook.setDR(getCurrent().getReceiptAmount());
         cashBook.setRelatedDate(getCurrent().getReceiptDate());
         cashBook.setLocation(getCurrent().getReceiptLocation());
         cashBook.setLogger(log);
 
-        CashBookBalance cashBalance = getCashBookBalanceController().getCashBookBalanceObject(getCurrent().getReceiptLocation(), BillStatus.TAX);
+        CashBookBalance cashBalance = getCashBookBalanceController().getCashBookBalanceObject(getCurrent().getReceiptLocation(), getCurrent().getBillStatus());
         
         if(cashBalance != null)
         {

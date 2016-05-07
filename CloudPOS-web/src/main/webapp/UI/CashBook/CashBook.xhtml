@@ -38,6 +38,13 @@
                             <p:ajax partialSubmit="true" update="dataTable" /> 
                         </p:calendar>
 
+                        <p:outputLabel value="Type : " for="billType" />
+                        <p:selectOneMenu id="billType" value="#{cashbookHandler.current.billStat}" label="Bill Status" required="true" >
+                            <f:selectItem itemLabel="Select One"  />  
+                            <f:selectItems value="#{billStatusHandler.billStatus}"/>
+                            <p:ajax partialSubmit="true" update="dataTable" /> 
+                        </p:selectOneMenu>
+
                         <p:commandButton update="dataTable" value="Load" action="#{cashbookHandler.initCashBook()}"/>
                         <p:commandButton value="Print" ajax="false"  action="#{cashbookHandler.printReportDownload}"/>
 
@@ -54,8 +61,8 @@
                                 <f:facet name="header">
                                     <h:outputText value="Date"/>
                                 </f:facet>
-                                 <h:outputText value="#{item.relatedDate}">
-                                     <f:convertDateTime pattern="#{systemsHandler.current.dateTimeformat}" />
+                                <h:outputText value="#{item.relatedDate}">
+                                    <f:convertDateTime pattern="#{systemsHandler.current.dateTimeformat}" />
                                 </h:outputText>
                             </p:column>
                             <p:column>

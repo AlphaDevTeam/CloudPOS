@@ -25,6 +25,11 @@
                             <p:calendar id="Date" value="#{cashReceiptsVoucherHandler.current.receiptDate}" pattern="#{sessionHandler.defaultDateFormat}" title="Date">
                                  <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
                             </p:calendar>
+                                <p:outputLabel value="Bill Type : " for="billType" />
+                                <p:selectOneMenu id="billType" required="true" value="#{cashReceiptsVoucherHandler.current.billStatus}" label="Bill Type">
+                                    <f:selectItem itemLabel="Select One"/>
+                                    <f:selectItems value="#{billStatusHandler.billStatus}"/>
+                                </p:selectOneMenu>
                             <p:outputLabel value="Description:" for="receiptDescription" />
                             <p:inputText id="receiptDescription" value="#{cashReceiptsVoucherHandler.current.receiptDescription}" title="Receipt Description" />
                             <p:outputLabel value="Amount:" for="receiptAmount" />

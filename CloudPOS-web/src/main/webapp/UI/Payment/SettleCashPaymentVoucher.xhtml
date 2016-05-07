@@ -13,7 +13,7 @@
             <ui:define name="Rcontent">
                 <f:view>
                     <h:form>
-                        <h1><h:outputText value="Cash Payment Voucher - Customer / Supplier"/></h1>
+                        <h1><h:outputText value="Cash Payment Voucher - Customer / Supplier - Settle Bills"/></h1>
                         <h:panelGrid columns="4">
                             
                             <p:outputLabel value="Payment Number : " for="paymentNumber" />
@@ -24,11 +24,6 @@
                             <p:calendar id="Date" value="#{cashPaymentVoucherHandler.current.paymentDate}" pattern="#{sessionHandler.defaultDateFormat}" title="Date" required="true">
                                  <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
                             </p:calendar>
-                             <p:outputLabel value="Bill Type : " for="billType" />
-                                <p:selectOneMenu id="billType" required="true" value="#{cashPaymentVoucherHandler.current.billStatus}" label="Bill Type">
-                                    <f:selectItem itemLabel="Select One"/>
-                                    <f:selectItems value="#{billStatusHandler.billStatus}"/>
-                                </p:selectOneMenu>
                             <p:outputLabel value="Description : " for="paymentDescription" />
                             <p:inputText id="paymentDescription" value="#{cashPaymentVoucherHandler.current.paymentDescription}" title="PaymentDescription" required="true"/>
                             <p:outputLabel value="Amount : " for="paymentAmount" />
@@ -44,9 +39,8 @@
                             <p:selectOneMenu id="relatedSupplier" value="#{cashPaymentVoucherHandler.current.relatedSupplier}" label="Customer / Supplier" converter="#{supplierConvertor}" required="true" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Select One"  />  
                                 <f:selectItems value="#{supplierHandler.allSuppliers()}"/>
-                                <p:ajax update="custBalance"/>
                             </p:selectOneMenu>
-                            <p:outputLabel id="custBalance" value="Balance : #{cashPaymentVoucherHandler.current.relatedSupplier.customerBalance}"  />
+                            
                             <p:commandButton value="Save" action="#{cashPaymentVoucherHandler.createPayment()}" />
                         </h:panelGrid>
                     </h:form>

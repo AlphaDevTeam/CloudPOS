@@ -30,7 +30,7 @@
                                 <p:inputText type="number" id="totalAmount" value="#{invoiceHandler.current.totalAmount}" title="TotalAmount" readonly="true" />
 
                                 <p:outputLabel value="Invoice Date : " for="InvDate" />  
-                                <p:calendar id="InvDate" value="#{invoiceHandler.current.trnDate}" pattern="#{sessionHandler.defaultDateFormat}" title="Invoice Date">
+                                <p:calendar id="InvDate" required="true" requiredMessage="Please insert Invoice Date" value="#{invoiceHandler.current.trnDate}" pattern="#{sessionHandler.defaultDateFormat}" title="Invoice Date">
                                     <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
                                 </p:calendar>
 

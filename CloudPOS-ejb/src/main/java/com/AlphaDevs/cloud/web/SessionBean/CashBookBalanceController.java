@@ -2,6 +2,7 @@
 package com.AlphaDevs.cloud.web.SessionBean;
 
 import com.AlphaDevs.cloud.web.Entities.CashBookBalance;
+import com.AlphaDevs.cloud.web.Entities.CashBookBalance_;
 import com.AlphaDevs.cloud.web.Entities.Location;
 import com.AlphaDevs.cloud.web.Enums.BillStatus;
 import javax.ejb.Stateless;
@@ -45,8 +46,8 @@ public class CashBookBalanceController extends AbstractFacade<CashBookBalance>
         Root<CashBookBalance> c = q.from(CashBookBalance.class);
         q.select(c);
         //ParameterExpression<Product> p = cb.parameter(Product.class);
-        q.where(cb.equal(c.get("location"), location)
-                ,cb.equal(c.get("billStatus"), billStat));
+        q.where(cb.equal(c.get(CashBookBalance_.location), location)
+                ,cb.equal(c.get(CashBookBalance_.billStatus), billStat));
         //q.where(cb.equal(c.get("supplier"), location)/);
         
         if(!getEntityManager().createQuery(q).getResultList().isEmpty())

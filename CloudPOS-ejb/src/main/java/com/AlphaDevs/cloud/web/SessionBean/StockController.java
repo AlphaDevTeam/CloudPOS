@@ -5,6 +5,7 @@ import com.AlphaDevs.cloud.web.Entities.Items;
 import com.AlphaDevs.cloud.web.Entities.Location;
 import com.AlphaDevs.cloud.web.Entities.Stock;
 import com.AlphaDevs.cloud.web.Entities.Stock_;
+import com.AlphaDevs.cloud.web.Enums.BillStatus;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -106,8 +107,17 @@ public class StockController extends AbstractFacade<Stock> {
         return getEntityManager().createQuery(q).getResultList();
     }
     
-    public Stock getItemStock(Location location,Items item) {        
-        List<Stock> itemStockList = getItemStockList(location, item);
+    public List<Stock> getItemStockList(Location location,Items item,BillStatus billStatus) {
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Stock> q = cb.createQuery(Stock.class);
+        Root<Stock> c = q.from(Stock.class);
+        q.select(c);
+        q.where(cb.equal(c.get(Stock_.StockLocation), location),cb.equal(c.get(Stock_.billStatus), billStatus),cb.equal(c.get(Stock_.SockItem), item));
+        return getEntityManager().createQuery(q).getResultList();
+    }
+    
+    public Stock getItemStock(Location location,Items item,BillStatus billStatus) {        
+        List<Stock> itemStockList = getItemStockList(location, item,billStatus);
         if(itemStockList != null && !itemStockList.isEmpty() && itemStockList.get(0) != null){
            return itemStockList.get(0);
         }else{

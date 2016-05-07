@@ -1,6 +1,7 @@
 
 package com.AlphaDevs.cloud.web.Entities;
 
+import com.AlphaDevs.cloud.web.Enums.BillStatus;
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -21,7 +22,7 @@ public class CustomerBalance implements Serializable
     
     @OneToOne
     private Supplier supplier;
-    
+    private BillStatus billStatus;
     private double  Balance;
 
     public CustomerBalance() {
@@ -44,6 +45,14 @@ public class CustomerBalance implements Serializable
         return supplier;
     }
 
+    public BillStatus getBillStatus() {
+        return billStatus;
+    }
+
+    public void setBillStatus(BillStatus billStatus) {
+        this.billStatus = billStatus;
+    }
+    
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
     }
@@ -79,7 +88,7 @@ public class CustomerBalance implements Serializable
 
     @Override
     public String toString() {
-        return "com.AlphaDevs.cloud.web.Entities.CustomerBalance[ id=" + id + " ]";
+        return  String.valueOf(getBalance());
     }
 
 }

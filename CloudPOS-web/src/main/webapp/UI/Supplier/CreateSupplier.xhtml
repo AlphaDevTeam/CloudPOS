@@ -59,7 +59,7 @@
 
 
                             <p:outputLabel value="Credit Limit : " for="creditLimit" />
-                            <p:inputText id="creditLimit" value="#{supplierHandler.current.creditLimit}" title="CreditLimit" required="true" />
+                            <p:inputText type="number" id="creditLimit" value="#{supplierHandler.current.creditLimit}" title="CreditLimit" required="true" />
 
                             <p:outputLabel value="Customer Category : " for="custcategory" />
                             <p:selectOneMenu id="custcategory" value="#{supplierHandler.current.custcategory}" label="Custcategory" converter="#{managedConvertor}" required="true" >

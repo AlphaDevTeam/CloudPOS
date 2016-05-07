@@ -4,6 +4,7 @@ package com.AlphaDevs.cloud.web.SessionBean;
 import com.AlphaDevs.cloud.web.Entities.CustomerBalance;
 import com.AlphaDevs.cloud.web.Entities.CustomerBalance_;
 import com.AlphaDevs.cloud.web.Entities.Supplier;
+import com.AlphaDevs.cloud.web.Enums.BillStatus;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,14 +66,14 @@ public class CustomerBalanceController extends AbstractFacade<CustomerBalance>
         
     }
     
-    public CustomerBalance getCustomerBalanceObject(Supplier supllier) 
+    public CustomerBalance getCustomerBalanceObject(Supplier supllier,BillStatus billStatus) 
     {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<CustomerBalance> q = cb.createQuery(CustomerBalance.class);
         Root<CustomerBalance> c = q.from(CustomerBalance.class);
         q.select(c);
         //ParameterExpression<Product> p = cb.parameter(Product.class);
-        q.where(cb.equal(c.get(CustomerBalance_.supplier), supllier));
+        q.where(cb.equal(c.get(CustomerBalance_.supplier), supllier),cb.equal(c.get(CustomerBalance_.billStatus),  billStatus));
         
         if(!getEntityManager().createQuery(q).getResultList().isEmpty())
         {

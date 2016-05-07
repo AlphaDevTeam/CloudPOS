@@ -7,6 +7,7 @@ import com.AlphaDevs.cloud.web.Entities.Pump;
 import com.AlphaDevs.cloud.web.Entities.Stock;
 import com.AlphaDevs.cloud.web.Entities.SystemNumbers;
 import com.AlphaDevs.cloud.web.Entities.UserX;
+import com.AlphaDevs.cloud.web.Enums.BillStatus;
 import com.AlphaDevs.cloud.web.Enums.Document;
 import com.AlphaDevs.cloud.web.Enums.TransactionTypes;
 import com.AlphaDevs.cloud.web.Extra.AlphaConstant;
@@ -196,8 +197,9 @@ public class MeterReadingHandler {
         getLoggerController().create(Log);
         getCurrent().setLogger(Log);
 
-        Stock stock = getStockController().getItemStock(getCurrent().getRelatedLocation(), getCurrent().getRelatedPump().getRelatedItem());
-        stock.setStockQty((float) (stock.getStockQty() - getCurrent().getReading()));
+        //Fix me - Hardcoding the TAX Value
+        Stock stock = getStockController().getItemStock(getCurrent().getRelatedLocation(), getCurrent().getRelatedPump().getRelatedItem(),BillStatus.TAX );
+        stock.setStockQty((float) (stock.getStockQty() - getCurrent().getReading())); 
         getStockController().edit(stock);
 
         ItemBincard itemBin = new ItemBincard();

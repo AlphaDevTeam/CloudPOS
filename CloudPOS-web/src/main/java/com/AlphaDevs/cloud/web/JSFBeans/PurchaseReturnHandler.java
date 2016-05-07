@@ -392,21 +392,20 @@ public class PurchaseReturnHandler
         custTran.setCR(getCurrent().getTotalAmount());
         
         //Getting Cust Balance
-        CustomerBalance Balance = customerBalanceController.getCustomerBalanceObject(current.getSupplier());
+        CustomerBalance Balance = getCustomerBalanceController().getCustomerBalanceObject(getCurrent().getSupplier(),getCurrent().getBillStatus());
         if(Balance != null)
         {
-            Balance.setBalance(Balance.getBalance() - current.getTotalAmount() );
-            customerBalanceController.edit(Balance);
+            Balance.setBalance(Balance.getBalance() - getCurrent().getTotalAmount() );
+            getCustomerBalanceController().edit(Balance);
             custTran.setBalance(Balance.getBalance());
-            
         }
         else
         {
-            custTran.setBalance(current.getTotalAmount());
+            custTran.setBalance(getCurrent().getTotalAmount());
         }
         
         custTran.setLogger(log);
-        customerTransactionController.create(custTran);
+        getCustomerTransactionController().create(custTran);
         
         /*    
         //Cashbook
