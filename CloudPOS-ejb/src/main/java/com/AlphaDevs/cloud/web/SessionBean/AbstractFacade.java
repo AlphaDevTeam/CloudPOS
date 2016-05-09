@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
  *
  * @author Mihindu Gajaba Karunarathne
  * @version 1.0.0
+ * @param <T>
  * @since 2012/06/16
  * @see Alpha Development Team ( www.AlphaDevs.com )
  * 
@@ -21,7 +22,7 @@ public abstract class AbstractFacade<T>
 {
     
     
-    private Class<T> entityClass;
+    private final Class<T> entityClass;
     
     
     protected abstract EntityManager getEntityManager();
@@ -46,7 +47,6 @@ public abstract class AbstractFacade<T>
     * @since 2012/06/16
     * @see Alpha Development Team ( www.AlphaDevs.com )
     * @return return
-    * @param params
     * @serialData 
     * 
     */

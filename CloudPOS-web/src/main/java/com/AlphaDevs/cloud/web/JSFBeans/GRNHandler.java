@@ -95,7 +95,7 @@ public class GRNHandler {
 
     @PostConstruct
     public void init() {
-        currentDocument = Document.GOOD_RECEIPT_NOTE;
+        currentDocument = Document.GOODS_RECEIVED_NOTE;
         if (current == null) {
             current = new GRN();
         }
@@ -337,7 +337,7 @@ public class GRNHandler {
     }
 
     public void handleSelect(SelectEvent event) {
-        currentDetails.setGrnItemCost(currentDetails.getGrnItem().getItemCost());
+        getCurrentDetails().setGrnItemCost(getCurrentDetails().getGrnItem().getItemCost());
     }
     
     public void handleLocationSelect(SelectEvent event) {
@@ -737,16 +737,14 @@ public class GRNHandler {
     }
 
     public List<Properties> getPropList() {
-
         if (getCurrent().getExtraz() == null && getPropertiesController() != null && getPropertiesController().findAll() != null) {
-            List<Properties> propertyList = new ArrayList<Properties>();
+            List<Properties> propertyList = new ArrayList<>();
             for (PropertyManager propertyMng : getPropertyManagerController().findProperty(SessionDataHelper.getLoggedCompany(true), getCurrentDocument())) {
                 Properties property = new Properties(propertyMng.getFieldName(), null);
                 propertyList.add(property);
             }
             getCurrent().setExtraz(propertyList);
         }
-
         return getCurrent().getExtraz();
     }
 

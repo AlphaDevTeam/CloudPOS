@@ -15,8 +15,8 @@ import java.util.List;
 public enum Document {
     
     INVOICE("Invoice","Commercial Invoice"),
-    GOOD_RECEIPT_NOTE("Grn","Goods Receipt Note"),
-    GOOD_RECEIPT_NOTE_RETURN("GRNReturn","Goods Receipt Note - Return"),
+    GOODS_RECEIVED_NOTE("Grn","Goods Received Note"),
+    GOODS_RECEIVED_NOTE_RETURN("GRNReturn","Goods Received Note - Return"),
     METER_READING("Meter" ,"Meter Reading"),
     CASH_PAYMENT_CUST("CashPaymentCust","Cash Payment Voucher (Cust/Sup)"),
     CASH_PAYMENT_EXP("CashPaymentExpenses","Cash Payment Voucher (Expenses)"),

@@ -48,11 +48,14 @@ public class PurchaseReturn implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private BillStatus billStatus;
 
-    @OneToMany(mappedBy = "relatedPurchaseRet",fetch= FetchType.EAGER,cascade= CascadeType.ALL)
+    @OneToMany(mappedBy = "relatedPurchaseRet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<PurchaseReturnDetails> purchaceRtnDetails;
 
     @OneToOne
     private Logger logger;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Properties> extraz;
 
     public PurchaseReturn() {
     }
@@ -120,6 +123,14 @@ public class PurchaseReturn implements Serializable {
         this.grnRetNo = grnRetNo;
     }
 
+    public List<Properties> getExtraz() {
+        return extraz;
+    }
+
+    public void setExtraz(List<Properties> extraz) {
+        this.extraz = extraz;
+    }
+    
     public String getInvNo() {
         return invNo;
     }
@@ -201,4 +212,4 @@ public class PurchaseReturn implements Serializable {
         return "com.AlphaDevs.cloud.web.Entities.PurchaseReturn[ id=" + id + " ]";
     }
 
-    }
+}

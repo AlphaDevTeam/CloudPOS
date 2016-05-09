@@ -48,6 +48,13 @@
                         <h:outputLabel value="Create Bank Branch"/>
                         <p:commandButton icon="fa fa-list-alt" value="Create GRN" action="UI/GRN/CreateGRN.xhtml?faces-redirect=true"/>
 
+                        <h:outputLabel value="Pending Invoices"/>
+                        <p:commandButton icon="fa fa-list-alt" value="Pending Invoices" action="UI/Reports/PendingInvoicePayments.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Pending GRNs"/>
+                        <p:commandButton icon="fa fa-list-alt" value="Pending GRNs" action="UI/Reports/PendingGRNPayments.xhtml?faces-redirect=true"/>
+
+                        
                         <h:outputLabel value="Create Bank Branch"/>
                         <h:commandButton value="Create Location" action="UI/Location/CreateLocation.xhtml?faces-redirect=true"/>    
 
@@ -138,7 +145,15 @@
                         <h:outputLabel value="Create Bank Branch"/>
                         <h:commandButton value="Cash Payment Voucher" action="UI/Payment/CreateCashPaymentVoucher.xhtml?faces-redirect=true"/>
 
-                        <h:outputLabel value="Create Bank Branch"/>
+                        <h:outputLabel value="Cash Payment Voucher ( GRN Settle )"/>
+                        <h:commandButton value="Cash Payment Voucher ( GRN Settle ) " action="UI/Payment/SettleCashPaymentVoucher.xhtml?faces-redirect=true"/>
+
+                        <h:outputLabel value="Cash Receipts Voucher ( Invoice Settle )"/>
+                        <h:commandButton value="Cash Receipts Voucher ( Invoice Settle ) " action="UI/Receipts/SettleCashReceiptsVoucher.xhtml?faces-redirect=true"/>
+
+                        
+                        
+                        <h:outputLabel value="Manage Pump"/>
                         <h:commandButton value="Manage Pump" action="#{pumpHandler.createPumpCreateLink()}"/>
 
                         <h:outputLabel value="Create Bank Branch"/>
