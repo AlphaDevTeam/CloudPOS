@@ -37,6 +37,8 @@ public enum TransactionTypes
     EMAIL_SETUP,
     TERMINAL,
     UOM,
+    DEPARTMENT,
+    JOB_TYPE,
     OTHER
     
 }

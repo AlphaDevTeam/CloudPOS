@@ -8,7 +8,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <link rel="stylesheet" href="../Reso/CoreStyles.css" type="text/css"/>
-       
+
 
         <ui:insert name="title">WeBPOS - #{systemsHandler.current.header}</ui:insert>
     </h:head>
@@ -30,8 +30,11 @@
                         </h:panelGrid>
                         <br/>
                         <p:dataTable  id="stockTable" value="#{stockHandler.loadStockData()}" var="item" paginator="true" lazy="true" rows="2">
-
-
+                            <f:facet name="header">
+                                Stock Report
+                                <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+                                <p:columnToggler datasource="stockTable" trigger="toggler" />
+                            </f:facet>
                             <p:column>
                                 <f:facet name="header" rendered="false">
                                     <h:outputText value="Id"/>
@@ -72,17 +75,17 @@
                                 </f:facet>
                                 <h:outputText value="#{item.sockItem.unitPrice}"/>
                             </p:column>
-                              <p:column>
+                            <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Item Cost"/>
                                 </f:facet>
-                                  <h:outputText value="#{item.sockItem.itemCost}"/>
+                                <h:outputText value="#{item.sockItem.itemCost}"/>
                             </p:column>
-                             <p:column>
+                            <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Item Code"/>
                                 </f:facet>
-                                 <h:outputText value="#{item.sockItem.itemCode}"/>
+                                <h:outputText value="#{item.sockItem.itemCode}"/>
                             </p:column>
 
                         </p:dataTable>

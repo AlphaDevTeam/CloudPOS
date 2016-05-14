@@ -22,6 +22,7 @@ import com.AlphaDevs.cloud.web.Enums.CreditCardReceiptStatus;
 import com.AlphaDevs.cloud.web.Enums.Document;
 import com.AlphaDevs.cloud.web.Enums.TransactionTypes;
 import com.AlphaDevs.cloud.web.Extra.AlphaConstant;
+import com.AlphaDevs.cloud.web.Extra.DocumentEntityHelper;
 import com.AlphaDevs.cloud.web.Helpers.EntityHelper;
 import com.AlphaDevs.cloud.web.Helpers.MessageHelper;
 import com.AlphaDevs.cloud.web.Helpers.SessionDataHelper;
@@ -499,15 +500,7 @@ public class InvoiceHandler {
                 getStockController().edit(stock);
 
                 //Item Bincard Entry 
-                ItemBincard itemBin = new ItemBincard();
-                itemBin.setDescription(getCurrentDocument().getDocumentDisplayName() + " - " + getCurrent());
-                itemBin.setItem(invDetails.getItem());
-                itemBin.setRelatedDate(getCurrent().getTrnDate());
-                itemBin.setTrnNumber(getCurrent().toString());
-                itemBin.setQty(invDetails.getItemQty() * -1);
-                itemBin.setLog(logger);
-                itemBin.setBillStat(getCurrent().getBillStatus());
-                itemBin.setBalance(stock.getStockQty());
+                ItemBincard itemBin = DocumentEntityHelper.createItemBincardEntry(logger, getCurrent().getLocation(), getCurrentDocument().getDocumentDisplayName() + " - " + getCurrent(), invDetails.getItem(), getCurrent().getTrnDate(), getCurrent().toString(), (invDetails.getItemQty() * -1), getCurrent().getBillStatus(), stock.getStockQty());
                 getItemBincardController().create(itemBin);
             }
 

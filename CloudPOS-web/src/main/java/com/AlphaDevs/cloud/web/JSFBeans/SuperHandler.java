@@ -4,7 +4,7 @@ package com.AlphaDevs.cloud.web.JSFBeans;
 import com.AlphaDevs.cloud.web.SessionBean.LoggerController;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
@@ -13,7 +13,7 @@ import javax.faces.bean.RequestScoped;
  * 
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class SuperHandler {
     @EJB
     public LoggerController loggerController;

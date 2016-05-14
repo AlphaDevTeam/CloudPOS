@@ -11,6 +11,7 @@ import com.AlphaDevs.cloud.web.Enums.BillStatus;
 import com.AlphaDevs.cloud.web.Enums.Document;
 import com.AlphaDevs.cloud.web.Enums.TransactionTypes;
 import com.AlphaDevs.cloud.web.Extra.AlphaConstant;
+import com.AlphaDevs.cloud.web.Extra.DocumentEntityHelper;
 import com.AlphaDevs.cloud.web.Helpers.EntityHelper;
 import com.AlphaDevs.cloud.web.Helpers.SessionDataHelper;
 import com.AlphaDevs.cloud.web.SessionBean.ItemBincardController;
@@ -193,23 +194,17 @@ public class MeterReadingHandler {
     }
 
     private void saveMeterReading() {
-        Logger Log = EntityHelper.createLogger("Meter Reading", getCurrent().toString(), TransactionTypes.READINGS);
-        getLoggerController().create(Log);
-        getCurrent().setLogger(Log);
+        Logger logger = EntityHelper.createLogger("Meter Reading", getCurrent().toString(), TransactionTypes.READINGS);
+        getLoggerController().create(logger);
+        getCurrent().setLogger(logger);
 
         //Fix me - Hardcoding the TAX Value
         Stock stock = getStockController().getItemStock(getCurrent().getRelatedLocation(), getCurrent().getRelatedPump().getRelatedItem(),BillStatus.TAX );
         stock.setStockQty((float) (stock.getStockQty() - getCurrent().getReading())); 
         getStockController().edit(stock);
 
-        ItemBincard itemBin = new ItemBincard();
-        itemBin.setDescription("Meter Reading - " + getCurrent().getRelatedPump() + " - " + getCurrent() + getCurrent().getNote());
-        itemBin.setItem(getCurrent().getRelatedPump().getRelatedItem());
-        itemBin.setTrnNumber(getCurrent().getReferenceNumber());
-        itemBin.setQty((getCurrent().getReading() * -1));
-        itemBin.setRelatedDate(getCurrent().getRelatedDate());
-        itemBin.setLog(Log);
-        itemBin.setBalance(stock.getStockQty());
+        //Fix me - Hardcoding the TAX Value
+        ItemBincard itemBin = DocumentEntityHelper.createItemBincardEntry(logger, getCurrent().getRelatedLocation(), getCurrentDocument().getDocumentDisplayName() + " - " + getCurrent(),getCurrent().getRelatedPump().getRelatedItem(), getCurrent().getRelatedDate(), getCurrent().toString(), (getCurrent().getReading() * -1), BillStatus.TAX, stock.getStockQty());
         getItemBincardController().create(itemBin);
 
         Pump pump = getCurrent().getRelatedPump();

@@ -7,6 +7,7 @@ import com.AlphaDevs.cloud.web.Enums.CreditCardReceiptStatus;
 import com.AlphaDevs.cloud.web.Enums.Document;
 import com.AlphaDevs.cloud.web.Enums.TransactionTypes;
 import com.AlphaDevs.cloud.web.Extra.AlphaConstant;
+import com.AlphaDevs.cloud.web.Extra.DocumentEntityHelper;
 import com.AlphaDevs.cloud.web.Helpers.EntityHelper;
 import com.AlphaDevs.cloud.web.Helpers.MessageHelper;
 import com.AlphaDevs.cloud.web.Helpers.SessionDataHelper;
@@ -374,7 +375,7 @@ public class PurchaseReturnHandler {
         }
 
     }
-    
+
 //    public String addTEst() {
 //
 //        if (getVirtualList().isEmpty()) {
@@ -548,37 +549,28 @@ public class PurchaseReturnHandler {
 //
 //        return "Home";
 //    }
-
     public String grnReturn() {
         if (getVirtualList().isEmpty()) {
             MessageHelper.addErrorMessage("Error", "No Items Found!");
             return "";
         }
 
-        Logger log = EntityHelper.createLogger("Purchase Return ", current.getGrnRetNo(), TransactionTypes.GRNRETURN);
-        loggerController.create(log);
+        Logger logger = EntityHelper.createLogger("Purchase Return ", current.getGrnRetNo(), TransactionTypes.GRNRETURN);
+        loggerController.create(logger);
 
         current.setBillStatus(BillStatus.TAX);
 
         current.setPurchaceRtnDetails(VirtualList);
-        current.setLogger(log);
+        current.setLogger(logger);
         purchaseReturnController.create(current);
 
         for (PurchaseReturnDetails PurRet : getVirtualList()) {
-            PurRet.setRelatedPurchaseRet(current);
-
-            Stock stock = getStockController().findSpecific(PurRet.getGrnItem(), getCurrent().getLocation(), SessionDataHelper.getLoggedCompany(true));
+            PurRet.setRelatedPurchaseRet(getCurrent());
+            Stock stock = getStockController().getItemStock(getCurrent().getLocation(), PurRet.getGrnItem(), getCurrent().getBillStatus());
             stock.setStockQty(stock.getStockQty() - PurRet.getGrnQty());
             getStockController().edit(stock);
 
-            ItemBincard itemBin = new ItemBincard();
-            itemBin.setDescription("Purchase Return - " + getCurrent().getGrnRetNo());
-            itemBin.setItem(PurRet.getGrnItem());
-            itemBin.setTrnNumber(getCurrent().getInvNo());
-            itemBin.setRelatedDate(getCurrent().getGrnRetDate());
-            itemBin.setQty(PurRet.getGrnQty() * -1);
-            itemBin.setLog(log);
-            itemBin.setBalance(stock.getStockQty());
+            ItemBincard itemBin = DocumentEntityHelper.createItemBincardEntry(logger, getCurrent().getLocation(), getCurrentDocument().getDocumentDisplayName() + " - " + getCurrent(), PurRet.getGrnItem(), getCurrent().getGrnRetDate(), getCurrent().toString(), (PurRet.getGrnQty() * -1), getCurrent().getBillStatus(), stock.getStockQty());
             getItemBincardController().create(itemBin);
 
         }
@@ -601,7 +593,7 @@ public class PurchaseReturnHandler {
             custTran.setBalance(getCurrent().getTotalAmount());
         }
 
-        custTran.setLogger(log);
+        custTran.setLogger(logger);
         getCustomerTransactionController().create(custTran);
 
         /*    

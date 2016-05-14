@@ -17,6 +17,7 @@ import com.AlphaDevs.cloud.web.SessionBean.StockController;
 import com.AlphaDevs.cloud.web.SessionBean.UnitsController;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -46,10 +47,14 @@ public class ItemsHandler {
 
     private Items current;
 
-    public ItemsHandler() {
+    @PostConstruct
+    public void init() {
         if (current == null) {
             current = new Items();
         }
+    }
+
+    public ItemsHandler() {
     }
 
     public Items getCurrent() {
@@ -182,8 +187,9 @@ public class ItemsHandler {
     public List<Items> autoCompleteItems(String query) {
         return getItemsController().findLike(query);
     }
-    public List<Items> autoCompleteItems(String query,Location location) {
-        return getItemsController().findLike(query,location);
+
+    public List<Items> autoCompleteItems(String query, Location location) {
+        return getItemsController().findLike(query, location);
     }
 
 //    public String redirectTo(String relevantPage) {

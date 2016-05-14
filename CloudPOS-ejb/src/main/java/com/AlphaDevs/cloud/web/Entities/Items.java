@@ -1,6 +1,7 @@
 
 package com.AlphaDevs.cloud.web.Entities;
 
+import com.AlphaDevs.cloud.web.Interfaces.Meterials;
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -15,7 +16,7 @@ import javax.persistence.*;
  */
 
 @Entity
-public class Items implements Serializable 
+public class Items implements Serializable ,Meterials
 {
     private static final long serialVersionUID = 1L;
     @Id

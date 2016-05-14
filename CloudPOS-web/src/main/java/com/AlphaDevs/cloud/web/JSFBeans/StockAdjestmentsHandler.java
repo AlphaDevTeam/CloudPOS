@@ -8,9 +8,11 @@ import com.AlphaDevs.cloud.web.Entities.StockAdjestments;
 import com.AlphaDevs.cloud.web.Entities.SystemNumbers;
 import com.AlphaDevs.cloud.web.Entities.UserX;
 import com.AlphaDevs.cloud.web.Enums.AdjestmentTypes;
+import com.AlphaDevs.cloud.web.Enums.BillStatus;
 import com.AlphaDevs.cloud.web.Enums.Document;
 import com.AlphaDevs.cloud.web.Enums.TransactionTypes;
 import com.AlphaDevs.cloud.web.Extra.AlphaConstant;
+import com.AlphaDevs.cloud.web.Extra.DocumentEntityHelper;
 import com.AlphaDevs.cloud.web.Helpers.EntityHelper;
 import com.AlphaDevs.cloud.web.Helpers.SessionDataHelper;
 import com.AlphaDevs.cloud.web.SessionBean.ItemBincardController;
@@ -166,22 +168,16 @@ public class StockAdjestmentsHandler {
     }
 
     public String persistStockAdjestment() {
-        Logger log = EntityHelper.createLogger("Stock Adjestment ", getCurrent().getRefNumber(), TransactionTypes.STOCK_ADJ);
-        getLoggerController().create(log);
+        Logger logger = EntityHelper.createLogger("Stock Adjestment ", getCurrent().getRefNumber(), TransactionTypes.STOCK_ADJ);
+        getLoggerController().create(logger);
 
         //Adjesting Stock
         Stock stock = getStockController().findSpecific(getCurrent().getAdjestmentItems(),getCurrent().getAdjestmentLocation(), SessionDataHelper.getLoggedCompany(true));
         stock.setStockQty((float) (stock.getStockQty() + getCurrent().getAdjestmentQty()));
         getStockController().edit(stock);
-
-        ItemBincard itemBin = new ItemBincard();
-        itemBin.setDescription("Stock Adjestment - " + getCurrent().getRefNumber());
-        itemBin.setItem(getCurrent().getAdjestmentItems());
-        itemBin.setRelatedDate(getCurrent().getAdjestmentDate());
-        itemBin.setTrnNumber(getCurrent().getRefNumber());
-        itemBin.setQty(getCurrent().getAdjestmentQty() * 1);
-        itemBin.setLog(log);
-        itemBin.setBalance(stock.getStockQty());
+        
+        //Fix Me BillType Hardcoded
+        ItemBincard itemBin = DocumentEntityHelper.createItemBincardEntry(logger, getCurrent().getAdjestmentLocation(), getCurrentDocument().getDocumentDisplayName() + " - " + getCurrent(),getCurrent().getAdjestmentItems(), getCurrent().getAdjestmentDate(), getCurrent().toString(), (getCurrent().getAdjestmentQty() * 1), BillStatus.TAX, stock.getStockQty());
         getItemBincardController().create(itemBin);
 
         //Increment the the Document No 

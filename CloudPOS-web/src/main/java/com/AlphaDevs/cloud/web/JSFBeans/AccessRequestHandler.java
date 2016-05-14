@@ -1,21 +1,15 @@
 package com.AlphaDevs.cloud.web.JSFBeans;
 
 import com.AlphaDevs.cloud.web.Entities.AccessRequest;
-import com.AlphaDevs.cloud.web.Entities.SystemNumbers;
 import com.AlphaDevs.cloud.web.Enums.Document;
 import com.AlphaDevs.cloud.web.Enums.RequestType;
 import com.AlphaDevs.cloud.web.Enums.Status;
-import com.AlphaDevs.cloud.web.Helpers.SessionDataHelper;
 import com.AlphaDevs.cloud.web.SessionBean.RequestAccessController;
-import com.AlphaDevs.cloud.web.SessionBean.SystemNumbersController;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.event.FlowEvent;
 

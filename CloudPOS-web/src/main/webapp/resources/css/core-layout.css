@@ -503,3 +503,16 @@ input[type="text"], input[type="password"], textarea{ -webkit-appearance: none; 
 .Container:after {
     clear: both; 
 }
+
+.ui-layout-center{
+    background-color: lightblue;
+}
+.ui-layout-north{
+    background-color: black;
+}
+.ui-layout-south{
+    background-color: black;
+}
+.ui-layout-west{
+    background-color: black;
+}

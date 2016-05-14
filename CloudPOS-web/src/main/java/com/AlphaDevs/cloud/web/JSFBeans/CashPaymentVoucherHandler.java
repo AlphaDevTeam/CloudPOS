@@ -310,7 +310,7 @@ public class CashPaymentVoucherHandler {
        String strDescription = "Cash Payament Voucher - " + getCurrent() + getCurrent().getPaymentDescription();
        return createGenericPayment(strDescription, TransactionTypes.CASHPAY);
     }
-    public String createReceipSettle() {
+    public String createVoucherSettle() {
         String strDescription = "Cash Payament Voucher (Settelment) - " + getCurrent() + " [ " + selectedGRNListNumbers() + " ] " + getCurrent().getPaymentDescription();
         createGenericPayment(strDescription, TransactionTypes.CASH_PAY_SETTLE);
         double allocatedAmount = 0;

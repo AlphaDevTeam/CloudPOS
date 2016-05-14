@@ -86,6 +86,20 @@
     </navigation-rule> 
     
     <navigation-rule>
+        <from-view-id>/UI/Job/ListJob.xhtml</from-view-id>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Update</from-outcome>
+            <to-view-id>/UI/Job/CreateJob.xhtml</to-view-id>
+        </navigation-case>      
+        <navigation-case>
+            <redirect/>
+            <from-outcome>Home</from-outcome>
+            <to-view-id>/Test.xhtml</to-view-id>
+        </navigation-case>       
+    </navigation-rule> 
+    
+    <navigation-rule>
         <from-view-id>/UI/Cheque/ChequesDeposit.xhtml</from-view-id>
         <navigation-case>
             <redirect/>

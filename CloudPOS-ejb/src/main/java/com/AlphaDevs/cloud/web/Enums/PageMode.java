@@ -1,4 +1,5 @@
 
+
 package com.AlphaDevs.cloud.web.Enums;
 
 /**
@@ -7,6 +8,7 @@ package com.AlphaDevs.cloud.web.Enums;
  * Alpha Development Team (Pvt) Ltd
  * 
  */
-public enum JOBStatus {
-    NOT_ASSINED,OPEN,ASSINGED,PENDING,COMPLETED
+public enum PageMode 
+{
+    CREATE,UPDATE,DELETE    
 }

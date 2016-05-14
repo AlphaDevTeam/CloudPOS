@@ -150,8 +150,13 @@
 
                         <h:outputLabel value="Cash Receipts Voucher ( Invoice Settle )"/>
                         <h:commandButton value="Cash Receipts Voucher ( Invoice Settle ) " action="UI/Receipts/SettleCashReceiptsVoucher.xhtml?faces-redirect=true"/>
-
                         
+                         <h:outputLabel value="Department"/>
+                        <h:commandButton value="Create Department" action="UI/Department/CreateDepartment.xhtml?faces-redirect=true"/>
+
+                         <h:outputLabel value="Department List"/>
+                        <h:commandButton value="List Department" action="UI/Department/ListDepartments.xhtml?faces-redirect=true"/>
+ 
                         
                         <h:outputLabel value="Manage Pump"/>
                         <h:commandButton value="Manage Pump" action="#{pumpHandler.createPumpCreateLink()}"/>

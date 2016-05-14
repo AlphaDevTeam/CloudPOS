@@ -61,7 +61,7 @@ public class CustomerTransactionController extends AbstractFacade<CustomerTransa
 
         List<CustomerTransaction> resultList = getEntityManager().createQuery(q).getResultList();
         if (resultList == null || resultList.isEmpty()) {
-            return new ArrayList<CustomerTransaction>();
+            return new ArrayList<>();
         } else {
             return resultList;
         }
