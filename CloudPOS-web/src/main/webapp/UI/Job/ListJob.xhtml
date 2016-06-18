@@ -23,6 +23,13 @@
                                 </f:facet>
                                 <p:commandLink value="#{item.id}" action="#{jobHandler.preapareList(item)}"/>
                             </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Add Items"/>
+                                </f:facet>
+                                <p:commandLink value="#{item.id}" action="#{jobHandler.preapareListAddItem(item)}"/>
+                            </p:column>
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Job Number"/>

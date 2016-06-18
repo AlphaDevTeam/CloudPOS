@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+
+
+                    <h:form>
+                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Description:" for="documentNumber" />
+                            <p:inputText id="documentNumber" value="#{labourHandler.current.documentNumber}" title="Description" />
+                            
+                            <p:outputLabel value="Description:" for="documentReference" />
+                            <p:inputText id="documentReference" value="#{labourHandler.current.documentReference}" title="Description" />
+                            
+                            <p:outputLabel value="Description:" for="description" />
+                            <p:inputText id="description" value="#{labourHandler.current.description}" title="Description" />
+                            
+                            <p:commandButton value="Save" action="#{labourHandler.persistObject}"/>
+                            
+                        </p:panelGrid>
+                    </h:form>
+                </f:view>
+                
+                <f:view>
+
+
+                    <h:form>
+                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Description:" for="description" />
+                            <p:inputText id="description" value="#{labourHandler.current.description}" title="Description" />
+                            <p:outputLabel value="Id:" for="id" />
+                            <p:inputText id="id" value="#{labourHandler.current.id}" title="Id" />
+                            <p:outputLabel value="DocumentType:" for="documentType" />
+                            <p:inputText id="documentType" value="#{labourHandler.current.documentType}" title="DocumentType" />
+                            <p:outputLabel value="Logger:" for="logger" />
+                            <p:selectOneMenu id="logger" value="#{labourHandler.current.logger}" >
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItems value="#{fixme}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="RelatedLocation:" for="relatedLocation" />
+                            <p:selectOneMenu id="relatedLocation" value="#{labourHandler.current.relatedLocation}" >
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItems value="#{fixme}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="RelatedCompany:" for="relatedCompany" />
+                            <p:selectOneMenu id="relatedCompany" value="#{labourHandler.current.relatedCompany}" >
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItems value="#{fixme}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="DocumentDate:" for="documentDate" />
+                            <p:inputText id="documentDate" value="#{labourHandler.current.documentDate}" title="DocumentDate" >
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </p:inputText>
+                            <p:outputLabel value="DocumentNumber:" for="documentNumber" />
+                            <p:inputText id="documentNumber" value="#{labourHandler.current.documentNumber}" title="DocumentNumber" />
+                            <p:outputLabel value="DocumentReference:" for="documentReference" />
+                            <p:inputText id="documentReference" value="#{labourHandler.current.documentReference}" title="DocumentReference" />
+                        </p:panelGrid>
+                    </h:form>
+                </f:view>
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

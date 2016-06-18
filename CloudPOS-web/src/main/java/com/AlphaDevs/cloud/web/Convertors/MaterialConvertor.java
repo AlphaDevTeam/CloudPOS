@@ -1,6 +1,7 @@
 package com.AlphaDevs.cloud.web.Convertors;
 
 import com.AlphaDevs.cloud.web.Entities.Items;
+import com.AlphaDevs.cloud.web.Interfaces.Meterials;
 import com.AlphaDevs.cloud.web.SessionBean.ItemsController;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -16,12 +17,12 @@ import javax.faces.convert.Converter;
  */
 @ManagedBean
 @RequestScoped
-public class ItemConvertor implements Converter {
+public class MaterialConvertor implements Converter {
 
     @EJB
     private ItemsController itemsController;
 
-    public ItemConvertor() {
+    public MaterialConvertor() {
     }
 
     @Override

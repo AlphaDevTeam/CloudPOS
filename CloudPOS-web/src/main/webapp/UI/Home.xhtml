@@ -3,20 +3,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-      <h:head>
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
         <ui:insert name="title">Alpha Service - Alpha Development Team Ltd </ui:insert>
-        
+
     </h:head>
     <h:body>
-        
+
         <h:outputStylesheet library="css" name="animate.css"/>
         <h:outputStylesheet library="css" name="core-layout.css"/>
         <h:outputStylesheet library="css" name="font-awesome.css"/>
         <h:outputStylesheet library="css" name="volt-font.css"/>
         <h:outputStylesheet library="css" name="volt-layout.css"/>
-        
-        
+
+
         <ui:composition template="/WEB-INF/ResponsiveTemplate.xhtml">
 
             <ui:define name="Rcontent">
@@ -40,74 +41,33 @@
 
                     <p:chart type="line" model="#{chartHandler.lineModel1}" style="height:300px;" responsive="true"/>
 
-                    <i class="fa fa-bar-chart" aria-hidden="true"></i>
-                    
-                    <div class="Container100 NoIndent Flex FlexWrap">
-                <div class="Container50 Responsive50 Flex">
-                    <div class="Card BlueBack">
-                        <div class="EmptyBox10"></div>
-                        <div class="CardTopic White">NEW USERS <i class="icon-user Fright White Opac50 Fs40"></i> </div>
-                        <div class="EmptyBox10"></div>
-                        <div class="Container100">
-                            <span class="Fs12 White FontVoltRegular Opac50 DispBlock">Returning Visitors</span>
-                            <span class="Fs40 FontVoltLight White">345</span>
-                        </div>
-                        <div class="Container100">
-                            <span class="Fs12 White FontVoltRegular Opac50 DispBlock">All Visitors</span>
-                            <span class="Fs40 FontVoltLight White">23,456</span>
-                        </div>
-                        <div class="EmptyBox10"></div>
-                    </div>
-                </div>
-                <div class="Container50 Responsive50 Flex">
-                    <div class="Card TealGreenBack">
-                        <div class="EmptyBox10"></div>
-                        <div class="CardTopic White">NEW ORDERS <i class="icon-clipboard2 Fright White Opac50 Fs40"></i></div>
-                        <div class="EmptyBox10"></div>
-                        <div class="Container100">
-                            <span class="Fs12 White FontVoltRegular Opac50 DispBlock">From E-Commerce</span>
-                            <span class="Fs40 FontVoltLight White">78,567</span>
-                        </div>
-                        <div class="Container100">
-                            <span class="Fs12 White FontVoltRegular Opac50 DispBlock">From Stores</span>
-                            <span class="Fs40 FontVoltLight White">98,435</span>
-                        </div>
-                        <div class="EmptyBox10"></div>
-                    </div>
-                </div>
-                <div class="Container50 Responsive50 Flex">
-                    <div class="Card GreenBack">
-                        <div class="EmptyBox10"></div>
-                        <div class="CardTopic White">CUSTOMER SUPPORT <i class="icon-support Fright White Opac50 Fs40"></i></div>
-                        <div class="EmptyBox10"></div>
-                        <div class="Container100">
-                            <span class="Fs12 White FontVoltRegular Opac50 DispBlock">Pending Issues</span>
-                            <span class="Fs40 FontVoltLight White">289</span>
-                        </div>
-                        <div class="Container100">
-                            <span class="Fs12 White FontVoltRegular Opac50 DispBlock">Solved Issues</span>
-                            <span class="Fs40 FontVoltLight White">10,436</span>
-                        </div>
-                        <div class="EmptyBox10"></div>
-                    </div>
-                </div>
-                <div class="Container50 Responsive50 Flex">
-                    <div class="Card OrangeBack">
-                        <div class="EmptyBox10"></div>
-                        <div class="CardTopic White">REVENUE <i class="icon-pin-outline Fright White Opac50 Fs40"></i></div>
-                        <div class="EmptyBox10"></div>
-                        <div class="Container100">
-                            <span class="Fs12 White FontVoltRegular Opac50 DispBlock">Pending Issues</span>
-                            <span class="Fs40 FontVoltLight White">289</span>
-                        </div>
-                        <div class="Container100">
-                            <span class="Fs12 White FontVoltRegular Opac50 DispBlock">Solved Issues</span>
-                            <span class="Fs40 FontVoltLight White">10,436</span>
-                        </div>
-                        <div class="EmptyBox10"></div>
-                    </div>
-                </div>
-            </div>
+                    <p:outputPanel style="display:block" styleClass="Container100 NoIndent Flex FlexWrap">
+                        <c:forEach var="item" items="#{locationHandler.listAll}">
+
+                            <p:outputPanel style="display:block" styleClass="Container50 Responsive50 Flex">
+                                <p:outputPanel style="display:block" styleClass="Card BlueBack">
+                                    <p:outputPanel style="display:block" styleClass="EmptyBox10"></p:outputPanel>
+                                    <p:outputPanel style="display:block" styleClass="Fs20 CardTopic White">#{item.description} <i class="fa fa-line-chart fa-2x fa-fw Fright White Opac50 Fs40" aria-hidden="true"></i> </p:outputPanel>
+                                    <p:outputPanel style="display:block" styleClass="EmptyBox10"></p:outputPanel>
+                                    <p:outputPanel style="display:block" styleClass="Container100">
+                                        <p:outputPanel styleClass="Fs12 White FontVoltRegular Opac50 DispBlock">Type</p:outputPanel>
+                                        <p:outputPanel styleClass="Fs20 FontVoltLight White">#{item.cashBookBalance.billStatus}</p:outputPanel>
+                                    </p:outputPanel>
+                                    <p:outputPanel style="display:block" styleClass="Container100">
+                                        <p:outputPanel styleClass="Fs12 White FontVoltRegular Opac50 DispBlock">Cash Balance</p:outputPanel>
+                                        <p:outputPanel styleClass="Fs20 FontVoltLight White">#{item.cashBookBalance.cashBalance}</p:outputPanel>
+                                    </p:outputPanel>
+                                    <p:outputPanel style="display:block" styleClass="Container100">
+                                        <p:outputPanel styleClass="Fs12 White FontVoltRegular Opac50 DispBlock">Bank Balance</p:outputPanel>
+                                        <p:outputPanel styleClass="Fs20 FontVoltLight White">#{item.cashBookBalance.bankBalance}</p:outputPanel>
+                                    </p:outputPanel>
+                                    <p:outputPanel style="display:block" styleClass="EmptyBox10"></p:outputPanel>
+                                </p:outputPanel>
+                            </p:outputPanel>
+
+
+                        </c:forEach>
+                    </p:outputPanel>
                 </h:form>
             </ui:define>
 

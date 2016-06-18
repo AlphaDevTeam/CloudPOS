@@ -14,77 +14,85 @@
             <ui:define name="Rcontent">
 
                 <f:view>
-                    <h:form id="mainForm" target="_new">
+                    <h:form id="mainForm">
                         <p:growl id="messages" showDetail="true"/>  
                         <h1><h:outputText value="Create/Edit"/></h1>
                         <h:panelGrid columns="6">
-                            <p:outputLabel value="Job Number:" for="jobNumber" />
-                            <p:inputText id="jobNumber" value="#{jobHandler.documentNumber}" title="Job Number" />
-                            <p:outputLabel value="JobStatus:" for="jobStatus" />
-                            <p:selectOneMenu id="jobStatus" required="true" value="#{jobHandler.current.jobStatus}" label="Job Status">
-                                <f:selectItem itemLabel="Select One"/>
-                                <f:selectItems value="#{jobStatusHandler.jobStatusList}"/>
-                            </p:selectOneMenu>
+                            <p:outputLabel value="Job Number:" for="acJob" />
+                            <p:inputText id="acJob" value="#{jobHandler.current.jobNumber}" title="Status" disabled="#{!jobHandler.editMode}"/>
+
                             <p:outputLabel value="Bill Type : " for="billType" />
-                            <p:selectOneMenu id="billType" required="true" value="#{jobHandler.current.billStatus}" label="Bill Type">
+                            <p:selectOneMenu id="billType" required="true" value="#{jobHandler.current.billStatus}" label="Bill Type" disabled="#{!jobHandler.editMode}">
                                 <f:selectItem itemLabel="Select One"/>
                                 <f:selectItems value="#{billStatusHandler.billStatus}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Location : " for="location" />
                             <p:selectOneMenu id="location" value="#{jobHandler.current.relatedLocation}" label="Location " 
-                                             converter="#{locationConvertor}" required="true" >
+                                             converter="#{locationConvertor}" required="true" disabled="#{!jobHandler.editMode}" >
                                 <f:selectItem itemLabel="Select One" />  
                                 <f:selectItems value="#{locationHandler.locationList}"/>
-                                <p:ajax event="itemSelect" process="@this" update="acItem,jobNumber" listener="#{jobHandler.handleLocationSelect}" /> 
+                                <p:ajax event="itemSelect" process="@this" update="acJob" listener="#{jobHandler.handleLocationSelect}" /> 
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Job Type : " for="jobType" />
                             <p:selectOneMenu id="jobType" value="#{jobHandler.current.jobType}" label="Job Type " 
-                                             converter="#{jobTypeConvertor}" required="true" >
+                                             converter="#{jobTypeConvertor}" required="true" disabled="#{!jobHandler.editMode}">
                                 <f:selectItem itemLabel="Select One" />  
                                 <f:selectItems value="#{jobTypesHandler.listAll}"/>
-                                <p:ajax event="itemSelect" process="@this" update="acItem,jobNumber" listener="#{jobHandler.handleLocationSelect}" /> 
                             </p:selectOneMenu>
 
-                            <p:outputLabel value="Item : " for="acItem" />
+                            <p:outputLabel value="Started Date :" for="startedDate" />
+                            <p:calendar required="true" id="startedDate" value="#{jobHandler.current.startedDate}" pattern="#{sessionHandler.defaultDateFormat}" title="Started Date" disabled="#{!jobHandler.editMode}">
+                                <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
+                            </p:calendar>
+
+                            <p:outputLabel value="Status :" for="status" />
+                            <p:inputText id="status" value="#{jobHandler.current.jobStatus}" title="Status" disabled="#{!jobHandler.editMode}"/>
+
+                            <p:outputLabel value="Cost Limit:" for="costLimit" />
+                            <p:inputText type="number" id="costLimit" value="#{jobHandler.current.costLimit}" title="Cost Limit" disabled="#{!jobHandler.editMode}" />
+
+                            <p:outputLabel value="Total Amount : " for="totalAmount" />
+                            <p:inputText type="number" id="totalAmount" title="Total Amount" value="#{jobHandler.current.totalAmount}" disabled="true" />
+
+                            <p:outputLabel value="Job Description : " for="jobDescription" />
+                            <p:inputTextarea id="jobDescription" value="#{jobHandler.current.jobDescription}" title="JobDescription"  rows="1" cols="30"  maxlength="255"  autoResize="false" disabled="#{!jobHandler.editMode}" />
+
+                          
+                             <p:outputLabel value="Item : " for="acItem" />
                             <p:autoComplete id="acItem" value="#{jobHandler.meterial}"   
                                             forceSelection="true"  completeMethod="#{jobHandler.autoCompleteItems}" var="varItem" itemLabel="#{varItem}" itemValue="#{varItem}" converter="#{itemConvertor}" >
-                                <p:ajax event="itemSelect" listener="#{jobHandler.handleSelect}" update="itemCost" />  
+                                <p:ajax event="itemSelect" listener="#{jobHandler.handleSelect}" update="itemCost,billType,qtyText" />  
                             </p:autoComplete>  
 
-                            <p:outputLabel value="#{empty jobHandler.meterial.unitOfMeasurement ? 'Qty' : 'Qty ('.concat(jobHandler.meterial.unitOfMeasurement).concat(')') }" for="itemQty" />
+                            <p:outputLabel id="qtyText" value="#{empty jobHandler.meterial.unitOfMeasurement ? 'Qty' : 'Qty ('.concat(jobHandler.meterial.unitOfMeasurement).concat(')') }" for="itemQty" />
                             <p:inputText type="number" id="itemQty" title="Qty" value="#{jobHandler.jobDetails.qty}" />
 
                             <p:outputLabel value="Cost : " for="itemCost" />
                             <p:inputText type="number" id="itemCost" title="Item Cost" value="#{jobHandler.jobDetails.itemCost}" />
-
-                            <p:outputLabel value="Total Amount : " for="totalAmount" />
-                            <p:inputText type="number" id="totalAmount" title="Total Amount" value="#{jobHandler.current.totalAmount}" />
-
-                            <p:commandButton value="Add" action="#{jobHandler.addItem()}" update="virtualList,totalAmount,acItem,itemQty,itemCost,:mainForm:messages"  /> 
-                            <p:commandButton value="Save" action="#{jobHandler.createJob()}" rendered="#{!jobHandler.editMode}"/>
-                            <p:commandButton value="Update" action="#{jobHandler.editJob()}" rendered="#{jobHandler.editMode}" />
+                            
+                            <p:outputLabel value="Note : " for="itemNote" />
+                            <p:inputText  id="itemNote" title="Item Note" value="#{jobHandler.jobDetails.note}" />
+                            
+                            <p:commandButton value="Add" action="#{jobHandler.addItem}" update="virtualList,totalAmount,acItem,itemQty,itemCost,billType,qtyText,:mainForm:messages"  /> 
+                            <p:commandButton value="Save" action="#{jobHandler.addJobDetails}" rendered="#{!jobHandler.editMode}"/>
+                            <p:commandButton value="Update" action="#{jobHandler.addJobDetails}" rendered="#{jobHandler.editMode}" />
 
                         </h:panelGrid>
 
-                        <p:outputLabel value="Job Description : " for="jobDescription" />
-                        <p:inputTextarea id="jobDescription" value="#{jobHandler.current.jobDescription}" title="JobDescription"  rows="4" cols="30" counter="display" maxlength="255" counterTemplate="{0} characters remaining." autoResize="false" />
-                        <h:outputText id="display" />
-
-
                         <p:dataTable  id="virtualList" editable="true" value="#{jobHandler.jobDetailList}"
                                       var="item" selection="#{jobHandler.selectedJobDetail}" selectionMode="single" 
-                                      rowKey="#{item.meterial}">
+                                      rowKey="#{item.meterial}" sortBy="#{item.meterial.toString()}">
 
                             <p:ajax event="rowEdit" listener="#{jobHandler.onEdit}" update=":mainForm:messages,:mainForm:totalAmount" />  
                             <p:ajax event="rowEditCancel" listener="#{jobHandler.onCancel}" update=":mainForm:messages,:mainForm:totalAmount" />  
-                            <p:column>
+                            <p:column sortBy="#{item.meterial.toString()}"> 
                                 <f:facet name="header">
                                     <h:outputText value="Description"/>
                                 </f:facet>
                                 <h:outputText value="#{item.meterial}"/>
                             </p:column>
-                            <p:column>
+                            <p:column sortBy="#{item.itemCost}">
                                 <f:facet name="header">
                                     <h:outputText value="Item Cost"/>
                                 </f:facet>
@@ -97,43 +105,66 @@
                                     </f:facet>  
                                 </p:cellEditor>
                             </p:column>
-                            <p:column>
+                             <p:column sortBy="#{item.itemCost}">
                                 <f:facet name="header">
-                                    <h:outputText value="Qty"/>
+                                    <h:outputText value="Item Cost"/>
                                 </f:facet>
                                 <p:cellEditor>  
                                     <f:facet name="output">  
-                                        <h:outputText  value="#{item.qty}" />  
+                                        <h:outputText value="#{item.itemCost}" />  
                                     </f:facet>  
                                     <f:facet name="input">  
-                                        <p:inputText type="number" value="#{item.qty}" style="width:100%"/>  
+                                        <p:inputText type="number" value="#{item.itemCost}" style="width:100%"/>  
+                                    </f:facet>  
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column sortBy="#{item.note}">
+                                <f:facet name="header">
+                                    <h:outputText value="Note"/>
+                                </f:facet>
+                                <p:cellEditor>  
+                                    <f:facet name="output">  
+                                        <h:outputText  value="#{item.note}" />  
+                                    </f:facet>  
+                                    <f:facet name="input">  
+                                        <p:inputText value="#{item.note}" style="width:100%"/>  
                                     </f:facet>  
                                 </p:cellEditor>
                             </p:column>
                             <f:facet name="footer">  
                                 <p:commandButton ajax="true" id="DeleteButton" value="Delete" icon="ui-icon-closethick"  
-                                                 onclick="confirmation.show()"/>  
+                                                 onclick="PF('confirmation').show()"/>  
+
                             </f:facet>  
                             <p:column headerText="Options" style="width:50px">  
                                 <p:rowEditor />  
                             </p:column>  
-
+                            <p:summaryRow>
+                                <p:column colspan="3" style="text-align:right">
+                                    <h:outputText value="Total:" />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{jobHandler.total}">
+                                        <f:convertNumber type="currency" currencySymbol="$" />
+                                    </h:outputText>
+                                </p:column>
+                            </p:summaryRow>
 
                         </p:dataTable>
-
-                        <p:confirmDialog id="confirmDialog" message="Are you sure about deleting item? "  
-                                         header="Are you sure ?" severity="alert" widgetVar="confirmation">  
-
-                            <p:commandButton id="confirm" value="Yes Sure" update=":mainForm:messages,:mainForm:totalAmount,virtualList" oncomplete="confirmation.hide()"  
-                                             actionListener="#{jobHandler.removeSelectedItem}" />  
-                            <p:commandButton id="decline" value="Not Yet" onclick="confirmation.hide()" type="button" />   
-
-                        </p:confirmDialog>   
 
                         <hr/>
 
                     </h:form>
                 </f:view>
+
+                <p:confirmDialog appendTo="@(body)"  id="confirmDialog" message="Are you sure about deleting item? "  
+                                 header="Are you sure ?"  widgetVar="confirmation" showEffect="fade" hideEffect="fade">  
+                    <h:form>
+                        <p:commandButton process="@this" ajax="true" id="confirm" value="Yes Sure" update=":mainForm:messages,:mainForm:totalAmount,:mainForm:virtualList" 
+                                         oncomplete="PF('confirmation').hide()" actionListener="#{jobHandler.removeSelectedItem}"  />  
+                        <p:commandButton process="@this" ajax="true" id="decline" update=":mainForm:messages,:mainForm:totalAmount,:mainForm:virtualList"  value="Not Yet" onclick="PF('confirmation').hide()" />   
+                    </h:form>
+                </p:confirmDialog>   
 
             </ui:define>
         </ui:composition>

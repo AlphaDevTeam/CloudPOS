@@ -1,7 +1,5 @@
 package com.AlphaDevs.cloud.web.Enums;
 
-import java.util.List;
-
 /**
  *
  * @author Mihindu Gajaba Karunarathne
@@ -23,7 +21,8 @@ public enum Document {
     REQUEST("Request", "Request"),
     STOCK_ADJESTMENT("StockAdjestment", "Stock Adjestments"),
     JOB("Job", "Job"),
-    STOCK_TRANSFER("StockTransfer", "Stock Transfers");
+    STOCK_TRANSFER("StockTransfer", "Stock Transfers"),
+    NON_INIT("NotInitialized","Not Initialized Object");
 
     private final String fieldName;
     private final String displayName;

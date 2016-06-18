@@ -100,7 +100,7 @@ public class CashBookBalance implements Serializable
 
     @Override
     public String toString() {
-        return "com.AlphaDevs.cloud.web.Entities.CashBookBalance[ id=" + id + " ]";
+        return String.valueOf(getCashBalance());
     }
 
 }

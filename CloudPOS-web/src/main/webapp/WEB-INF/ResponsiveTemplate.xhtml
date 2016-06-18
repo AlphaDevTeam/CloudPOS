@@ -43,10 +43,24 @@
             <pe:layoutPane position="north" resizable="true" size="100" minSize="40" maxSize="200">
                 <ui:insert name="Rheader">
                     <h:panelGroup layout="block" style="background-color: black;color: gray;">
-                        <h:panelGrid columns="2">
+                        <p:panelGrid columns="4" layout="grid" style="background-color: black">
                             <p:graphicImage  class="image-cropper" name="Images/AlphaLogoBlack.jpg" height="50" width="50" style="margin-left: 15px; margin-right: auto; width: 75px; height: 75px;border-color: gray; border-style: solid;" /> 
                             <p:outputLabel value="Alpha Development Team - WEB POS Beta V1 - #{systemsHandler.current.header}" style="margin-left: 15px; margin-right: auto; width: 75px; height: 75px"/>
-                        </h:panelGrid>
+                            <p:graphicImage value="#{sessionHandler.url}"  class="image-cropper outer" />
+                            <p:outputLabel value="#{stringHelper.convertToUppercase(sessionHandler.sessionUser.userName)}"/>
+                        </p:panelGrid>
+
+                        <a href="#">
+                            <i class="icon-vcard Opac80"></i>
+                            <span>
+                                <span class="Fs16">Mr. Jack BAUER, Welcome</span> 
+                                <br/>
+                                <span class="Opac50 Fs12">Your last login - 18.08.2015 | 3:55 PM</span>
+
+                            </span>
+                        </a>
+
+
                     </h:panelGroup>
                 </ui:insert>
             </pe:layoutPane>

@@ -10,6 +10,7 @@ import com.AlphaDevs.cloud.web.Entities.Stock;
 import com.AlphaDevs.cloud.web.Entities.SystemNumbers;
 import com.AlphaDevs.cloud.web.Entities.UserX;
 import com.AlphaDevs.cloud.web.Enums.Document;
+import com.AlphaDevs.cloud.web.Enums.JOBStatus;
 import com.AlphaDevs.cloud.web.Enums.TransactionTypes;
 import com.AlphaDevs.cloud.web.Extra.AlphaConstant;
 import com.AlphaDevs.cloud.web.Extra.DocumentEntityHelper;
@@ -25,6 +26,7 @@ import com.AlphaDevs.cloud.web.SessionBean.LoggerController;
 import com.AlphaDevs.cloud.web.SessionBean.StockController;
 import com.AlphaDevs.cloud.web.SessionBean.SystemNumbersController;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -79,6 +81,8 @@ public class JobHandler extends SuperHandler {
     @PostConstruct
     public void init() {
 
+        System.out.println("Init Called");
+        setJobDetailList(new ArrayList<JobDetails>());
         if (selectedJobDetail == null) {
             selectedJobDetail = new JobDetails();
         }
@@ -86,15 +90,21 @@ public class JobHandler extends SuperHandler {
         if (SessionDataHelper.getFlash(flashString) != null) {
             setCurrent((Job) FacesContext.getCurrentInstance().getExternalContext().getFlash().get(flashString));
             setEditMode((boolean) SessionDataHelper.getFlash(isUpdateMode));
-            System.out.println("@PostConstruct : JobHandler" + getCurrent() + " - " + isEditMode());
-            System.out.println("@PostConstruct : JobHandler Details " + getCurrent().getJobDetails() + " - " + isEditMode());
+            System.out.println("@PostConstruct : JobHandler" + getCurrent() + " - " + getCurrent().getBillStatus() + " - " + isEditMode());
+            System.out.println("@PostConstruct : JobHandler Details - " + getCurrent().getJobDetails().size() + " - " + getCurrent().getJobDetails() + " - " + isEditMode());
+            setJobDetailList(getCurrent().getJobDetails());
+            System.out.println("List : " + getJobDetailList());
+            setJobDetails(new JobDetails());
         } else {
             setCurrent(new Job());
             setEditMode(false);
             setJobDetails(new JobDetails());
         }
+        if (!isEditMode()) {
+            getCurrent().setStartedDate(Calendar.getInstance().getTime());
+            getCurrent().setJobStatus(JOBStatus.OPEN);
+        }
 
-        setJobDetailList(new ArrayList<JobDetails>());
         setCurrentDocument(Document.JOB);
     }
 
@@ -204,10 +214,20 @@ public class JobHandler extends SuperHandler {
 
     public String preapareList(Job job) {
         setCurrent(job);
-        System.out.println("Job Set " + job);
+        setFlashs();
+        return "Update";
+    }
+     public String preapareListAddItem(Job job) {
+        setCurrent(job);
+        SessionDataHelper.setFlash(flashString, getCurrent());
+        SessionDataHelper.setFlash(isUpdateMode, false);
+        return "Update";
+    }
+
+
+    private void setFlashs() {
         SessionDataHelper.setFlash(flashString, getCurrent());
         SessionDataHelper.setFlash(isUpdateMode, true);
-        return "Update";
     }
 
     public String getDocumentNumber() {
@@ -229,11 +249,15 @@ public class JobHandler extends SuperHandler {
     }
 
     public void setMeterial(Items item) {
+        System.out.println("Item Set");
         getJobDetails().setMeterial(item);
     }
 
     public Items getMeterial() {
-        return (Items) getJobDetails().getMeterial();
+        if (getJobDetails() != null && getJobDetails().getMeterial1() != null) {
+            return (Items) getJobDetails().getMeterial();
+        }
+        return new Items();
     }
 
     public void setCurrent(Job current) {
@@ -266,13 +290,22 @@ public class JobHandler extends SuperHandler {
     }
 
     public List<Items> autoCompleteItems(String query) {
-        return getItemsController().findLike(query, getCurrent().getRelatedLocation() != null ? getCurrent().getRelatedLocation() : getLocationController().find(1L));
+        return getItemsController().findLike(query, getCurrent().getRelatedLocation());
+    }
+
+    public List<Job> autoCompleteJobs(String query) {
+        return getJobController().findLike(query, getCurrent().getRelatedLocation());
     }
 
     public void handleSelect(SelectEvent event) {
         MessageHelper.addSuccessMessage("Handle Select" + getMeterial());
         getJobDetails().setMeterial(getMeterial());
         getJobDetails().setItemCost(getMeterial().getItemCost());
+    }
+
+    public void handleSelectJob(SelectEvent event) {
+        MessageHelper.addSuccessMessage("Handle Select" + getCurrent());
+
     }
 
     public double getTotal() {
@@ -305,10 +338,11 @@ public class JobHandler extends SuperHandler {
 
     }
 
-    public String removeSelectedItem() {
+    public void removeSelectedItem() {
+        
+        System.out.println("Trying to REmove Items" + getJobDetailList());
         if (getSelectedJobDetail() == null) {
             MessageHelper.addErrorMessage("No Item Selected", "Please select an item to Remove");
-            return "";
         } else {
             for (int a = 0; a < getJobDetailList().size(); a++) {
                 if (getJobDetailList().get(a) == getSelectedJobDetail()) {
@@ -318,11 +352,12 @@ public class JobHandler extends SuperHandler {
             }
             getCurrent().setTotalAmount(getTotal());
         }
-        return "#";
+        System.out.println("List : " + getJobDetailList());
     }
 
     public void addItem() {
         boolean isFound = false;
+        System.out.println("getCurrent " + getCurrent());
         if (getJobDetails().getMeterial() == null || getJobDetails().getItemCost() == 0 || getJobDetails().getQty() == 0) {
             MessageHelper.addErrorMessage("Item Information Missing", "Please Fill All Details");
             return;
@@ -373,6 +408,39 @@ public class JobHandler extends SuperHandler {
         }
         getCurrent().setJobDetails(getJobDetailList());
         getJobController().create(getCurrent());
+        setCurrent(new Job());
+
+        if (getCurrentSystemNumber() != null) {
+            getCurrentSystemNumber().setSystemNumber(getCurrentSystemNumber().getIncrementedSystemNumber());
+            getSystemNumbersController().edit(getCurrentSystemNumber());
+        }
+
+        return "Home";
+    }
+
+    public String addJobDetails() {
+
+        Logger logger = EntityHelper.createLogger("Element Added - " + getCurrentDocument().getDocumentDisplayName(), getCurrent().getJobNumber(), TransactionTypes.JOB);
+        getLoggerController().create(logger);
+        getCurrent().setLogger(logger);
+        for (JobDetails jobDetail : getJobDetailList()) {
+
+            //Update Stock
+            Stock stock = getStockController().getItemStock(getCurrent().getRelatedLocation(), (Items) jobDetail.getMeterial(), getCurrent().getBillStatus());
+            stock.setStockLocation(getCurrent().getRelatedLocation());
+            stock.setSockItem((Items) jobDetail.getMeterial());
+            stock.setStockQty(stock.getStockQty() - jobDetail.getQty());
+            stock.setRelatedCompany(SessionDataHelper.getLoggedCompany(true));
+            getStockController().edit(stock);
+
+            //Item Bincard Entry 
+            ItemBincard itemBin = DocumentEntityHelper.createItemBincardEntry(logger, getCurrent().getRelatedLocation(), getCurrentDocument().getDocumentDisplayName() + " - " + getCurrent(), (Items) jobDetail.getMeterial(), getCurrent().getStartedDate(), getCurrent().toString(), (jobDetail.getQty() * -1), getCurrent().getBillStatus(), stock.getStockQty());
+            getItemBincardController().create(itemBin);
+            jobDetail.setRelatedJob(getCurrent());
+
+        }
+        getCurrent().setJobDetails(getJobDetailList());
+        getJobController().edit(getCurrent());
         setCurrent(new Job());
 
         if (getCurrentSystemNumber() != null) {

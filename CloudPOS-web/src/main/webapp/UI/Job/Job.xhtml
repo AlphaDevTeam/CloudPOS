@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/ResponsiveTemplate.xhtml">
+
+            <ui:define name="Rcontent">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Create a Job"/></h1>
+                        <h:panelGrid columns="6">
+
+                            <p:outputLabel value="Job Number:" for="jobNumber" />
+                            <p:inputText id="jobNumber" value="#{jobHandler.documentNumber}" title="Job Number" />
+                            <p:outputLabel value="Bill Type : " for="billType" />
+                            <p:selectOneMenu id="billType" required="true" value="#{jobHandler.current.billStatus}" label="Bill Type">
+                                <f:selectItem itemLabel="Select One"/>
+                                <f:selectItems value="#{billStatusHandler.billStatus}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Location : " for="location" />
+                            <p:selectOneMenu id="location" value="#{jobHandler.current.relatedLocation}" label="Location " 
+                                             converter="#{locationConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{locationHandler.locationList}"/>
+                                <p:ajax event="itemSelect" process="@this" update="jobNumber" listener="#{jobHandler.handleLocationSelect}" /> 
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Job Type : " for="jobType" />
+                            <p:selectOneMenu id="jobType" value="#{jobHandler.current.jobType}" label="Job Type " 
+                                             converter="#{jobTypeConvertor}" required="true" >
+                                <f:selectItem itemLabel="Select One" />  
+                                <f:selectItems value="#{jobTypesHandler.listAll}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Started Date :" for="startedDate" />
+                            <p:calendar required="true" id="startedDate" value="#{jobHandler.current.startedDate}" pattern="#{sessionHandler.defaultDateFormat}" title="Started Date" disabled="true">
+                                <f:convertDateTime pattern="#{sessionHandler.defaultDateFormat}" />  
+                            </p:calendar>
+
+                            <p:outputLabel value="Status :" for="status" />
+                            <p:inputText id="status" value="#{jobHandler.current.jobStatus}" title="Status" disabled="true"/>
+
+
+                            <p:outputLabel value="Cost Limit:" for="costLimit" />
+                            <p:inputText type="number" id="costLimit" value="#{jobHandler.current.costLimit}" title="Cost Limit" />
+
+
+                            <p:outputLabel value="Job Description : " for="jobDescription" />
+                            <p:inputTextarea id="jobDescription" value="#{jobHandler.current.jobDescription}" title="JobDescription"  rows="1" cols="30"  maxlength="255"  autoResize="false" />
+
+
+                            <p:commandButton value="Save" action="#{jobHandler.createJob()}" rendered="#{!jobHandler.editMode}"/>
+                            <p:commandButton value="Update" action="#{jobHandler.editJob()}" rendered="#{jobHandler.editMode}" />
+                        </h:panelGrid>
+
+
+
+                    </h:form>
+                </f:view>
+
+                <f:view>
+
+                    #{labourHandler}
+                    <h:form>
+                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="DocumentNumber:" for="documentNumber" />
+                            <p:inputText id="documentNumber" value="#{labourHandler.current.documentNumber}" title="DocumentNumber" />
+                            <p:outputLabel value="DocumentReference:" for="documentReference" />
+                            <p:inputText id="documentReference" value="#{labourHandler.current.documentReference}" title="DocumentReference" />
+                            <p:outputLabel value="Id:" for="id" />
+                            <p:inputText id="id" value="#{labourHandler.current.id}" title="Id" />
+                        </p:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

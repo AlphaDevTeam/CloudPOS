@@ -3,6 +3,7 @@ package com.AlphaDevs.cloud.web.Entities;
 
 import com.AlphaDevs.cloud.web.Interfaces.Meterials;
 import java.io.Serializable;
+import java.lang.annotation.Target;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,7 @@ public class JobDetails implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
    
+    @OneToOne(targetEntity = Items.class)
     private Meterials meterial;
     private float qty;
     private String note;
@@ -36,7 +38,7 @@ public class JobDetails implements Serializable {
             System.out.println("Cast to Item and Returned");
             return (Items) meterial;
         }
-        return (Items) meterial;
+        return null;
     }
 
     public void setMeterial1(Meterials meterial) {

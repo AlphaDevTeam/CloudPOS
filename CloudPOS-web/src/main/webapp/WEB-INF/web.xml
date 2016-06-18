@@ -8,9 +8,9 @@
         <param-name>primefaces.FONT_AWESOME</param-name>
         <param-value>true</param-value>
     </context-param>
-    <mime-mapping>  
-        <extension>woff2</extension>  
-        <mime-type>application/x-font-woff2</mime-type>  
+    <mime-mapping>
+        <extension>woff2</extension>
+        <mime-type>application/x-font-woff2</mime-type>
     </mime-mapping>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
@@ -41,7 +41,7 @@
             <web-resource-name>The /resources folder.</web-resource-name>
             <url-pattern>/resources/*</url-pattern>
         </web-resource-collection>
-        <auth-constraint />
-    </security-constraint> 
+        <auth-constraint/>
+    </security-constraint>
     
 </web-app>

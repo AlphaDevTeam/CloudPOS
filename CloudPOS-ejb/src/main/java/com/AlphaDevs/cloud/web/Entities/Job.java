@@ -47,6 +47,7 @@ public class Job implements Serializable {
     private JobTypes jobType;
     @OneToMany
     private List<Employee> assignedEmployees;
+    @Enumerated(EnumType.STRING)
     private BillStatus billStatus;
     private double totalAmount;
     private double costLimit;
@@ -116,10 +117,12 @@ public class Job implements Serializable {
     }
 
     public BillStatus getBillStatus() {
+        System.out.println("getBill" + billStatus);
         return billStatus;
     }
 
     public void setBillStatus(BillStatus billStatus) {
+        System.out.println("setBill" + billStatus);
         this.billStatus = billStatus;
     }
 
